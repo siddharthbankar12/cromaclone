@@ -9,6 +9,9 @@
   background-color: #191919;
 }
 
+.category {
+  background-color: #191919;
+}
 .navbar {
   background-color: #000000;
   position: sticky;
@@ -36,6 +39,10 @@
 
 .croma-logo {
   cursor: pointer;
+}
+
+.menu-hidden {
+  display: none;
 }
 
 .menu-bar {
@@ -116,6 +123,7 @@
 .imageSlider {
   width: 100%;
   height: 100vh;
+  margin: 0 auto;
   position: relative;
 
   & .slide {
@@ -188,7 +196,14 @@
     justify-content: space-between;
     flex-wrap: wrap;
 
-    & :nth-child(1),
+    & img {
+      width: calc(98% / 2);
+      border-radius: 12px;
+      margin: 15px 0;
+      cursor: pointer;
+    }
+
+    /* & :nth-child(1),
     & :nth-child(2) {
       width: calc(98% / 2);
       border-radius: 12px;
@@ -200,7 +215,7 @@
       width: 100%;
       border-radius: 12px;
       cursor: pointer;
-    }
+    } */
   }
 }
 
@@ -218,6 +233,7 @@
     & img {
       width: 100%;
       border-radius: 12px;
+      cursor: pointer;
     }
   }
 
@@ -248,11 +264,13 @@
   & .hot-images {
     margin-top: 20px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 
     & img {
       width: calc(96% / 4);
       border-radius: 12px;
+      cursor: pointer;
     }
   }
 }
@@ -280,10 +298,12 @@
 
   & .curated-images {
     display: flex;
+    flex-wrap: wrap;
     gap: 35px;
     margin-top: 20px;
 
     & img {
+      cursor: pointer;
       width: 10%;
     }
   }
@@ -348,7 +368,6 @@
   background-color: #1d1d1d;
   color: white;
   font-family: "Open Sans", serif;
-  font-size: 16px;
   padding-top: 65px;
 }
 
@@ -359,7 +378,9 @@
 
 .footer-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 15px;
   padding-bottom: 25px;
   border-bottom: 2px solid grey;
 }
@@ -368,7 +389,6 @@
 .productLinks,
 .contact-form {
   width: calc(94% / 3);
-  /* border: 1px solid white; */
 }
 
 .changeHead {
@@ -382,7 +402,7 @@
 .twosection {
   display: flex;
   flex-wrap: wrap;
-  font-size: 14px;
+  font-size: 18px;
 
   & p {
     cursor: pointer;
@@ -464,9 +484,404 @@
   justify-content: space-between;
 }
 
+.fb-left {
+  font-size: 18px;
+  display: flex;
+  gap: 5px;
+}
+
 .fb-right {
   display: flex;
   align-items: center;
   gap: 10px;
   font-size: 20px;
+}
+
+/* Extra Small devices (phones, less than 576px) */
+@media (max-width: 640.99px) {
+
+  body{
+    overflow-x: hidden;
+  }
+
+  .category,
+  .bank-offers,
+  .new-favourites,
+  .whats-hot,
+  .repairing-appliances,
+  .exclusively-curated,
+  .why-croma,
+  .brands,
+  .footer-container {
+    width: 90%;
+  }
+
+  .container {
+    width: 94%;
+  }
+
+  .menu-bar,
+  .search-bar,
+  .location {
+    display: none;
+  }
+
+  .menu-hidden {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    & span {
+      font-size: 35px;
+      font-weight: 100;
+    }
+  }
+
+  .left-nav {
+    gap: 20px;
+  }
+
+  .right-nav {
+    gap: 35px;
+  }
+
+  .imageSlider {
+    height: 40vh;
+  }
+
+  .prev {
+    padding: 0 10px 15px 0;
+  }
+  .next {
+    padding: 0 0 15px 10px;
+  }
+
+  .bank-offers {
+    .offer-images {
+      flex-direction: column;
+      width: 100%;
+
+      & img {
+        width: 100%;
+      }
+
+      & :nth-child(2),
+      & :nth-child(4) {
+        display: none;
+      }
+    }
+  }
+
+  .whats-hot {
+    & .hot-images {
+      gap: 30px;
+      & img {
+        width: 100%;
+      }
+    }
+  }
+
+  .prevLogo {
+    padding: 0 10px 15px 0;
+  }
+  .nextLogo {
+    padding: 0 0 15px 10px;
+  }
+
+  .footer-top {
+    gap: 35px;
+  }
+
+  .usefulLinks,
+  .productLinks,
+  .contact-form {
+    width: 100%;
+  }
+
+  .usefulLinks,
+  .productLinks {
+    border-bottom: 2px solid grey;
+    padding-bottom: 25px;
+  }
+
+  .contact-form {
+    gap: 25px;
+  }
+
+  .twosection {
+    
+    font-size: 16px;
+  }
+
+  .footer-bottom {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .fb-left {
+    flex-direction: column-reverse;
+    align-items: center;
+    font-size: 12px;
+    text-align: justify;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 900.99px) {
+  .category,
+  .bank-offers,
+  .new-favourites,
+  .whats-hot,
+  .repairing-appliances,
+  .exclusively-curated,
+  .why-croma,
+  .brands,
+  .footer-container {
+    width: 90%;
+  }
+
+  .container {
+    width: 94%;
+  }
+
+  .menu-bar {
+    display: none;
+  }
+
+  .menu-hidden {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    & span {
+      font-size: 35px;
+      font-weight: 100;
+    }
+  }
+
+  .search-bar {
+    & input {
+      width: 220px;
+    }
+  }
+
+  .left-nav {
+    gap: 20px;
+  }
+
+  .right-nav {
+    gap: 20px;
+  }
+
+  .imageSlider {
+    height: 65vh;
+  }
+
+  .prev,
+  .next {
+    padding: 0 20px 20px 20px;
+  }
+
+  .location {
+    display: none;
+  }
+
+  .usefulLinks,
+  .productLinks,
+  .contact-form {
+    width: calc(94% / 2);
+  }
+
+  .contact-form {
+    margin-top: 55px;
+    gap: 25px;
+  }
+
+  .fb-left {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1230.99px) {
+  .category,
+  .bank-offers,
+  .new-favourites,
+  .whats-hot,
+  .repairing-appliances,
+  .exclusively-curated,
+  .why-croma,
+  .brands,
+  .footer-container {
+    width: 90%;
+  }
+
+  .container {
+    width: 94%;
+  }
+
+  .menu-bar {
+    display: none;
+  }
+
+  .menu-hidden {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    & span {
+      font-size: 35px;
+      font-weight: 100;
+    }
+  }
+
+  .search-bar {
+    & input {
+      width: 250px;
+    }
+  }
+
+  .left-nav {
+    gap: 30px;
+  }
+
+  .right-nav {
+    gap: 20px;
+  }
+
+  .imageSlider {
+    height: 75vh;
+  }
+
+  .prev,
+  .next {
+    padding: 0 20px 20px 20px;
+  }
+
+  .usefulLinks,
+  .productLinks,
+  .contact-form {
+    width: calc(94% / 2);
+  }
+
+  .contact-form {
+    margin-top: 55px;
+    gap: 25px;
+  }
+}
+
+@media (min-width: 1231px) and (max-width: 1700.99px) {
+  .category,
+  .bank-offers,
+  .new-favourites,
+  .whats-hot,
+  .repairing-appliances,
+  .exclusively-curated,
+  .why-croma,
+  .brands,
+  .footer-container {
+    width: 90%;
+  }
+
+  .imageSlider {
+    height: 75vh;
+  }
+}
+
+@media (min-width: 1701px) and (max-width: 2100.99px) {
+  .container {
+    width: 77%;
+  }
+
+  .left-nav {
+    gap: 60px;
+  }
+  .right-nav {
+    gap: 40px;
+  }
+
+  .search-bar {
+    & input {
+      width: 500px;
+    }
+  }
+
+  .imageSlider {
+    height: 85vh;
+  }
+}
+
+@media (min-width: 2101px) {
+  .category,
+  .bank-offers,
+  .new-favourites,
+  .whats-hot,
+  .repairing-appliances,
+  .exclusively-curated,
+  .why-croma,
+  .brands,
+  .footer-container {
+    width: 55%;
+  }
+
+  .container {
+    width: 65%;
+    height: 120px;
+  }
+
+  .left-nav {
+    gap: 60px;
+  }
+  .right-nav {
+    gap: 40px;
+  }
+
+  .croma-logo {
+    & img {
+      width: 183px;
+      height: 43px;
+    }
+  }
+
+  .menu-bar {
+    & span {
+      font-size: 55px;
+      font-weight: 200;
+    }
+
+    & p {
+      font-size: 18px;
+    }
+  }
+
+  .search-bar {
+    padding: 10px 16px;
+    & input {
+      width: 500px;
+      font-size: 18px;
+    }
+  }
+
+  .location {
+    font-size: 20px;
+
+    & :nth-child(3) {
+      font-size: 20px;
+    }
+  }
+
+  .imageSlider {
+    width: 68%;
+    height: 85vh;
+  }
+
+  .profile {
+    & span {
+      font-size: 40px;
+    }
+  }
+  .cart {
+    & span {
+      font-size: 30px;
+    }
+  }
 }
