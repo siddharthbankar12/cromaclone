@@ -1,0 +1,900 @@
+.croma {
+  background-color: #191919;
+}
+
+.category {
+  background-color: #191919;
+}
+.navbar {
+  background-color: #000000;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  font-family: "Open Sans", serif;
+}
+
+.containerNav {
+  width: 1175px;
+  height: 80px;
+  margin: 0 auto;
+  background-color: #000000;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-nav {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.croma-logo {
+  cursor: pointer;
+}
+
+.menu-hidden {
+  display: none;
+}
+
+.menu-bar {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  & span {
+    font-size: 35px;
+    font-weight: 100;
+  }
+
+  & p {
+    font-size: 14px;
+  }
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 8px 15px;
+  background-color: white;
+
+  & input {
+    width: 420px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+
+    &::placeholder {
+      font-family: "Open Sans", serif;
+    }
+  }
+
+  & span {
+    color: #000000;
+    font-weight: 200;
+    font-size: 26px;
+    cursor: pointer;
+  }
+}
+
+.right-nav {
+  display: flex;
+  gap: 25px;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  cursor: pointer;
+
+  & :nth-child(3) {
+    font-size: 15px;
+  }
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  & span {
+    font-size: 30px;
+  }
+}
+
+.cart {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.imageSlider {
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+  position: relative;
+
+  & .slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+    }
+  }
+
+  & .active {
+    opacity: 1;
+  }
+}
+
+.category {
+  width: 80%;
+  margin: 0 auto;
+  padding: 35px 0 15px 0;
+  display: flex;
+
+  & .imageWindow {
+    overflow: hidden;
+
+    & .category-container {
+      display: flex;
+      align-items: start;
+      transition: transform 0.5s ease-in-out;
+
+      & .category-images {
+        display: flex;
+        flex: 0 0 calc(100% / 10);
+        justify-content: center;
+        cursor: pointer;
+
+        & img {
+          height: 85%;
+          width: 85%;
+        }
+      }
+    }
+  }
+}
+
+.prev,
+.next {
+  background-color: #191919;
+  color: white;
+  border: none;
+  padding: 0 20px 40px 20px;
+  cursor: pointer;
+}
+
+.bank-offers {
+  width: 75%;
+  margin: 0 auto;
+  color: white;
+  font-size: 24px;
+  font-family: "Open Sans", serif;
+  font-weight: 500;
+
+  & .offer-images {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    & img {
+      width: calc(98% / 2);
+      border-radius: 12px;
+      margin: 15px 0;
+      cursor: pointer;
+    }
+
+    /* & :nth-child(1),
+    & :nth-child(2) {
+      width: calc(98% / 2);
+      border-radius: 12px;
+      margin: 15px 0;
+      cursor: pointer;
+    }
+
+    & :nth-child(3) {
+      width: 100%;
+      border-radius: 12px;
+      cursor: pointer;
+    } */
+  }
+}
+
+.new-favourites {
+  width: 75%;
+  margin: 60px auto 0;
+  color: white;
+  font-size: 24px;
+  font-family: "Open Sans", serif;
+  font-weight: 500;
+
+  & .fav-images {
+    margin-top: 15px;
+
+    & img {
+      width: 100%;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+  }
+
+  & :nth-child(2) {
+    display: flex;
+    justify-content: space-between;
+
+    & div {
+      width: calc(98% / 2);
+
+      & img {
+        border-radius: 12px;
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.whats-hot {
+  width: 75%;
+  margin: 50px auto 0;
+  color: white;
+  font-size: 24px;
+  font-family: "Open Sans", serif;
+  font-weight: 500;
+
+  & .hot-images {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    & img {
+      width: calc(96% / 4);
+      border-radius: 12px;
+      cursor: pointer;
+    }
+  }
+}
+
+.repairing-appliances {
+  width: 75%;
+  margin: 50px auto 0;
+  color: white;
+  font-size: 24px;
+  font-family: "Open Sans", serif;
+  font-weight: 500;
+
+  & img {
+    width: 100%;
+  }
+}
+
+.exclusively-curated {
+  width: 75%;
+  margin: 50px auto 0;
+  color: white;
+  font-size: 24px;
+  font-family: "Open Sans", serif;
+  font-weight: 500;
+
+  & .curated-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 35px;
+    margin-top: 20px;
+
+    & img {
+      cursor: pointer;
+      width: 10%;
+    }
+  }
+}
+
+.why-croma {
+  width: 75%;
+  margin: 50px auto 0;
+  color: white;
+  font-size: 24px;
+  font-family: "Open Sans", serif;
+  font-weight: 500;
+
+  & img {
+    margin-top: 20px;
+    width: 100%;
+    border-radius: 12px;
+  }
+}
+
+.brands {
+  width: 75%;
+  margin: 0 auto;
+  padding: 35px 0 35px;
+  display: flex;
+
+  & .logoWindow {
+    overflow: hidden;
+
+    & .brand-container {
+      display: flex;
+      align-items: start;
+      transition: transform 0.5s ease-in-out;
+
+      & .brand-images {
+        display: flex;
+        flex: 0 0 calc(100% / 5);
+        justify-content: center;
+        cursor: pointer;
+
+        & img {
+          height: 85%;
+          width: 85%;
+          border-radius: 12px;
+        }
+      }
+    }
+  }
+}
+
+.prevLogo,
+.nextLogo {
+  background-color: #191919;
+  color: white;
+  border: none;
+  padding: 0 20px;
+  cursor: pointer;
+}
+
+.footer {
+  width: 100%;
+  background-color: #1d1d1d;
+  color: white;
+  font-family: "Open Sans", serif;
+  padding-top: 65px;
+}
+
+.footer-container {
+  width: 75%;
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding-bottom: 25px;
+  border-bottom: 2px solid grey;
+}
+
+.usefulLinks,
+.productLinks,
+.contact-form {
+  width: calc(94% / 3);
+}
+
+.changeHead {
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+
+.twosection {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 18px;
+
+  & p {
+    cursor: pointer;
+    width: 50%;
+    margin-top: 10px;
+  }
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+  border: 1px solid white;
+  border-radius: 8px;
+
+  & button {
+    width: 100%;
+    border-radius: 8px;
+    padding: 10px 0;
+    background-color: #00e9bf;
+    font-family: "Open Sans", serif;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+.enter-email {
+  width: 100%;
+  display: flex;
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 10px 15px;
+
+  & input {
+    width: 100%;
+    font-size: 16px;
+    font-family: "Open Sans", serif;
+    border: none;
+    outline: none;
+
+    &::placeholder {
+      font-size: 16px;
+      font-family: "Open Sans", serif;
+    }
+  }
+}
+
+.enter-message {
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 10px 15px;
+  width: 100%;
+
+  & textarea {
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 70px;
+    max-height: 70px;
+    font-size: 16px;
+    font-family: "Open Sans", serif;
+    border: none;
+    outline: none;
+
+    &::placeholder {
+      font-size: 16px;
+      font-family: "Open Sans", serif;
+    }
+  }
+}
+
+.footer-bottom {
+  padding: 25px 0 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.fb-left {
+  font-size: 18px;
+  display: flex;
+  gap: 5px;
+}
+
+.fb-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 20px;
+}
+
+/* Extra Small devices (phones, less than 576px) */
+@media (max-width: 640.99px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .category,
+  .bank-offers,
+  .new-favourites,
+  .whats-hot,
+  .repairing-appliances,
+  .exclusively-curated,
+  .why-croma,
+  .brands,
+  .footer-container {
+    width: 90%;
+  }
+
+  .containerNav {
+    width: 94%;
+  }
+
+  .menu-bar,
+  .search-bar,
+  .location {
+    display: none;
+  }
+
+  .menu-hidden {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    & span {
+      font-size: 35px;
+      font-weight: 100;
+    }
+  }
+
+  .left-nav {
+    gap: 20px;
+  }
+
+  .right-nav {
+    gap: 35px;
+  }
+
+  .imageSlider {
+    height: 40vh;
+  }
+
+  .prev {
+    padding: 0 10px 15px 0;
+  }
+  .next {
+    padding: 0 0 15px 10px;
+  }
+
+  .bank-offers {
+    .offer-images {
+      flex-direction: column;
+      width: 100%;
+
+      & img {
+        width: 100%;
+      }
+
+      & :nth-child(2),
+      & :nth-child(4) {
+        display: none;
+      }
+    }
+  }
+
+  .whats-hot {
+    & .hot-images {
+      gap: 30px;
+      & img {
+        width: 100%;
+      }
+    }
+  }
+
+  .prevLogo {
+    padding: 0 10px 15px 0;
+  }
+  .nextLogo {
+    padding: 0 0 15px 10px;
+  }
+
+  .footer-top {
+    gap: 35px;
+  }
+
+  .usefulLinks,
+  .productLinks,
+  .contact-form {
+    width: 100%;
+  }
+
+  .usefulLinks,
+  .productLinks {
+    border-bottom: 2px solid grey;
+    padding-bottom: 25px;
+  }
+
+  .contact-form {
+    gap: 25px;
+  }
+
+  .twosection {
+    font-size: 16px;
+  }
+
+  .footer-bottom {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .fb-left {
+    flex-direction: column-reverse;
+    align-items: center;
+    font-size: 12px;
+    text-align: justify;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 900.99px) {
+  .category,
+  .bank-offers,
+  .new-favourites,
+  .whats-hot,
+  .repairing-appliances,
+  .exclusively-curated,
+  .why-croma,
+  .brands,
+  .footer-container {
+    width: 90%;
+  }
+
+  .containerNav {
+    width: 94%;
+  }
+
+  .menu-bar {
+    display: none;
+  }
+
+  .menu-hidden {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    & span {
+      font-size: 35px;
+      font-weight: 100;
+    }
+  }
+
+  .search-bar {
+    & input {
+      width: 220px;
+    }
+  }
+
+  .left-nav {
+    gap: 20px;
+  }
+
+  .right-nav {
+    gap: 20px;
+  }
+
+  .imageSlider {
+    height: 65vh;
+  }
+
+  .prev,
+  .next {
+    padding: 0 20px 20px 20px;
+  }
+
+  .location {
+    display: none;
+  }
+
+  .usefulLinks,
+  .productLinks,
+  .contact-form {
+    width: calc(94% / 2);
+  }
+
+  .contact-form {
+    margin-top: 55px;
+    gap: 25px;
+  }
+
+  .fb-left {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1230.99px) {
+  .category,
+  .bank-offers,
+  .new-favourites,
+  .whats-hot,
+  .repairing-appliances,
+  .exclusively-curated,
+  .why-croma,
+  .brands,
+  .footer-container {
+    width: 90%;
+  }
+
+  .containerNav {
+    width: 94%;
+  }
+
+  .menu-bar {
+    display: none;
+  }
+
+  .menu-hidden {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    & span {
+      font-size: 35px;
+      font-weight: 100;
+    }
+  }
+
+  .search-bar {
+    & input {
+      width: 250px;
+    }
+  }
+
+  .left-nav {
+    gap: 30px;
+  }
+
+  .right-nav {
+    gap: 20px;
+  }
+
+  .imageSlider {
+    height: 75vh;
+  }
+
+  .prev,
+  .next {
+    padding: 0 20px 20px 20px;
+  }
+
+  .usefulLinks,
+  .productLinks,
+  .contact-form {
+    width: calc(94% / 2);
+  }
+
+  .contact-form {
+    margin-top: 55px;
+    gap: 25px;
+  }
+}
+
+@media (min-width: 1231px) and (max-width: 1700.99px) {
+  .category,
+  .bank-offers,
+  .new-favourites,
+  .whats-hot,
+  .repairing-appliances,
+  .exclusively-curated,
+  .why-croma,
+  .brands,
+  .footer-container {
+    width: 90%;
+  }
+
+  .imageSlider {
+    height: 75vh;
+  }
+}
+
+@media (min-width: 1701px) and (max-width: 2100.99px) {
+  .containerNav {
+    width: 77%;
+  }
+
+  .left-nav {
+    gap: 60px;
+  }
+  .right-nav {
+    gap: 40px;
+  }
+
+  .search-bar {
+    & input {
+      width: 500px;
+    }
+  }
+
+  .imageSlider {
+    height: 85vh;
+  }
+}
+
+@media (min-width: 2101px) {
+  .category,
+  .bank-offers,
+  .new-favourites,
+  .whats-hot,
+  .repairing-appliances,
+  .exclusively-curated,
+  .why-croma,
+  .brands,
+  .footer-container {
+    width: 55%;
+  }
+
+  .containerNav {
+    width: 65%;
+    height: 120px;
+  }
+
+  .left-nav {
+    gap: 60px;
+  }
+  .right-nav {
+    gap: 40px;
+  }
+
+  .croma-logo {
+    & img {
+      width: 183px;
+      height: 43px;
+    }
+  }
+
+  .menu-bar {
+    & span {
+      font-size: 55px;
+      font-weight: 200;
+    }
+
+    & p {
+      font-size: 18px;
+    }
+  }
+
+  .search-bar {
+    padding: 10px 16px;
+    & input {
+      width: 500px;
+      font-size: 18px;
+    }
+  }
+
+  .location {
+    font-size: 20px;
+
+    & :nth-child(3) {
+      font-size: 20px;
+    }
+  }
+
+  .imageSlider {
+    width: 68%;
+    height: 85vh;
+  }
+
+  .profile {
+    & span {
+      font-size: 40px;
+    }
+  }
+  .cart {
+    & span {
+      font-size: 30px;
+    }
+  }
+}
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Close button */
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
