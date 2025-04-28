@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../style/LoginRegister.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import toast from "react-hot-toast";
+
 import axios from "axios";
 import { login } from "../store/userSlice";
+import { toast } from "react-toastify";
 
 const LoginRegisterPage = ({ closeModal }) => {
   const route = useNavigate();
