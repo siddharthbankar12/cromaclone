@@ -10,7 +10,6 @@ const userSlice = createSlice({
         localStorage.setItem("token", JSON.stringify(action.payload.token));
       }
       state.user = action.payload.user;
-      console.log(state.user);
     },
     logout: (state) => {
       localStorage.removeItem("token");

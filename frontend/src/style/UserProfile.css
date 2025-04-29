@@ -9,6 +9,7 @@ body {
   background-color: #191919;
   color: white;
   font-family: "Open Sans", serif;
+  position: relative;
 }
 
 .headingProfile {
@@ -102,7 +103,17 @@ body {
   background-color: #12daa8;
   color: black;
 }
-
+.logOutBtn {
+  position: absolute;
+  right: 0;
+  background-color: #12daa8;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
 @media (max-width: 991.98px) {
   .container {
     width: 85%;

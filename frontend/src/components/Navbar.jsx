@@ -1,18 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginRegisterPage from "./LoginRegister";
+import axios from "axios";
 
 const Navbar = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const route = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userLocation, setUserLocation] = useState({
+    userCity: "",
+    postalCode: "",
+  });
+  const token = localStorage.getItem("token");
 
   const LoginRegister = () => {
-    setIsModalOpen(true);
+    if (token) {
+      route("/user-profile");
+    } else {
+      setIsModalOpen(true);
+    }
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const getUserLocation = async () => {
+    try {
+      const response = await axios.get("https://ipinfo.io?d66a8f0420021a");
+      const { city, postal } = response.data;
+      setUserLocation((prevState) => ({
+        ...prevState,
+        userCity: city,
+        postalCode: postal,
+      }));
+    } catch (error) {
+      console.error("Error fetching user location:", error);
+    }
+  };
+
+  useEffect(() => {
+    getUserLocation();
+  }, []);
 
   return (
     <div className="navbar">
@@ -54,7 +82,10 @@ const Navbar = () => {
             <span className="material-symbols-outlined" aria-label="Location">
               location_on
             </span>
-            <p>Mumbai, 400049</p>
+            <p>
+              {userLocation.userCity}, {userLocation.postalCode}
+            </p>
+
             <span
               className="material-symbols-outlined"
               aria-label="Edit Location"

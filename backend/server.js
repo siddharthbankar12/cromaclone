@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import allRouters from "./routers/index.js";
 import cors from "cors";
+import * as jwt_decode from "jwt-decode";
 
 const app = express();
 

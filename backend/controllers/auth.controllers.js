@@ -2,7 +2,7 @@ import User from "../models/user.schema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-export const register = async (req, res) => {
+export const Register = async (req, res) => {
   try {
     const {
       role,
@@ -70,7 +70,7 @@ export const register = async (req, res) => {
   }
 };
 
-export const login = async (req, res) => {
+export const Login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -122,9 +122,55 @@ export const login = async (req, res) => {
 
 export const getCurrentUser = async (req, res) => {
   try {
-    // your get current user logic here
+    const { token } = req.body;
+    if (!token) {
+      return res.json({ success: false });
+    }
+
+    const tokenData = jwt.verify(token, process.env.TOKENSECRETKEY);
+
+    if (!tokenData) {
+      return res.json({ success: false });
+    }
+
+    const isUserExists = await User.findById(tokenData.userId);
+    if (!isUserExists) {
+      return res.json({ success: false });
+    }
+
+    return res.json({
+      success: true,
+      userData: {
+        user: isUserExists,
+      },
+    });
   } catch (error) {
     console.log(error, "error from getCurrentUser API ..");
     return res.json({ success: false, message: error });
+  }
+};
+
+export const updateCurrentUser = async (req, res) => {
+  try {
+    const { formData, token } = req.body;
+
+    if (!token)
+      return res.json({ success: false, message: "No token provided" });
+
+    const decoded = jwt.verify(token, process.env.TOKENSECRETKEY);
+    const userId = decoded.userId;
+
+    const updatedUser = await User.findByIdAndUpdate(userId, formData, {
+      new: true,
+    });
+
+    return res.json({
+      success: true,
+      message: "User updated successfully",
+      userData: { user: updatedUser },
+    });
+  } catch (error) {
+    console.log("error from updateCurrentUser API ..", error);
+    return res.json({ success: false, message: error.message });
   }
 };
