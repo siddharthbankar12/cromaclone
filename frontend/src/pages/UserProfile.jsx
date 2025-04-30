@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 const UserProfile = () => {
   const userData = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
-  const router = useNavigate();
+  const route = useNavigate();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -21,6 +21,7 @@ const UserProfile = () => {
     email: "",
     address: "",
     dob: "",
+    role: "",
   });
 
   const [loading, setLoading] = useState(true);
@@ -76,7 +77,8 @@ const UserProfile = () => {
   useEffect(() => {
     if (userData) {
       setFormData({
-        title: userData.gender == "male" ? "mr" : "mrs",
+        title: userData.gender === "male" ? "mr" : "mrs",
+        role: userData.role || "",
         firstName: userData.firstName || "",
         middleName: userData.middleName || "",
         lastName: userData.lastName || "",
@@ -91,7 +93,7 @@ const UserProfile = () => {
   }, [userData]);
 
   const handleChange = (e) => {
-    const { id, value, type, name } = e.target;
+    const { id, value, type } = e.target;
 
     if (type === "radio") {
       setFormData((prev) => ({ ...prev, gender: value }));
@@ -109,7 +111,8 @@ const UserProfile = () => {
   const discardChanges = () => {
     if (userData) {
       setFormData({
-        title: userData.gender == "male" ? "mr" : "mrs",
+        title: userData.gender === "male" ? "mr" : "mrs",
+        role: userData.role || "",
         firstName: userData.firstName || "",
         middleName: userData.middleName || "",
         lastName: userData.lastName || "",
@@ -127,7 +130,7 @@ const UserProfile = () => {
 
   const logOutUser = () => {
     dispatch(logout());
-    router("/");
+    route("/");
   };
 
   if (loading) {
@@ -137,15 +140,19 @@ const UserProfile = () => {
   return (
     <div className="container">
       <div className="breadcrumb">
-        <a href="/">My Account</a>
+        <a href="#">My Account</a>
         <span className="material-symbols-outlined"> arrow_forward_ios </span>
-        <a href="/">My Profile Page</a>
+        <a href="#">My Profile Page</a>
         <div className="logOutBtn" onClick={logOutUser}>
           LogOut
         </div>
       </div>
 
-      <p className="headingProfile">My Profile Page</p>
+      <p className="headingProfile">
+        {formData.role.charAt(0).toUpperCase() +
+          formData.role.slice(1).toLowerCase()}{" "}
+        Profile Page
+      </p>
 
       <form>
         <div className="form-row">

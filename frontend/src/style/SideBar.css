@@ -1,0 +1,21 @@
+.sidebar {
+  color: white;
+  border: 1px solid white;
+  border-radius: 8px;
+  max-width: 250px;
+  padding: 20px 30px;
+  background-color: #191919;
+}
+
+.btns {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.btns > li {
+  border-bottom: 1px solid white;
+  padding-bottom: 8px;
+  cursor: pointer;
+}

@@ -141,7 +141,10 @@ export const getCurrentUser = async (req, res) => {
     return res.json({
       success: true,
       userData: {
-        user: isUserExists,
+        user: {
+          ...isUserExists._doc,
+          userId: isUserExists._id,
+        },
       },
     });
   } catch (error) {

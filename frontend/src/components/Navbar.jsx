@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginRegisterPage from "./LoginRegister";
 import axios from "axios";
+import SideBar from "./SideBar";
 
-const Navbar = () => {
+const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
   const route = useNavigate();
+  const sidebarRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userLocation, setUserLocation] = useState({
     userCity: "",
@@ -42,15 +44,39 @@ const Navbar = () => {
     getUserLocation();
   }, []);
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsSidebarOpen(false);
+      }
+    }
+
+    if (isSidebarOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSidebarOpen]);
+
   return (
     <div className="navbar">
       <div className="containerNav">
         <div className="left-nav">
-          <div className="menu-hidden">
-            <span className="material-symbols-outlined" aria-label="Menu">
-              menu
+          <div
+            className="menu-hidden"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          >
+            <span
+              className="material-symbols-outlined"
+              aria-label="Menu Toggle"
+            >
+              {isSidebarOpen ? "close" : "menu"}
             </span>
+            <p>{isSidebarOpen ? "Menu" : "Menu"}</p>
           </div>
+
           <div
             className="croma-logo"
             onClick={() => {
@@ -59,12 +85,20 @@ const Navbar = () => {
           >
             <img src="/assets/croma_logo/Croma_Logo.svg" alt="Croma Logo" />
           </div>
-          <div className="menu-bar">
-            <span className="material-symbols-outlined" aria-label="Menu">
-              menu
+
+          <div
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            className="menu-bar"
+          >
+            <span
+              className="material-symbols-outlined"
+              aria-label="Menu Toggle"
+            >
+              {isSidebarOpen ? "close" : "menu"}
             </span>
-            <p>Menu</p>
+            <p>{isSidebarOpen ? "Menu" : "Menu"}</p>
           </div>
+
           <div className="search-bar">
             <input
               type="text"
@@ -85,7 +119,6 @@ const Navbar = () => {
             <p>
               {userLocation.userCity}, {userLocation.postalCode}
             </p>
-
             <span
               className="material-symbols-outlined"
               aria-label="Edit Location"
@@ -93,11 +126,13 @@ const Navbar = () => {
               edit
             </span>
           </div>
+
           <div className="profile" onClick={LoginRegister}>
             <span className="material-symbols-outlined" aria-label="Profile">
               person
             </span>
           </div>
+
           <div className="cart">
             <span className="material-symbols-outlined" aria-label="Cart">
               shopping_cart
@@ -109,6 +144,12 @@ const Navbar = () => {
       {isModalOpen && (
         <div className="modal-overlay">
           <LoginRegisterPage closeModal={closeModal} />
+        </div>
+      )}
+
+      {isSidebarOpen && (
+        <div className="sidebar-modal" ref={sidebarRef}>
+          <SideBar />
         </div>
       )}
     </div>

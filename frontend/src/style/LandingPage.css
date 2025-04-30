@@ -902,3 +902,33 @@
   font-size: 20px;
   cursor: pointer;
 }
+
+.blurred {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+  transition: filter 0.3s ease-in-out;
+}
+
+.main-content {
+  transition: filter 0.3s ease-in-out;
+}
+
+.sidebar-modal {
+  position: fixed;
+  top: 76px;
+  left: 110px;
+  width: 250px;
+  height: auto;
+
+  z-index: 1000;
+}
+
+.modal-close-icon {
+  position: fixed;
+  top: 20px;
+  left: 270px;
+  font-size: 28px;
+  z-index: 1001;
+  cursor: pointer;
+}
