@@ -149,7 +149,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
 
       {isSidebarOpen && (
         <div className="sidebar-modal" ref={sidebarRef}>
-          <SideBar />
+          <SideBar setIsSidebarOpen={setIsSidebarOpen} />
         </div>
       )}
     </div>

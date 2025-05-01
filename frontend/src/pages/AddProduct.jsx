@@ -13,6 +13,7 @@ const AddProduct = () => {
     quantity: "",
     category: "computer",
     image: "",
+    description: "",
   });
   const route = useNavigate();
   console.log(userData);
@@ -39,7 +40,8 @@ const AddProduct = () => {
         productData.price &&
         productData.quantity &&
         productData.category &&
-        productData.image
+        productData.image &&
+        productData.description
       ) {
         const response = await axios.post(
           "http://localhost:8000/api/v1/product/add-product",
@@ -56,8 +58,9 @@ const AddProduct = () => {
             quantity: "",
             category: "computer",
             image: "",
+            description: "",
           });
-          route("/added-products");
+          route("/seller/added-products");
         } else {
           toast.error(response.data.message);
         }
@@ -81,10 +84,10 @@ const AddProduct = () => {
 
   return (
     <div className="add-product-container">
-      <h1 className="add-product-title">Add Product</h1>
+      <h1 className="add-product-title">Add a New Product</h1>
 
       <form className="add-product-form" onSubmit={handleSubmit}>
-        <label htmlFor="name">Product Name :</label> <br />
+        <label htmlFor="name">Product Name :</label>
         <input
           className="add-product-input"
           type="text"
@@ -95,8 +98,7 @@ const AddProduct = () => {
           placeholder="Enter product name"
           required
         />
-        <br />
-        <label htmlFor="price">Product Price :</label> <br />
+        <label htmlFor="price">Product Price :</label>
         <input
           className="add-product-input"
           type="number"
@@ -107,8 +109,7 @@ const AddProduct = () => {
           placeholder="Enter price"
           required
         />
-        <br />
-        <label htmlFor="quantity">Total Quantity :</label> <br />
+        <label htmlFor="quantity">Total Quantity :</label>
         <input
           className="add-product-input"
           type="number"
@@ -119,8 +120,7 @@ const AddProduct = () => {
           placeholder="Enter quantity"
           required
         />
-        <br />
-        <label htmlFor="category">Category :</label> <br />
+        <label htmlFor="category">Category :</label>
         <select
           id="category"
           onChange={handleChangeCategory}
@@ -136,8 +136,7 @@ const AddProduct = () => {
           <option value="pad">Pad</option>
           <option value="accessories">Accessories</option>
         </select>
-        <br />
-        <label htmlFor="image">Product Image URL :</label> <br />
+        <label htmlFor="image">Product Image URL :</label>
         <input
           className="add-product-input"
           type="url"
@@ -148,7 +147,17 @@ const AddProduct = () => {
           placeholder="Enter image URL"
           required
         />
-        <br />
+        <label htmlFor="description">Product Description :</label>
+        <input
+          className="add-product-input"
+          type="text"
+          id="description"
+          name="description"
+          onChange={handleChange}
+          value={productData.description}
+          placeholder="Enter product description"
+          required
+        />
         <div className="add-product-buttons">
           <button type="submit" className="add-product-button">
             Add Product
@@ -162,6 +171,21 @@ const AddProduct = () => {
           </button>
         </div>
       </form>
+      {productData.image && (
+        <img
+          src={productData.image}
+          alt="Product Preview"
+          className="product-preview"
+          style={{
+            width: "100%",
+            maxHeight: "200px",
+            objectFit: "contain",
+            marginTop: "10px",
+            borderRadius: "8px",
+            border: "1px solid #eee",
+          }}
+        />
+      )}
     </div>
   );
 };

@@ -8,6 +8,7 @@ import AddProduct from "./pages/AddProduct";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { login } from "./store/userSlice";
+import AddedProducts from "./pages/AddedProducts";
 
 const App = () => {
   const userData = useSelector((state) => state.user.user);
@@ -53,6 +54,7 @@ const App = () => {
           <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/croma/create-account" element={<CreateAccount />} />
           <Route path="/seller/add-product" element={<AddProduct />} />
+          <Route path="/seller/added-products" element={<AddedProducts />} />
         </Routes>
       </div>
     </>

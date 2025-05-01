@@ -3,7 +3,8 @@ import User from "../models/user.schema.js";
 
 export const AddProduct = async (req, res) => {
   try {
-    const { name, price, quantity, category, image } = req.body.productData;
+    const { name, price, quantity, category, image, description } =
+      req.body.productData;
     const { userId } = req.body;
 
     const isUserExists = await User.findById(userId);
@@ -36,6 +37,7 @@ export const AddProduct = async (req, res) => {
       quantity,
       category,
       image,
+      description,
       userId,
     });
 
