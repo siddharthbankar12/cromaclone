@@ -24,7 +24,7 @@ const SideBar = ({ setIsSidebarOpen }) => {
   return (
     <div className="sidebar">
       <ul className="btns">
-        <li onClick={() => setIsSidebarOpen(false)}>All Products</li>
+        <li onClick={() => handleClick("/all-products")}>All Products</li>
         {tokenFromLS && userData?.role === "seller" && (
           <>
             {" "}

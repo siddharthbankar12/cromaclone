@@ -4,11 +4,11 @@ const userSchema = new Schema(
   {
     gender: {
       type: String,
-      required: false,
+      required: true,
     },
     role: {
       type: String,
-      default: "user",
+      required: true,
     },
     firstName: {
       type: String,
@@ -33,11 +33,11 @@ const userSchema = new Schema(
     },
     phoneNo: {
       type: String,
-      required: true,
+      required: false,
     },
     address: {
       type: String,
-      default: "",
+      required: false,
     },
     dob: {
       type: Date,

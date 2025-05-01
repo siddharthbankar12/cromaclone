@@ -53,12 +53,10 @@ export const Register = async (req, res) => {
       gender: gender,
       role: role,
       firstName: firstName,
-      middleName: "",
       lastName: lastName,
+      phoneNo: phoneNo,
       email: email,
       password: hashPassword,
-      phoneNo: phoneNo,
-      dob: "",
     });
 
     await newUser.save();
@@ -110,6 +108,7 @@ export const Login = async (req, res) => {
           name: `${isUserExists.firstName} ${isUserExists.lastName}`,
           phoneNo: isUserExists.phoneNo,
           role: isUserExists.role,
+          phoneNo: isUserExists.phoneNo,
         },
         token: JwtToken,
       },
