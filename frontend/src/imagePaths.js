@@ -1,0 +1,48 @@
+export const imagesSlider = [
+  "/assets/imageSlider_landingPage/1.jpg",
+  "/assets/imageSlider_landingPage/2.jpg",
+  "/assets/imageSlider_landingPage/3.jpg",
+  "/assets/imageSlider_landingPage/4.jpg",
+  "/assets/imageSlider_landingPage/5.jpg",
+  "/assets/imageSlider_landingPage/6.jpg",
+  "/assets/imageSlider_landingPage/7.jpg",
+  "/assets/imageSlider_landingPage/8.jpg",
+];
+
+export const imagesCategory = [
+  "/assets/category_images/Accessories_kefony.png",
+  "/assets/category_images/Air_Conditioner_a4hg1z.png",
+  "/assets/category_images/Cameras_a6n2jy.png",
+  "/assets/category_images/D_Geyser_i5frr1.png",
+  "assets/category_images/Fans_ecnoxj.png",
+  "/assets/category_images/Grooming_vvxudd.png",
+  "/assets/category_images/Head_set_xjj934.png",
+  "/assets/category_images/Home_theatres_kpwvft.png",
+  "/assets/category_images/Kitchen_Appliances_yhzevo.png",
+  "/assets/category_images/Laptops_pzewpv.png",
+  "/assets/category_images/LP_Cooler_ak2tjf.png",
+  "/assets/category_images/Microwaves_otd6qq.png",
+  "/assets/category_images/Mobile_sdtrdf.png",
+  "/assets/category_images/Ref_biysg7.png",
+  "/assets/category_images/Speaker_g2mbgn.png",
+  "/assets/category_images/Tablets_yzod4f.png",
+  "/assets/category_images/TV_vdemgc.png",
+  "/assets/category_images/Washing_machines_izyrnd.png",
+  "/assets/category_images/Water_Purifiers_Desktop_phji31.png",
+  "/assets/category_images/Wearables_iunu7h.png",
+];
+
+export const brandLogos = [
+  "/assets/brand_logos/1_maspxu.png",
+  "/assets/brand_logos/2_bki1il.png",
+  "/assets/brand_logos/3_voajbz.png",
+  "/assets/brand_logos/4_wmg1qj.png",
+  "/assets/brand_logos/5_pjm9wd.png",
+  "/assets/brand_logos/6_cruwwo.png",
+  "/assets/brand_logos/7_uvvozm.png",
+  "/assets/brand_logos/8_dvwyxd.png",
+  "/assets/brand_logos/9_rqohp4.png",
+  "/assets/brand_logos/10_iobxyi.png",
+  "/assets/brand_logos/11_tc1idk.png",
+  "/assets/brand_logos/12_hfsle3.png",
+];

@@ -69,7 +69,7 @@
   }
 }
 
-.material-symbols-outlined {
+.mso {
   display: flex;
   align-items: center;
 }
@@ -92,6 +92,7 @@
 
 .all-product-image {
   width: 100%;
+  height: 300px;
   position: relative;
   display: flex;
   align-items: center;
@@ -101,7 +102,9 @@
   padding: 10px 0;
 
   & img {
-    width: 80%;
+    width: 67%;
+    border-radius: 12px;
+    /* object-fit: fill; */
   }
 
   & i {

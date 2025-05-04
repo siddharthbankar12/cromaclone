@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import "../style/LoginRegister.css";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../store/userSlice";
 import { toast } from "react-toastify";
+import axiosInstance from "../axiosConfig";
 
 const LoginRegisterPage = ({ closeModal }) => {
   const route = useNavigate();
@@ -24,13 +23,14 @@ const LoginRegisterPage = ({ closeModal }) => {
     event.preventDefault();
 
     try {
-      const responseUser = await axios.post(
-        "http://localhost:8000/api/v1/auth/login",
-        { email: userData.email, password: userData.password }
-      );
+      const responseUser = await axiosInstance.post("/auth/login", {
+        email: userData.email,
+        password: userData.password,
+      });
 
       if (responseUser.data.success === true) {
         dispatch(login(responseUser.data.userData));
+        console.log(responseUser.data.userData, "userData");
         toast.success(responseUser.data.message);
         setUserData({ email: "", password: "" });
         closeModal();

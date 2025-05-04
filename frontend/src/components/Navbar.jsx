@@ -1,21 +1,22 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginRegisterPage from "./LoginRegister";
-import axios from "axios";
 import SideBar from "./SideBar";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
   const route = useNavigate();
   const sidebarRef = useRef(null);
+  const userData = useSelector((state) => state.user.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userLocation, setUserLocation] = useState({
     userCity: "",
     postalCode: "",
   });
-  const token = localStorage.getItem("token");
 
   const LoginRegister = () => {
-    if (token) {
+    if (userData) {
       route("/user-profile");
     } else {
       setIsModalOpen(true);

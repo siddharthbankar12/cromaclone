@@ -2,6 +2,7 @@ import User from "../models/user.schema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+// REGISTER
 export const Register = async (req, res) => {
   try {
     const {
@@ -25,154 +26,184 @@ export const Register = async (req, res) => {
       !password ||
       !confirmPassword
     ) {
-      return res.send({
+      return res.status(400).json({
         success: false,
-        message: "please check if anything is missing ..",
+        message: "Please fill all required fields.",
       });
     }
 
     if (password !== confirmPassword) {
-      return res.json({
+      return res.status(400).json({
         success: false,
-        message: "Password is not matched ..",
+        message: "Passwords do not match.",
       });
     }
 
-    const isEmailExist = await User.find({ email: email });
-
-    if (isEmailExist?.length > 0) {
-      return res.json({
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({
         success: false,
-        message: "Email already taken, please use another one ..",
+        message: "Email already in use.",
       });
     }
 
-    const hashPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = User({
-      gender: gender,
-      role: role,
-      firstName: firstName,
-      lastName: lastName,
-      phoneNo: phoneNo,
-      email: email,
-      password: hashPassword,
+    const newUser = new User({
+      gender,
+      role,
+      firstName,
+      lastName,
+      phoneNo,
+      email,
+      password: hashedPassword,
     });
 
     await newUser.save();
 
-    return res.json({ success: true, message: "Register Successfully .." });
+    return res.status(201).json({
+      success: true,
+      message: "Registered successfully.",
+    });
   } catch (error) {
-    console.log(error, "error from register API ..");
-    return res.json({ success: false, message: error });
+    console.error("Register API error:", error);
+    return res.status(500).json({ success: false, message: "Server error." });
   }
 };
 
+// LOGIN
 export const Login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.json({
+      return res.status(400).json({
         success: false,
-        message: "All fields are required ..",
+        message: "All fields are required.",
       });
     }
 
-    const isUserExists = await User.findOne({ email: email });
-
-    if (!isUserExists) {
-      return res.json({ success: false, message: "Email is wrong .." });
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid email." });
     }
 
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      isUserExists.password
-    );
-
-    if (!isPasswordCorrect) {
-      return res.json({ success: false, message: "Password is wrong .." });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid password." });
     }
 
-    const JwtToken = jwt.sign(
-      { userId: isUserExists._id },
-      process.env.TOKENSECRETKEY
-    );
+    const token = jwt.sign({ userId: user._id }, process.env.TOKENSECRETKEY, {
+      expiresIn: "7d",
+    });
 
-    return res.json({
+    res.cookie("token", token);
+
+    return res.status(200).json({
       success: true,
-      message: "Login Successfully ..",
+      message: "Login successful.",
       userData: {
         user: {
-          userId: isUserExists._id,
-          name: `${isUserExists.firstName} ${isUserExists.lastName}`,
-          phoneNo: isUserExists.phoneNo,
-          role: isUserExists.role,
-          phoneNo: isUserExists.phoneNo,
+          ...user._doc,
+          userId: user._id,
+          password: undefined,
         },
-        token: JwtToken,
       },
     });
   } catch (error) {
-    console.log(error, "error from login API ..");
-    return res.json({ success: false, message: error });
+    console.error("Login API error:", error);
+    return res.status(500).json({ success: false, message: "Server error." });
   }
 };
 
+// GET CURRENT USER
 export const getCurrentUser = async (req, res) => {
   try {
-    const { token } = req.body;
+    const token = req.cookies.token;
     if (!token) {
-      return res.json({ success: false });
+      return res.status(401).json({ success: false, message: "Unauthorized." });
     }
 
-    const tokenData = jwt.verify(token, process.env.TOKENSECRETKEY);
+    const decoded = jwt.verify(token, process.env.TOKENSECRETKEY);
 
-    if (!tokenData) {
-      return res.json({ success: false });
+    const user = await User.findById(decoded.userId).select("-password");
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found." });
     }
 
-    const isUserExists = await User.findById(tokenData.userId);
-    if (!isUserExists) {
-      return res.json({ success: false });
-    }
-
-    return res.json({
+    return res.status(200).json({
       success: true,
       userData: {
         user: {
-          ...isUserExists._doc,
-          userId: isUserExists._id,
+          ...user._doc,
+          userId: user._id,
         },
       },
     });
   } catch (error) {
-    console.log(error, "error from getCurrentUser API ..");
-    return res.json({ success: false, message: error });
+    console.error("getCurrentUser API error:", error);
+    return res.status(500).json({ success: false, message: "Server error." });
   }
 };
 
+// UPDATE USER
 export const updateCurrentUser = async (req, res) => {
   try {
-    const { formData, token } = req.body;
+    const { formData } = req.body;
+    const token = req.cookies.token;
 
-    if (!token)
-      return res.json({ success: false, message: "No token provided" });
+    if (!token) {
+      return res.status(401).json({ success: false, message: "Unauthorized." });
+    }
 
     const decoded = jwt.verify(token, process.env.TOKENSECRETKEY);
-    const userId = decoded.userId;
 
-    const updatedUser = await User.findByIdAndUpdate(userId, formData, {
+    const updatedUser = await User.findByIdAndUpdate(decoded.userId, formData, {
       new: true,
-    });
+    }).select("-password");
 
-    return res.json({
+    const newToken = jwt.sign(
+      { userId: updatedUser._id },
+      process.env.TOKENSECRETKEY,
+      { expiresIn: "7d" }
+    );
+
+    res.cookie("token", newToken);
+
+    return res.status(200).json({
       success: true,
-      message: "User updated successfully",
-      userData: { user: updatedUser },
+      message: "User updated successfully.",
+      userData: {
+        user: {
+          ...updatedUser._doc,
+          userId: updatedUser._id,
+        },
+      },
     });
   } catch (error) {
-    console.log("error from updateCurrentUser API ..", error);
-    return res.json({ success: false, message: error.message });
+    console.error("updateCurrentUser API error:", error);
+    return res.status(500).json({ success: false, message: "Server error." });
+  }
+};
+
+// LOGOUT
+export const logOutUser = async (req, res) => {
+  try {
+    res.clearCookie("token");
+
+    return res.status(200).json({
+      success: true,
+      message: "Logout successful.",
+    });
+  } catch (error) {
+    console.error("logOutUser API error:", error);
+    return res.status(500).json({ success: false, message: "Server error." });
   }
 };

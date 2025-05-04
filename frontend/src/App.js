@@ -6,27 +6,23 @@ import UserProfile from "./pages/UserProfile";
 import CreateAccount from "./pages/CreateAccount";
 import AddProduct from "./pages/AddProduct";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { login } from "./store/userSlice";
 import AddedProducts from "./pages/AddedProducts";
 import AllProducts from "./pages/AllProducts";
+import axiosInstance from "./axiosConfig";
+import SingleProduct from "./pages/SingleProduct";
 
 const App = () => {
   const userData = useSelector((state) => state.user.user);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const dispatch = useDispatch();
 
-  async function getCurrentUserData(token) {
+  async function getCurrentUserData() {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/v1/auth/get-current-user",
-        { token }
-      );
+      const response = await axiosInstance.post("/auth/get-current-user");
 
       if (response.data.success) {
         dispatch(login(response.data.userData));
-      } else {
-        localStorage.removeItem("token");
       }
     } catch (error) {
       console.log(error);
@@ -35,10 +31,7 @@ const App = () => {
 
   useEffect(() => {
     if (!userData) {
-      const token = localStorage.getItem("token");
-      if (token) {
-        getCurrentUserData(JSON.parse(token));
-      }
+      getCurrentUserData();
     }
   }, [userData]);
 
@@ -57,6 +50,10 @@ const App = () => {
           <Route path="/seller/add-product" element={<AddProduct />} />
           <Route path="/seller/added-products" element={<AddedProducts />} />
           <Route path="/all-products" element={<AllProducts />} />
+          <Route
+            path="/all-products/single-product/:id"
+            element={<SingleProduct />}
+          />
         </Routes>
       </div>
     </>

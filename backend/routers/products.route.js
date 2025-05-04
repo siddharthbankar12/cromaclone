@@ -5,12 +5,13 @@ import {
   AllProducts,
   SingleProductData,
 } from "../controllers/products.controllers.js";
+import { cookieToken } from "../services/token.service.js";
 
-const ProductsRoutes = Router();
+const productsRouters = Router();
 
-ProductsRoutes.post("/add-product", AddProduct); // seller
-ProductsRoutes.post("/added-products", AddedProducts); // seller
-ProductsRoutes.get("/all-products", AllProducts); // user
-ProductsRoutes.post("/single-product-data", SingleProductData); // user
+productsRouters.post("/add-product", cookieToken, AddProduct); // seller
+productsRouters.post("/added-products", cookieToken, AddedProducts); // seller
+productsRouters.get("/all-products", AllProducts); // user
+productsRouters.post("/single-product-data", SingleProductData); // user
 
-export default ProductsRoutes;
+export default productsRouters;

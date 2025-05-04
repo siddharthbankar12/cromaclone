@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "../style/CreateAccount.css";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../axiosConfig";
 
 const CreateAccount = () => {
   const [newUserData, setNewUserData] = useState({
@@ -29,12 +29,10 @@ const CreateAccount = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await axios.post(
-      "http://localhost:8000/api/v1/auth/register",
-      { newUserData }
-    );
-
     try {
+      const response = await axiosInstance.post("/auth/register", {
+        newUserData,
+      });
       if (
         newUserData.role &&
         newUserData.firstName &&
@@ -67,7 +65,7 @@ const CreateAccount = () => {
         toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error(response.data.message);
+      toast.error(error);
     }
   };
 

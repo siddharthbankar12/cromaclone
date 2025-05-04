@@ -5,11 +5,12 @@ const productSchema = new Schema({
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
   category: { type: String, required: true },
+  brand: { type: String, required: true },
   image: { type: String, required: true },
   description: { type: String, required: true },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
 });
 
-const Product = model("Product", productSchema);
+const Product = model("Products", productSchema);
 
 export default Product;

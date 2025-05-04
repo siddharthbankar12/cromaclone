@@ -1,31 +1,42 @@
 import React, { useEffect } from "react";
 import "../style/SideBar.css";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import axiosInstance from "../axiosConfig";
+import { logout } from "../store/userSlice";
 
 const SideBar = ({ setIsSidebarOpen }) => {
   const route = useNavigate();
+  const dispatch = useDispatch();
   const userData = useSelector((state) => state.user.user);
-  const tokenFromLS = localStorage.getItem("token");
 
   const handleClick = (path) => {
     route(path);
     setIsSidebarOpen(false);
   };
 
-  const LogOutBtn = () => {
-    localStorage.removeItem("token");
-    setIsSidebarOpen(false);
-    toast.success("Logout Successful");
-    route("/");
+  const logOutUser = async () => {
+    try {
+      const response = await axiosInstance.put("/auth/logout");
+      if (response.data.success) {
+        dispatch(logout());
+        toast.success(response.data.message);
+        route("/");
+      } else {
+        toast.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error(error);
+    }
   };
 
   return (
     <div className="sidebar">
       <ul className="btns">
         <li onClick={() => handleClick("/all-products")}>All Products</li>
-        {tokenFromLS && userData?.role === "seller" && (
+        {userData?.role === "seller" && (
           <>
             {" "}
             <li onClick={() => handleClick("/seller/add-product")}>
@@ -37,13 +48,13 @@ const SideBar = ({ setIsSidebarOpen }) => {
           </>
         )}
 
-        {tokenFromLS && userData?.role === "user" && (
+        {userData?.role === "user" && (
           <>
             <li onClick={() => setIsSidebarOpen(false)}>Order History</li>
           </>
         )}
 
-        {tokenFromLS && <li onClick={LogOutBtn}>Logout</li>}
+        {userData?.role && <li onClick={logOutUser}>Logout</li>}
       </ul>
     </div>
   );

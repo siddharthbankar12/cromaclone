@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import "../style/AllProducts.css";
+import axiosInstance from "../axiosConfig";
+import { useNavigate } from "react-router-dom";
 
 const AllProducts = () => {
-  const route = useNavigate();
-
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const route = useNavigate();
 
   const getAllProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        "http://localhost:8000/api/v1/product/all-products"
-      );
+      const response = await axiosInstance.get("/product/all-products");
       if (response.data.success) {
         setAllProducts(response.data.products);
       }
@@ -43,19 +40,19 @@ const AllProducts = () => {
         <div className="category-filter">
           <div className="categories">
             <p>Categories</p>
-            <span className="material-symbols-outlined">
+            <span className="material-symbols-outlined mso">
               keyboard_arrow_down
             </span>
           </div>
           <div className="brand">
             <p>Brand</p>
-            <span className="material-symbols-outlined">
+            <span className="material-symbols-outlined mso">
               keyboard_arrow_down
             </span>
           </div>
           <div className="price">
             <p>Price</p>
-            <span className="material-symbols-outlined">
+            <span className="material-symbols-outlined mso">
               keyboard_arrow_down
             </span>
           </div>
@@ -66,7 +63,7 @@ const AllProducts = () => {
             <p>
               Sort By <b>Featured</b>
             </p>
-            <span className="material-symbols-outlined">
+            <span className="material-symbols-outlined mso">
               keyboard_arrow_down
             </span>
           </div>
@@ -78,14 +75,22 @@ const AllProducts = () => {
           <p>Loading products...</p>
         ) : allProducts.length > 0 ? (
           allProducts.map((product) => (
-            <div className="single-product-container" key={product._id}>
+            <div
+              className="single-product-container"
+              key={product._id}
+              onClick={() =>
+                route(`/all-products/single-product/${product._id}`)
+              }
+            >
               <div className="all-product-image">
                 <img src={product.image} alt={product.name} />
                 <i className="fa-regular fa-heart"></i>
               </div>
 
               <div className="product-name-price-delivery">
-                <div className="product-name">{product.name}</div>
+                <div className="product-name">
+                  {product.name} - {product.brand}
+                </div>
 
                 <div className="product-price">
                   <div className="price">
@@ -102,7 +107,7 @@ const AllProducts = () => {
                 </div>
 
                 <div className="product-delivery-date">
-                  <span className="material-symbols-outlined">
+                  <span className="material-symbols-outlined mso">
                     delivery_truck_speed
                   </span>
                   <p>Standard Delivery by Mon, 20th Jan</p>
@@ -117,11 +122,11 @@ const AllProducts = () => {
 
       <div className="sort-filter-mobile">
         <div className="bottom-sort">
-          <span className="material-symbols-outlined"> sort </span>
+          <span className="material-symbols-outlined mso"> sort </span>
           <p>Sort</p>
         </div>
         <div className="bottom-filter">
-          <span className="material-symbols-outlined"> filter_list </span>
+          <span className="material-symbols-outlined mso"> filter_list </span>
           <p>Filter</p>
         </div>
       </div>

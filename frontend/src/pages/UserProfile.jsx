@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "../style/UserProfile.css";
-import axios from "axios";
+
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axiosInstance from "../axiosConfig";
 
 const UserProfile = () => {
   const userData = useSelector((state) => state.user.user);
@@ -26,12 +27,9 @@ const UserProfile = () => {
 
   const [loading, setLoading] = useState(true);
 
-  async function getCurrentUserData(token) {
+  async function getCurrentUserData() {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/v1/auth/get-current-user",
-        { token }
-      );
+      const response = await axiosInstance.post("/auth/get-current-user");
 
       if (response.data.success) {
         dispatch(login(response.data.userData));
@@ -45,18 +43,15 @@ const UserProfile = () => {
     }
   }
 
-  async function saveCurrentUserData(token) {
+  async function saveCurrentUserData() {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/v1/auth/update-current-user",
-        { formData, token }
-      );
+      const response = await axiosInstance.post("/auth/update-current-user", {
+        formData,
+      });
 
       if (response.data.success) {
-        dispatch(login(response.data.userData));
         toast.success(response.data.message);
       } else {
-        localStorage.removeItem("token");
         setLoading(false);
       }
     } catch (error) {
@@ -66,13 +61,12 @@ const UserProfile = () => {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      getCurrentUserData(JSON.parse(token));
+    if (!userData) {
+      getCurrentUserData();
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [userData]);
 
   useEffect(() => {
     if (userData) {
@@ -128,9 +122,20 @@ const UserProfile = () => {
 
   console.log(formData);
 
-  const logOutUser = () => {
-    dispatch(logout());
-    route("/");
+  const logOutUser = async () => {
+    try {
+      const response = await axiosInstance.put("/auth/logout");
+      if (response.data.success) {
+        dispatch(logout());
+        toast.success(response.data.message);
+        route("/");
+      } else {
+        toast.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error(error);
+    }
   };
 
   if (loading) {

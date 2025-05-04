@@ -1,42 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../style/LandingPage.css";
 import Footer from "../components/Footer";
+import { imagesSlider, imagesCategory, brandLogos } from "../imagePaths.js";
 
 const LandingPage = () => {
-  const imagesSlider = [
-    "/assets/imageSlider_landingPage/1.jpg",
-    "/assets/imageSlider_landingPage/2.jpg",
-    "/assets/imageSlider_landingPage/3.jpg",
-    "/assets/imageSlider_landingPage/4.jpg",
-    "/assets/imageSlider_landingPage/5.jpg",
-    "/assets/imageSlider_landingPage/6.jpg",
-    "/assets/imageSlider_landingPage/7.jpg",
-    "/assets/imageSlider_landingPage/8.jpg",
-  ];
-
-  const imagesCategory = [
-    "/assets/category_images/Accessories_kefony.png",
-    "/assets/category_images/Air_Conditioner_a4hg1z.png",
-    "/assets/category_images/Cameras_a6n2jy.png",
-    "/assets/category_images/D_Geyser_i5frr1.png",
-    "assets/category_images/Fans_ecnoxj.png",
-    "/assets/category_images/Grooming_vvxudd.png",
-    "/assets/category_images/Head_set_xjj934.png",
-    "/assets/category_images/Home_theatres_kpwvft.png",
-    "/assets/category_images/Kitchen_Appliances_yhzevo.png",
-    "/assets/category_images/Laptops_pzewpv.png",
-    "/assets/category_images/LP_Cooler_ak2tjf.png",
-    "/assets/category_images/Microwaves_otd6qq.png",
-    "/assets/category_images/Mobile_sdtrdf.png",
-    "/assets/category_images/Ref_biysg7.png",
-    "/assets/category_images/Speaker_g2mbgn.png",
-    "/assets/category_images/Tablets_yzod4f.png",
-    "/assets/category_images/TV_vdemgc.png",
-    "/assets/category_images/Washing_machines_izyrnd.png",
-    "/assets/category_images/Water_Purifiers_Desktop_phji31.png",
-    "/assets/category_images/Wearables_iunu7h.png",
-  ];
-
   const imagesToShow = 10;
   const imagesToMove = 2;
 
@@ -266,26 +233,9 @@ const LandingPage = () => {
 
         <div className="logoWindow">
           <div className="brand-container">
-            {[
-              "1_maspxu",
-              "2_bki1il",
-              "3_voajbz",
-              "4_wmg1qj",
-              "1_maspxu",
-              "5_pjm9wd",
-              "6_cruwwo",
-              "7_uvvozm",
-              "8_dvwyxd",
-              "9_rqohp4",
-              "10_iobxyi",
-              "11_tc1idk",
-              "12_hfsle3",
-            ].map((logo, index) => (
+            {brandLogos.map((logoPath, index) => (
               <div className="brand-images" key={index}>
-                <img
-                  src={`./assets/brand_logos/${logo}.png`}
-                  alt={`Logo ${index + 1}`}
-                />
+                <img src={logoPath} alt={`Logo ${index + 1}`} />
               </div>
             ))}
           </div>

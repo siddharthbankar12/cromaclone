@@ -1,9 +1,9 @@
-import axios from "axios";
 import "../style/AddProduct.css";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../axiosConfig";
 
 const AddProduct = () => {
   const userData = useSelector((state) => state.user.user);
@@ -11,20 +11,76 @@ const AddProduct = () => {
     name: "",
     price: "",
     quantity: "",
-    category: "computer",
+    category: "Computer",
     image: "",
     description: "",
+    brand: "",
   });
+  const [isOtherBrand, setIsOtherBrand] = useState(false);
   const route = useNavigate();
   console.log(userData);
-  const token = localStorage.getItem("token");
+
+  const categoryList = [
+    "Select category",
+    "Accessories",
+    "Air Conditioners",
+    "Cameras",
+    "Geysers",
+    "Fans",
+    "Grooming",
+    "Headphones & Earphones",
+    "Home Theaters & Soundbars",
+    "Kitchen Appliances",
+    "Laptops",
+    "Coolers",
+    "Microwaves",
+    "Mobiles",
+    "Refrigerators",
+    "Speakers & Media Players",
+    "Tablets",
+    "Televisions",
+    "Washing Machines",
+    "Water Purifiers",
+    "Wearables",
+  ];
+
+  const brandList = [
+    "Select brand",
+    "PHILIPS",
+    "SAMSUNG",
+    "oppo",
+    "Lenovo",
+    "hp",
+    "Haier",
+    "DELL",
+    "croma",
+    "mi",
+    "vivo",
+    "JBL",
+    "BOSE",
+    "Another",
+  ];
 
   const handleChange = (event) => {
-    setProductData({ ...productData, [event.target.name]: event.target.value });
+    const { name, value } = event.target;
+    setProductData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleChangeCategory = (event) => {
     setProductData({ ...productData, category: event.target.value });
+  };
+
+  const handleChangeBrand = (event) => {
+    const selectedBrand = event.target.value;
+    setProductData({ ...productData, brand: selectedBrand });
+    if (selectedBrand === "Another") {
+      setIsOtherBrand(true);
+    } else {
+      setIsOtherBrand(false);
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -34,6 +90,12 @@ const AddProduct = () => {
       return toast.error("Please login.");
     }
 
+    // If "Another" is selected, use the custom brand
+    const finalBrand =
+      productData.brand === "Another"
+        ? productData.customBrand
+        : productData.brand;
+
     try {
       if (
         productData.name &&
@@ -41,24 +103,24 @@ const AddProduct = () => {
         productData.quantity &&
         productData.category &&
         productData.image &&
-        productData.description
+        productData.description &&
+        (productData.brand !== "Another" || productData.customBrand)
       ) {
-        const response = await axios.post(
-          "http://localhost:8000/api/v1/product/add-product",
-          {
-            productData,
-            userId: userData.userId,
-          }
-        );
+        const response = await axiosInstance.post("/product/add-product", {
+          productData: { ...productData, brand: finalBrand },
+          userId: userData.userId,
+        });
         if (response.data.success === true) {
           toast.success(response.data.message);
           setProductData({
             name: "",
             price: "",
             quantity: "",
-            category: "computer",
+            category: "Computer",
             image: "",
             description: "",
+            brand: "",
+            customBrand: "",
           });
           route("/seller/added-products");
         } else {
@@ -74,13 +136,11 @@ const AddProduct = () => {
   };
 
   useEffect(() => {
-    if (!userData || (userData && userData?.role !== "seller")) {
+    if (userData && userData?.role !== "seller") {
       toast.error("You don't have access for this page.");
       route("/");
     }
   }, [userData]);
-
-  console.log(userData?.role);
 
   return (
     <div className="add-product-container">
@@ -127,15 +187,42 @@ const AddProduct = () => {
           value={productData.category}
           className="add-product-select"
         >
-          <option value="computer">Computer</option>
-          <option value="laptops">Laptops</option>
-          <option value="mobiles">Mobiles</option>
-          <option value="ac">AC</option>
-          <option value="cpu">CPU</option>
-          <option value="monitor">Monitor</option>
-          <option value="pad">Pad</option>
-          <option value="accessories">Accessories</option>
+          {categoryList.map((category, index) => (
+            <option key={index} value={category}>
+              {category}
+            </option>
+          ))}
         </select>
+
+        <label htmlFor="brand">Brand :</label>
+        <select
+          id="brand"
+          onChange={handleChangeBrand}
+          value={productData.brand}
+          className="add-product-select"
+        >
+          {brandList.map((brand, index) => (
+            <option key={index} value={brand}>
+              {brand}
+            </option>
+          ))}
+        </select>
+
+        {isOtherBrand && (
+          <>
+            <label htmlFor="customBrand">Enter Brand Name :</label>
+            <input
+              className="add-product-input"
+              type="text"
+              id="customBrand"
+              name="customBrand"
+              onChange={handleChange}
+              placeholder="Enter your custom brand"
+              required
+            />
+          </>
+        )}
+
         <label htmlFor="image">Product Image URL :</label>
         <input
           className="add-product-input"
