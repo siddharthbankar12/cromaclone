@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import axiosInstance from "../axiosConfig";
 import "../style/SingleProduct.css";
@@ -11,6 +11,8 @@ const SingleProduct = () => {
   const [loading, setLoading] = useState(false);
   const [cartButtonDisable, setCartButtonDisable] = useState(false);
   const userData = useSelector((state) => state.user.user);
+  const location = useSelector((state) => state.user.location);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,7 +50,7 @@ const SingleProduct = () => {
         userId: userData.userId,
       });
       if (response.data.success) {
-        toast.success(response.data.message);
+        // toast.success(response.data.message);
         navigate("/cart");
       }
     } catch (error) {
@@ -78,7 +80,7 @@ const SingleProduct = () => {
               <img src={singleProduct.image} alt={singleProduct.name} />
             </div>
             <div className="product-details">
-              <div className="product-name">
+              <div className="single-product-name">
                 <p>{singleProduct.name}</p>
               </div>
 
@@ -113,13 +115,19 @@ const SingleProduct = () => {
                 </div>
                 <div className="right-add">
                   <p>
-                    Delivery at: <span>Mumbai, 400049 </span>.
+                    Delivery at :{" "}
+                    <span>
+                      {location.userCity}, {location.postalCode}{" "}
+                    </span>
+                    .
                   </p>
                   <p>Will be delivered by 20 January 2025.</p>
                 </div>
               </div>
 
               <div className="product-feature">
+                <p>Brand Name : {singleProduct.brand}</p>
+                <br />
                 <p>Description</p>
                 <ul>
                   {singleProduct.description?.split(",").map((desc, index) => (

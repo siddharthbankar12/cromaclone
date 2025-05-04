@@ -6,15 +6,20 @@ import UserProfile from "./pages/UserProfile";
 import CreateAccount from "./pages/CreateAccount";
 import AddProduct from "./pages/AddProduct";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "./store/userSlice";
+import { login, setLocation } from "./store/userSlice";
 import AddedProducts from "./pages/AddedProducts";
 import AllProducts from "./pages/AllProducts";
 import axiosInstance from "./axiosConfig";
 import SingleProduct from "./pages/SingleProduct";
+import axios from "axios";
+import Cart from "./pages/Cart";
+import OrderHistory from "./pages/OrderHistory";
+import Footer from "./components/Footer";
 
 const App = () => {
   const userData = useSelector((state) => state.user.user);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   const dispatch = useDispatch();
 
   async function getCurrentUserData() {
@@ -28,6 +33,26 @@ const App = () => {
       console.log(error);
     }
   }
+
+  const getUserLocation = async () => {
+    try {
+      const response = await axios.get("https://ipinfo.io?d66a8f0420021a");
+      const { city, postal } = response.data;
+
+      const locationData = {
+        userCity: city,
+        postalCode: postal,
+      };
+
+      dispatch(setLocation(locationData));
+    } catch (error) {
+      console.error("Error fetching user location:", error);
+    }
+  };
+
+  useEffect(() => {
+    getUserLocation();
+  }, []);
 
   useEffect(() => {
     if (!userData) {
@@ -54,8 +79,11 @@ const App = () => {
             path="/all-products/single-product/:id"
             element={<SingleProduct />}
           />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/order-history" element={<OrderHistory />} />
         </Routes>
       </div>
+      <Footer />
     </>
   );
 };

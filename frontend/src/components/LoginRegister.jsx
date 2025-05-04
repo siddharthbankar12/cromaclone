@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../style/LoginRegister.css";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../store/userSlice";
 import { toast } from "react-toastify";
 import axiosInstance from "../axiosConfig";
@@ -38,9 +38,15 @@ const LoginRegisterPage = ({ closeModal }) => {
         toast.error(responseUser.data.message);
       }
     } catch (error) {
-      toast.error(
-        error.responseUser.data.message || error.responseUser.data.error
-      );
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
     }
   };
 

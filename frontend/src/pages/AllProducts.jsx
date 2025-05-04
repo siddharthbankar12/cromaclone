@@ -88,7 +88,7 @@ const AllProducts = () => {
               </div>
 
               <div className="product-name-price-delivery">
-                <div className="product-name">
+                <div className="product-namee">
                   {product.name} - {product.brand}
                 </div>
 

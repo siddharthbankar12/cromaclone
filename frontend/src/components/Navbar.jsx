@@ -2,18 +2,15 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginRegisterPage from "./LoginRegister";
 import SideBar from "./SideBar";
-import axios from "axios";
 import { useSelector } from "react-redux";
 
 const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
   const route = useNavigate();
   const sidebarRef = useRef(null);
   const userData = useSelector((state) => state.user.user);
+  const cartCount = useSelector((state) => state.user.cartCount);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userLocation, setUserLocation] = useState({
-    userCity: "",
-    postalCode: "",
-  });
+  const location = useSelector((state) => state.user.location);
 
   const LoginRegister = () => {
     if (userData) {
@@ -27,23 +24,9 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
     setIsModalOpen(false);
   };
 
-  const getUserLocation = async () => {
-    try {
-      const response = await axios.get("https://ipinfo.io?d66a8f0420021a");
-      const { city, postal } = response.data;
-      setUserLocation((prevState) => ({
-        ...prevState,
-        userCity: city,
-        postalCode: postal,
-      }));
-    } catch (error) {
-      console.error("Error fetching user location:", error);
-    }
+  const UserCart = () => {
+    route("/cart");
   };
-
-  useEffect(() => {
-    getUserLocation();
-  }, []);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -118,7 +101,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
               location_on
             </span>
             <p>
-              {userLocation.userCity}, {userLocation.postalCode}
+              {location.userCity}, {location.postalCode}
             </p>
             <span
               className="material-symbols-outlined"
@@ -134,7 +117,8 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
             </span>
           </div>
 
-          <div className="cart">
+          <div className="cart" onClick={UserCart}>
+            <p className="cart-count-nav">{cartCount}</p>
             <span className="material-symbols-outlined" aria-label="Cart">
               shopping_cart
             </span>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import "../style/AddedProducts.css";
 import axiosInstance from "../axiosConfig";

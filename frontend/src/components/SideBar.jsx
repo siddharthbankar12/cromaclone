@@ -50,7 +50,7 @@ const SideBar = ({ setIsSidebarOpen }) => {
 
         {userData?.role === "user" && (
           <>
-            <li onClick={() => setIsSidebarOpen(false)}>Order History</li>
+            <li onClick={() => handleClick("/order-history")}>Order History</li>
           </>
         )}
 

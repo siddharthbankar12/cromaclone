@@ -245,8 +245,6 @@ const LandingPage = () => {
           &#10095;
         </button>
       </div>
-
-      <Footer />
     </div>
   );
 };
