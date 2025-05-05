@@ -42,7 +42,12 @@ const SingleProduct = () => {
     try {
       setCartButtonDisable(true);
       if (!userData?.userId) {
+        setCartButtonDisable(false);
         return toast.error("Please login to add product to cart");
+      }
+
+      if (userData?.role !== "user") {
+        return toast.error("You don't have access cart option");
       }
 
       const response = await axiosInstance.post("/user/add-to-cart", {
@@ -50,7 +55,7 @@ const SingleProduct = () => {
         userId: userData.userId,
       });
       if (response.data.success) {
-        // toast.success(response.data.message);
+        toast.success(response.data.message);
         navigate("/cart");
       }
     } catch (error) {
@@ -59,6 +64,8 @@ const SingleProduct = () => {
       setCartButtonDisable(false);
     }
   };
+
+  console.log(userData);
 
   if (loading) return <p>Loading...</p>;
   if (!singleProduct) return <p>No product found.</p>;
@@ -140,29 +147,31 @@ const SingleProduct = () => {
         </div>
       </div>
 
-      <div className="buy-option">
-        <div className="buy-container">
-          <div className="left-side-buy">
-            <div className="pro-img">
-              <img src={singleProduct.image} alt={singleProduct.name} />
+      {userData?.role === "user" && (
+        <div className="buy-option">
+          <div className="buy-container">
+            <div className="left-side-buy">
+              <div className="pro-img">
+                <img src={singleProduct.image} alt={singleProduct.name} />
+              </div>
+              <div className="pro-detail">
+                <p>{singleProduct.name}</p>
+                <p>₹ {singleProduct.price.toLocaleString("en-IN")}</p>
+              </div>
             </div>
-            <div className="pro-detail">
-              <p>{singleProduct.name}</p>
-              <p>₹ {singleProduct.price.toLocaleString("en-IN")}</p>
+            <div className="right-side-buy">
+              <button className="buy-button">Buy Now</button>
+              <button
+                className="addCart-button"
+                onClick={addToCart}
+                disabled={cartButtonDisable}
+              >
+                {cartButtonDisable ? "Adding..." : "Add to Cart"}
+              </button>
             </div>
-          </div>
-          <div className="right-side-buy">
-            <button className="buy-button">Buy Now</button>
-            <button
-              className="addCart-button"
-              onClick={addToCart}
-              disabled={cartButtonDisable}
-            >
-              {cartButtonDisable ? "Adding..." : "Add to Cart"}
-            </button>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

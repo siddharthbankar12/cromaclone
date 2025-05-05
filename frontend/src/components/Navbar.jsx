@@ -58,7 +58,6 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
             >
               {isSidebarOpen ? "close" : "menu"}
             </span>
-            <p>{isSidebarOpen ? "Menu" : "Menu"}</p>
           </div>
 
           <div

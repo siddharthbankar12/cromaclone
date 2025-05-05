@@ -15,6 +15,7 @@ import axios from "axios";
 import Cart from "./pages/Cart";
 import OrderHistory from "./pages/OrderHistory";
 import Footer from "./components/Footer";
+import ManageProducts from "./pages/ManageProducts";
 
 const App = () => {
   const userData = useSelector((state) => state.user.user);
@@ -81,6 +82,7 @@ const App = () => {
           />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order-history" element={<OrderHistory />} />
+          <Route path="/admin/manage-products" element={<ManageProducts />} />
         </Routes>
       </div>
       <Footer />

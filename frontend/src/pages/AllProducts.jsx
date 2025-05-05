@@ -114,11 +114,17 @@ const AllProducts = () => {
                   </div>
 
                   <div className="save-price">
-                    <p>₹{product.price + 5000}</p>
-                    <p>(Save ₹5000)</p>
+                    <p>₹{product.originalPrice}</p>
+                    <p>
+                      (Save ₹
+                      {product.originalPrice && product.price
+                        ? (product.originalPrice - product.price).toFixed(2)
+                        : "N/A"}
+                      )
+                    </p>
                   </div>
                   <div className="price-off">
-                    <p>6% Off</p>
+                    <p>{product.discountPercentage}% Off</p>
                   </div>
                 </div>
 
