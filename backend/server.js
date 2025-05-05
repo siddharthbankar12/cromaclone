@@ -14,7 +14,7 @@ app.use(express.json());
 // https://cromaclone.vercel.app/
 
 const corsOptions = {
-  origin: ["https://cromaclone.vercel.app/"],
+  origin: ["https://cromaclone.vercel.app"],
   credentials: true,
 };
 app.use(cors(corsOptions));
