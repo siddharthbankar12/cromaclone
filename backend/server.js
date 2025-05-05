@@ -14,8 +14,6 @@ const corsOptions = { origin: ["http://localhost:3000"], credentials: true };
 app.use(cors(corsOptions));
 app.use(cookieParser());
 
-const port = 8000;
-
 app.get("/", (req, res) => {
   return res.send("Welcome to backend server");
 });
@@ -26,4 +24,4 @@ mongoose.connect(process.env.CROMADB).then(() => {
   console.log("MongoDB Connected");
 });
 
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+app.listen(8000, () => console.log(`Server is running on port ${port}`));
