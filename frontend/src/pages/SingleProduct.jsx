@@ -110,9 +110,15 @@ const SingleProduct = () => {
                 </div>
                 <div className="product-saves-amount">
                   <p>
-                    MRP ₹{(singleProduct.price + 5000).toLocaleString("en-IN")}
+                    MRP ₹{singleProduct.originalPrice.toLocaleString("en-IN")}
                   </p>
-                  <p>(Save ₹5,000.00)</p>
+                  <p>
+                    (Save ₹
+                    {(
+                      singleProduct.originalPrice - singleProduct.price
+                    ).toLocaleString("en-IN")}
+                    )
+                  </p>
                 </div>
               </div>
 

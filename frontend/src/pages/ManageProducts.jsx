@@ -159,9 +159,10 @@ const ManageProducts = () => {
                     </div>
                   </td>
                   <td>
-                    {product.price} / {product.discountPercentage}%
+                    {product.price.toLocaleString("en-IN")} /{" "}
+                    {product.discountPercentage}%
                   </td>
-                  <td>{product.originalPrice}</td>
+                  <td>{product.originalPrice.toLocaleString("en-IN")}</td>
                   <td>
                     <input
                       type="number"

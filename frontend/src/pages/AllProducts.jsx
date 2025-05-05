@@ -110,15 +110,17 @@ const AllProducts = () => {
 
                 <div className="product-price">
                   <div className="price">
-                    <p>₹{product.price}</p>
+                    <p>₹{product.price.toLocaleString("en-IN")}</p>
                   </div>
 
                   <div className="save-price">
-                    <p>₹{product.originalPrice}</p>
+                    <p>₹{product.originalPrice.toLocaleString("en-IN")}</p>
                     <p>
                       (Save ₹
                       {product.originalPrice && product.price
-                        ? (product.originalPrice - product.price).toFixed(2)
+                        ? (product.originalPrice - product.price)
+                            .toFixed(2)
+                            .toLocaleString("en-IN")
                         : "N/A"}
                       )
                     </p>
