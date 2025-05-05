@@ -35,9 +35,9 @@ const SideBar = ({ setIsSidebarOpen }) => {
   return (
     <div className="sidebar">
       <ul className="btns">
+        <li onClick={() => handleClick("/all-products")}>All Products</li>
         {userData?.role === "seller" && (
           <>
-            <li onClick={() => handleClick("/all-products")}>All Products</li>
             <li onClick={() => handleClick("/seller/add-product")}>
               Add Product
             </li>
@@ -49,7 +49,6 @@ const SideBar = ({ setIsSidebarOpen }) => {
 
         {userData?.role === "user" && (
           <>
-            <li onClick={() => handleClick("/all-products")}>All Products</li>
             <li onClick={() => handleClick("/order-history")}>Order History</li>
           </>
         )}
