@@ -24,4 +24,4 @@ mongoose.connect(process.env.CROMADB).then(() => {
   console.log("MongoDB Connected");
 });
 
-app.listen(8000, () => console.log(`Server is running on port ${port}`));
+app.listen(8000, () => console.log(`Server is running on port 8000`));
