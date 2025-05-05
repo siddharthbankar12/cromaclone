@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../style/AllProducts.css";
-import axiosInstance from "../axiosConfig";
+import axiosInstance from "../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
+import { categoryList, brandList } from "../utils/BrandAndCategory";
 
 const AllProducts = () => {
   const [allProducts, setAllProducts] = useState([]);
@@ -38,31 +39,46 @@ const AllProducts = () => {
 
       <div className="products-filter">
         <div className="category-filter">
-          <div className="categories">
-            <p>Categories</p>
+          {/* Category */}
+          <div className="dropdown">
+            <select name="category" id="category">
+              <option value="">Category</option>
+              {categoryList.map((name, idx) => (
+                <option value={name} key={idx + 1}>
+                  {name}
+                </option>
+              ))}
+            </select>
             <span className="material-symbols-outlined mso">
               keyboard_arrow_down
             </span>
           </div>
-          <div className="brand">
-            <p>Brand</p>
-            <span className="material-symbols-outlined mso">
-              keyboard_arrow_down
-            </span>
-          </div>
-          <div className="price">
-            <p>Price</p>
-            <span className="material-symbols-outlined mso">
-              keyboard_arrow_down
-            </span>
-          </div>
-        </div>
 
-        <div className="amount-sort">
-          <div className="featured-amount">
-            <p>
-              Sort By <b>Featured</b>
-            </p>
+          {/* Brand */}
+          <div className="dropdown">
+            <select name="brand" id="brand">
+              <option value="">Brand</option>
+              {brandList.map((brand, idx) => (
+                <option value={brand} key={idx + 1}>
+                  {brand}
+                </option>
+              ))}
+            </select>
+            <span className="material-symbols-outlined mso">
+              keyboard_arrow_down
+            </span>
+          </div>
+
+          {/* Price */}
+          <div className="dropdown">
+            <select name="price" id="price">
+              <option value="">Price</option>
+              <option value="0-999">Below ₹1000</option>
+              <option value="1000-5000">₹1000 - ₹5000</option>
+              <option value="5000-25000">₹5000 - ₹25000</option>
+              <option value="25000-50000">₹25000 - ₹50000</option>
+              <option value="50000+">Above ₹50000</option>
+            </select>
             <span className="material-symbols-outlined mso">
               keyboard_arrow_down
             </span>
@@ -118,17 +134,6 @@ const AllProducts = () => {
         ) : (
           <p>No products found.</p>
         )}
-      </div>
-
-      <div className="sort-filter-mobile">
-        <div className="bottom-sort">
-          <span className="material-symbols-outlined mso"> sort </span>
-          <p>Sort</p>
-        </div>
-        <div className="bottom-filter">
-          <span className="material-symbols-outlined mso"> filter_list </span>
-          <p>Filter</p>
-        </div>
       </div>
     </div>
   );

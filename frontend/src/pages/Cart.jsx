@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../axiosConfig";
+import axiosInstance from "../utils/axiosConfig";
 import "../style/Cart.css";
 import { setCartCount } from "../store/userSlice";
 
@@ -81,6 +81,7 @@ const Cart = () => {
       });
       if (response.data.success) {
         toast.success(response.data.message);
+        dispatch(setCartCount(0));
         router("/order-history");
       }
     } catch (error) {

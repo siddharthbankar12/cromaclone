@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axiosInstance from "../axiosConfig";
+import axiosInstance from "../utils/axiosConfig";
 
 const UserProfile = () => {
   const userData = useSelector((state) => state.user.user);

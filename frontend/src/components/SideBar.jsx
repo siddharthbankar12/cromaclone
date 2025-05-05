@@ -3,7 +3,7 @@ import "../style/SideBar.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import axiosInstance from "../axiosConfig";
+import axiosInstance from "../utils/axiosConfig";
 import { logout } from "../store/userSlice";
 
 const SideBar = ({ setIsSidebarOpen }) => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import axiosInstance from "../axiosConfig";
+import axiosInstance from "../utils/axiosConfig";
 import "../style/SingleProduct.css";
 
 const SingleProduct = () => {

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../store/userSlice";
 import { toast } from "react-toastify";
-import axiosInstance from "../axiosConfig";
+import axiosInstance from "../utils/axiosConfig";
 
 const LoginRegisterPage = ({ closeModal }) => {
   const route = useNavigate();

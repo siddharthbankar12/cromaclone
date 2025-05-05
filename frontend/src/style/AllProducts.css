@@ -49,24 +49,6 @@
       padding: 8px 12px;
     }
   }
-
-  & .amount-sort {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: end;
-    gap: 15px;
-
-    & div {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      border-radius: 8px;
-      background-color: #363636;
-      padding: 8px 12px;
-    }
-  }
 }
 
 .mso {
@@ -184,16 +166,12 @@
   .products-filter {
     & .category-filter {
       width: 100%;
-      flex-wrap: nowrap;
-      overflow-x: scroll;
+      /* flex-wrap: nowrap; */
+      /* overflow-x: scroll; */
 
       & .all-filters {
         display: none;
       }
-    }
-
-    & .amount-sort {
-      display: none;
     }
   }
 
@@ -290,5 +268,106 @@
 @media (min-width: 2351px) {
   .products-list {
     width: 50%;
+  }
+}
+
+.dropdown {
+  position: relative;
+  background-color: #363636;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+}
+
+.dropdown select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 16px;
+  font-family: inherit;
+  padding-right: 24px;
+  cursor: pointer;
+}
+
+.dropdown .material-symbols-outlined {
+  position: absolute;
+  right: 12px;
+  pointer-events: none;
+  color: white;
+  font-size: 20px;
+}
+
+@media (max-width: 1200px) {
+  .products-filter {
+    display: block;
+    margin: 20px 0;
+  }
+
+  .category-filter,
+  .amount-sort {
+    width: 100%;
+    margin: 15px 0;
+  }
+
+  .category-filter .dropdown {
+    /* width: 100%; */
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dropdown select {
+    font-size: 14px;
+  }
+
+  .dropdown .material-symbols-outlined {
+    font-size: 18px;
+  }
+
+  .category-filter .dropdown {
+    padding: 10px 15px;
+  }
+
+  .products-filter {
+    /* display: block; */
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .category-filter,
+  .amount-sort {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .dropdown select {
+    font-size: 12px;
+  }
+
+  .dropdown .material-symbols-outlined {
+    font-size: 16px;
+  }
+
+  .category-filter .dropdown {
+    padding: 8px 10px;
+  }
+
+  .products-filter {
+    display: block;
+    width: 100%;
+    margin: 15px 0;
+  }
+
+  .category-filter,
+  .amount-sort {
+    width: 100%;
+    margin: 8px 0;
   }
 }

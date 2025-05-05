@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import "../style/AddedProducts.css";
-import axiosInstance from "../axiosConfig";
+import axiosInstance from "../utils/axiosConfig";
 
 const AddedProducts = () => {
   const userData = useSelector((state) => state.user.user);

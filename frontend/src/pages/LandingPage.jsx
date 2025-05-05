@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../style/LandingPage.css";
-import Footer from "../components/Footer";
-import { imagesSlider, imagesCategory, brandLogos } from "../imagePaths.js";
+import { imagesSlider, imagesCategory, brandLogos } from "../utils/imagePaths";
 
 const LandingPage = () => {
   const imagesToShow = 10;

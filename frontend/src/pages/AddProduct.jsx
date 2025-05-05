@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../axiosConfig";
+import axiosInstance from "../utils/axiosConfig";
+import { categoryList, brandList } from "../utils/BrandAndCategory";
 
 const AddProduct = () => {
   const userData = useSelector((state) => state.user.user);
@@ -19,47 +20,6 @@ const AddProduct = () => {
   const [isOtherBrand, setIsOtherBrand] = useState(false);
   const route = useNavigate();
   console.log(userData);
-
-  const categoryList = [
-    "Select category",
-    "Accessories",
-    "Air Conditioners",
-    "Cameras",
-    "Geysers",
-    "Fans",
-    "Grooming",
-    "Headphones & Earphones",
-    "Home Theaters & Soundbars",
-    "Kitchen Appliances",
-    "Laptops",
-    "Coolers",
-    "Microwaves",
-    "Mobiles",
-    "Refrigerators",
-    "Speakers & Media Players",
-    "Tablets",
-    "Televisions",
-    "Washing Machines",
-    "Water Purifiers",
-    "Wearables",
-  ];
-
-  const brandList = [
-    "Select brand",
-    "PHILIPS",
-    "SAMSUNG",
-    "oppo",
-    "Lenovo",
-    "hp",
-    "Haier",
-    "DELL",
-    "croma",
-    "mi",
-    "vivo",
-    "JBL",
-    "BOSE",
-    "Another",
-  ];
 
   const handleChange = (event) => {
     const { name, value } = event.target;

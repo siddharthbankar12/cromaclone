@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../style/CreateAccount.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../axiosConfig";
+import axiosInstance from "../utils/axiosConfig";
 
 const CreateAccount = () => {
   const [newUserData, setNewUserData] = useState({

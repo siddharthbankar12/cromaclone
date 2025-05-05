@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, setLocation } from "./store/userSlice";
 import AddedProducts from "./pages/AddedProducts";
 import AllProducts from "./pages/AllProducts";
-import axiosInstance from "./axiosConfig";
+import axiosInstance from "./utils/axiosConfig";
 import SingleProduct from "./pages/SingleProduct";
 import axios from "axios";
 import Cart from "./pages/Cart";

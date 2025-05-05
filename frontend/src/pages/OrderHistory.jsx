@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "../style/OrderHistory.css";
-import axiosInstance from "../axiosConfig";
+import axiosInstance from "../utils/axiosConfig";
 
 const OrderHistory = () => {
   const userData = useSelector((state) => state.user.user);
