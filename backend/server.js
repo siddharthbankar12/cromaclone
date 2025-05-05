@@ -11,7 +11,7 @@ dotenv.config();
 app.use(express.json());
 
 // "http://localhost:3000"
-// https://cromaclone.vercel.app/
+// https://cromaclone.vercel.app
 
 const corsOptions = {
   origin: ["https://cromaclone.vercel.app"],
