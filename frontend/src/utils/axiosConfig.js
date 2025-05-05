@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000/api/v1",
-  // https://cromaclonebackend.onrender.com
+  baseURL: "https://cromaclone.onrender.com",
+  // https://cromaclone.onrender.com
   // http://localhost:8000/api/v1
   withCredentials: true,
 });
