@@ -47,7 +47,7 @@ const AllProducts = () => {
 
   // Update filters based on URL query parameters
   useEffect(() => {
-    const queryParams = new  (location.search);
+    const queryParams = new URLSearchParams(location.search);
     setFilters({
       category: queryParams.get("category") || "",
       brand: queryParams.get("brand") || "",
