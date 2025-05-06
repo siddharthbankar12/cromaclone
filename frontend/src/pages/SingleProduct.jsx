@@ -22,7 +22,6 @@ const SingleProduct = () => {
   const getSingleProductData = async () => {
     try {
       setLoading(true);
-      await new Promise((res) => setTimeout(res, 2500));
       const response = await axiosInstance.post(
         "/product/single-product-data",
         {

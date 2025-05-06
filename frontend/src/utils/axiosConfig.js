@@ -4,7 +4,7 @@ import axios from "axios";
 // http://localhost:8000/api/v1
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000/api/v1",
+  baseURL: "https://cromaclone.onrender.com/api/v1",
   withCredentials: true,
 });
 
