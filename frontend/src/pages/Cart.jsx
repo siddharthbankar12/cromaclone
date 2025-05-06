@@ -14,7 +14,7 @@ const Cart = () => {
   const [loading, setLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
-  const router = useNavigate();
+  const route = useNavigate();
   const dispatch = useDispatch();
 
   const getCartProducts = async () => {
@@ -82,7 +82,7 @@ const Cart = () => {
       if (response.data.success) {
         toast.success(response.data.message);
         dispatch(setCartCount(0));
-        router("/order-history");
+        route("/order-history");
       }
     } catch (error) {
       console.log(error);
@@ -101,7 +101,7 @@ const Cart = () => {
     <>
       <h1 className="cartHead">Your Cart</h1>
       {loading ? (
-        <h1 className="cart-loading">Loading...</h1>
+        <div className="loader"></div>
       ) : (
         <div className="cart-container">
           <div className="cart-products">

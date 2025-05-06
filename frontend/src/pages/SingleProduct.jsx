@@ -22,6 +22,7 @@ const SingleProduct = () => {
   const getSingleProductData = async () => {
     try {
       setLoading(true);
+      await new Promise((res) => setTimeout(res, 2500));
       const response = await axiosInstance.post(
         "/product/single-product-data",
         {
@@ -67,7 +68,7 @@ const SingleProduct = () => {
 
   console.log(userData);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <div className="loader"></div>;
   if (!singleProduct) return <p>No product found.</p>;
 
   return (

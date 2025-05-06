@@ -12,6 +12,7 @@ const AllProducts = () => {
   const getAllProducts = async () => {
     try {
       setLoading(true);
+
       const response = await axiosInstance.get("/product/all-products");
       if (response.data.success) {
         setAllProducts(response.data.products);
@@ -88,8 +89,10 @@ const AllProducts = () => {
 
       <div className="list-of-products">
         {loading ? (
-          <p>Loading products...</p>
-        ) : allProducts.length > 0 ? (
+          <div className="loader"></div>
+        ) : allProducts.length === 0 ? (
+          <p>No products found.</p>
+        ) : (
           allProducts.map((product) => (
             <div
               className="single-product-container"
@@ -139,8 +142,6 @@ const AllProducts = () => {
               </div>
             </div>
           ))
-        ) : (
-          <p>No products found.</p>
         )}
       </div>
     </div>

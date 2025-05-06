@@ -7,8 +7,11 @@ import axiosInstance from "../utils/axiosConfig";
 const AddedProducts = () => {
   const userData = useSelector((state) => state.user.user);
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getAddedProducts = async () => {
+    setLoading(true);
+
     if (userData?.userId && userData.role === "seller") {
       try {
         const response = await axiosInstance.post("/product/added-products", {
@@ -19,6 +22,8 @@ const AddedProducts = () => {
         }
       } catch (error) {
         toast.error("Failed to fetch products.");
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -35,7 +40,9 @@ const AddedProducts = () => {
     <div className="added-products-containerr">
       <h1 className="added-products-titlee">Your Added Products</h1>
       <div className="products-flexboxx">
-        {products.length > 0 ? (
+        {loading ? (
+          <div className="loader"></div>
+        ) : products.length > 0 ? (
           products.map((product) => (
             <div key={product._id} className="product-cardd">
               <img
@@ -59,7 +66,7 @@ const AddedProducts = () => {
             </div>
           ))
         ) : (
-          <p className="loading-textt">Loading...</p>
+          <p>No products found.</p>
         )}
       </div>
     </div>

@@ -33,7 +33,7 @@ const OrderHistory = () => {
   return (
     <>
       {loading ? (
-        <h1 className="loading">Loading...</h1>
+        <div className="loader"></div>
       ) : (
         <div className="order-container">
           <h2 className="order-title">Order History</h2>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import LoginRegisterPage from "./LoginRegister";
 import SideBar from "./SideBar";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
   const route = useNavigate();
@@ -25,7 +26,13 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
   };
 
   const UserCart = () => {
-    route("/cart");
+    if (userData?.role === "admin" || userData?.role === "seller") {
+      toast.error("You do not have access to this page.");
+    } else if (userData?.role === "user") {
+      route("/cart");
+    } else {
+      toast.error("Please log in first to access this page.");
+    }
   };
 
   useEffect(() => {
