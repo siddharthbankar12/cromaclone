@@ -1,19 +1,40 @@
 import React, { useEffect, useState } from "react";
 import "../style/AllProducts.css";
 import axiosInstance from "../utils/axiosConfig";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { categoryList, brandList } from "../utils/BrandAndCategory";
 
 const AllProducts = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const route = useNavigate();
+  const [filters, setFilters] = useState({
+    category: "",
+    brand: "",
+    price: "",
+  });
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  // Fetch all products with applied filters
   const getAllProducts = async () => {
     try {
       setLoading(true);
 
-      const response = await axiosInstance.get("/product/all-products");
+      const queryParams = new URLSearchParams();
+      if (filters.category && filters.category !== "All Category") {
+        queryParams.set("category", filters.category);
+      }
+      if (filters.brand && filters.brand !== "All Brands") {
+        queryParams.set("brand", filters.brand);
+      }
+      if (filters.price) {
+        queryParams.set("price", filters.price);
+      }
+
+      const response = await axiosInstance.get(
+        `/product/all-products?${queryParams.toString()}`
+      );
+
       if (response.data.success) {
         setAllProducts(response.data.products);
       }
@@ -23,18 +44,52 @@ const AllProducts = () => {
       setLoading(false);
     }
   };
-  console.log(allProducts);
 
+  // Update filters based on URL query parameters
+  useEffect(() => {
+    const queryParams = new  (location.search);
+    setFilters({
+      category: queryParams.get("category") || "",
+      brand: queryParams.get("brand") || "",
+      price: queryParams.get("price") || "",
+    });
+  }, [location.search]);
+
+  // Fetch products when filters change
   useEffect(() => {
     getAllProducts();
-  }, []);
+  }, [filters]);
+
+  // Handle filter changes and update URL query parameters
+  const handleFilterChange = (e) => {
+    const updatedFilters = {
+      ...filters,
+      [e.target.name]: e.target.value,
+    };
+    setFilters(updatedFilters);
+
+    const queryParams = new URLSearchParams();
+
+    if (updatedFilters.category && updatedFilters.category !== "All Category") {
+      queryParams.set("category", updatedFilters.category);
+    }
+    if (updatedFilters.brand && updatedFilters.brand !== "All Brands") {
+      queryParams.set("brand", updatedFilters.brand);
+    }
+    if (updatedFilters.price) {
+      queryParams.set("price", updatedFilters.price);
+    }
+
+    navigate(`?${queryParams.toString()}`);
+  };
 
   return (
     <div className="products-list">
       <div className="category-name">
         <p>Category</p>
         <p>
-          Phones & Wearables <span>(6504)</span>
+          {filters.category ? filters.category : "All Products"}{" "}
+          <span>({allProducts.length})</span>
         </p>
       </div>
 
@@ -42,8 +97,13 @@ const AllProducts = () => {
         <div className="category-filter">
           {/* Category */}
           <div className="dropdown">
-            <select name="category" id="category">
-              <option value="">Category</option>
+            <select
+              name="category"
+              id="category"
+              value={filters.category}
+              onChange={handleFilterChange}
+            >
+              <option value="">All Categories</option>
               {categoryList.map((name, idx) => (
                 <option value={name} key={idx + 1}>
                   {name}
@@ -57,8 +117,13 @@ const AllProducts = () => {
 
           {/* Brand */}
           <div className="dropdown">
-            <select name="brand" id="brand">
-              <option value="">Brand</option>
+            <select
+              name="brand"
+              id="brand"
+              value={filters.brand}
+              onChange={handleFilterChange}
+            >
+              <option value="">All Brands</option>
               {brandList.map((brand, idx) => (
                 <option value={brand} key={idx + 1}>
                   {brand}
@@ -72,7 +137,12 @@ const AllProducts = () => {
 
           {/* Price */}
           <div className="dropdown">
-            <select name="price" id="price">
+            <select
+              name="price"
+              id="price"
+              value={filters.price}
+              onChange={handleFilterChange}
+            >
               <option value="">Price</option>
               <option value="0-999">Below ₹1000</option>
               <option value="1000-5000">₹1000 - ₹5000</option>
@@ -98,7 +168,7 @@ const AllProducts = () => {
               className="single-product-container"
               key={product._id}
               onClick={() =>
-                route(`/all-products/single-product/${product._id}`)
+                navigate(`/all-products/single-product/${product._id}`)
               }
             >
               <div className="all-product-image">

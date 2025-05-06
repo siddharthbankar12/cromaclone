@@ -1,5 +1,6 @@
 export const categoryList = [
   "Select category",
+  "All Category",
   "Accessories",
   "Air Conditioners",
   "Cameras",
@@ -24,6 +25,7 @@ export const categoryList = [
 
 export const brandList = [
   "Select brand",
+  "All Brands",
   "PHILIPS",
   "SAMSUNG",
   "oppo",

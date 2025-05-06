@@ -93,14 +93,35 @@ export const AddedProducts = async (req, res) => {
   }
 };
 
-// Get all products
-export const AllProducts = async (req, res) => {
+// Get all products with filters
+export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find({});
+    const { category, brand, price } = req.query;
+
+    const filter = {};
+
+    if (category && category !== "All Category") {
+      filter.category = { $regex: category, $options: "i" };
+    }
+
+    if (brand && brand !== "All Brands") {
+      filter.brand = { $regex: brand, $options: "i" };
+    }
+
+    if (price) {
+      const priceRange = price.split("-");
+      if (priceRange.length === 2) {
+        filter.price = { $gte: priceRange[0], $lte: priceRange[1] };
+      } else if (priceRange[0] === "50000+") {
+        filter.price = { $gte: 50000 };
+      }
+    }
+
+    const products = await Product.find(filter);
 
     return res.status(200).json({
       success: true,
-      message: "All products fetched successfully.",
+      message: "Products fetched successfully.",
       products,
     });
   } catch (error) {

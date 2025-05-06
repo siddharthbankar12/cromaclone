@@ -12,6 +12,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
   const cartCount = useSelector((state) => state.user.cartCount);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useSelector((state) => state.user.location);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const LoginRegister = () => {
     if (userData) {
@@ -32,6 +33,15 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
       route("/cart");
     } else {
       toast.error("Please log in first to access this page.");
+    }
+  };
+
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      const queryParams = new URLSearchParams();
+      queryParams.set("category", searchTerm.trim());
+      route(`/all-products?${queryParams.toString()}`);
+      setSearchTerm("");
     }
   };
 
@@ -94,8 +104,23 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
               type="text"
               placeholder="What are you looking for ?"
               aria-label="Search"
+              value={searchTerm}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value) {
+                  setSearchTerm(value.charAt(0).toUpperCase() + value.slice(1));
+                } else {
+                  setSearchTerm(value);
+                }
+              }}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
             />
-            <span className="material-symbols-outlined" aria-label="Search">
+
+            <span
+              className="material-symbols-outlined"
+              aria-label="Search"
+              onClick={handleSearch}
+            >
               search
             </span>
           </div>
