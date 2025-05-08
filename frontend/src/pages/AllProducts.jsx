@@ -16,7 +16,7 @@ const AllProducts = () => {
   });
   const [search, setSearch] = useState(userSearch);
 
-  const navigate = useNavigate();
+  const route = useNavigate();
   const location = useLocation();
 
   const getAllProducts = async (category, brand, price, searchValue) => {
@@ -52,25 +52,6 @@ const AllProducts = () => {
     }
   };
 
-  useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-
-    const updatedCategory = queryParams.get("category") || "";
-    const updatedBrand = queryParams.get("brand") || "";
-    const updatedPrice = queryParams.get("price") || "";
-    const updatedSearch = queryParams.get("search") || "";
-
-    setFilters({
-      category: updatedCategory,
-      brand: updatedBrand,
-      price: updatedPrice,
-    });
-
-    setSearch(updatedSearch);
-
-    getAllProducts(updatedCategory, updatedBrand, updatedPrice, updatedSearch);
-  }, [location.search]);
-
   const handleFilterChange = (e) => {
     const updatedFilters = {
       ...filters,
@@ -90,8 +71,27 @@ const AllProducts = () => {
       queryParams.set("price", updatedFilters.price);
     }
 
-    navigate(`?${queryParams.toString()}`);
+    route(`?${queryParams.toString()}`);
   };
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+
+    const updatedCategory = queryParams.get("category") || "";
+    const updatedBrand = queryParams.get("brand") || "";
+    const updatedPrice = queryParams.get("price") || "";
+    const updatedSearch = queryParams.get("search") || "";
+
+    setFilters({
+      category: updatedCategory,
+      brand: updatedBrand,
+      price: updatedPrice,
+    });
+
+    setSearch(updatedSearch);
+
+    getAllProducts(updatedCategory, updatedBrand, updatedPrice, updatedSearch);
+  }, [location.search]);
 
   return (
     <div className="products-list">
@@ -182,7 +182,7 @@ const AllProducts = () => {
               className="single-product-container"
               key={product._id}
               onClick={() =>
-                navigate(`/all-products/single-product/${product._id}`)
+                route(`/all-products/single-product/${product._id}`)
               }
             >
               <div className="all-product-image">
