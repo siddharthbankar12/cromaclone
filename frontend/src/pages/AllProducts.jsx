@@ -116,11 +116,8 @@ const AllProducts = () => {
               id="category"
               value={filters.category}
               onChange={handleFilterChange}
-              className="drop-select-option"
             >
-              <option className="drop-select-option" value="All Category">
-                All Categories
-              </option>
+              <option value="All Category">All Categories</option>
               {mergedData.categories.map((name, idx) => (
                 <option
                   className="drop-select-option"
@@ -143,11 +140,8 @@ const AllProducts = () => {
               id="brand"
               value={filters.brand}
               onChange={handleFilterChange}
-              className="drop-select-option"
             >
-              <option value="All Brands" className="drop-select-option">
-                All Brands
-              </option>
+              <option value="All Brands">All Brands</option>
               {mergedData.brands.map((brand, idx) => (
                 <option
                   value={brand.name}
@@ -170,7 +164,6 @@ const AllProducts = () => {
               id="price"
               value={filters.price}
               onChange={handleFilterChange}
-              className="drop-select-option"
             >
               <option value="" className="drop-select-option">
                 Price
