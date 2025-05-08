@@ -116,6 +116,7 @@ const AllProducts = () => {
               id="category"
               value={filters.category}
               onChange={handleFilterChange}
+              className="drop-select-option"
             >
               <option value="All Category" className="drop-select-option">
                 All Categories
@@ -142,6 +143,7 @@ const AllProducts = () => {
               id="brand"
               value={filters.brand}
               onChange={handleFilterChange}
+              className="drop-select-option"
             >
               <option value="All Brands" className="drop-select-option">
                 All Brands
@@ -168,6 +170,7 @@ const AllProducts = () => {
               id="price"
               value={filters.price}
               onChange={handleFilterChange}
+              className="drop-select-option"
             >
               <option value="" className="drop-select-option">
                 Price
