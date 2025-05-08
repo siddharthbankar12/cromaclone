@@ -117,7 +117,9 @@ const AllProducts = () => {
               value={filters.category}
               onChange={handleFilterChange}
             >
-              <option value="All Category">All Categories</option>
+              <option value="All Category" className="drop-select-option">
+                All Categories
+              </option>
               {mergedData.categories.map((name, idx) => (
                 <option
                   className="drop-select-option"
@@ -141,7 +143,9 @@ const AllProducts = () => {
               value={filters.brand}
               onChange={handleFilterChange}
             >
-              <option value="All Brands">All Brands</option>
+              <option value="All Brands" className="drop-select-option">
+                All Brands
+              </option>
               {mergedData.brands.map((brand, idx) => (
                 <option
                   value={brand.name}
