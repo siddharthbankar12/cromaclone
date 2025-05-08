@@ -65,15 +65,9 @@ const AllProducts = () => {
       price: updatedPrice,
     });
     setSearch(updatedSearch);
-  }, [search, location.search]);
 
-  useEffect(() => {
     getAllProducts();
-  }, [filters]);
-
-  // useEffect(() => {
-  //   getAllProducts();
-  // }, [userSearch]);
+  }, [location.search]);
 
   const handleFilterChange = (e) => {
     const updatedFilters = {
