@@ -51,6 +51,10 @@
   }
 }
 
+.drop-select-option {
+  background-color: #363636;
+}
+
 .mso {
   display: flex;
   align-items: center;

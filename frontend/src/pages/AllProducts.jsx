@@ -116,10 +116,17 @@ const AllProducts = () => {
               id="category"
               value={filters.category}
               onChange={handleFilterChange}
+              className="drop-select-option"
             >
-              <option value="All Category">All Categories</option>
+              <option className="drop-select-option" value="All Category">
+                All Categories
+              </option>
               {mergedData.categories.map((name, idx) => (
-                <option value={name.name} key={idx + 1}>
+                <option
+                  className="drop-select-option"
+                  value={name.name}
+                  key={idx + 1}
+                >
                   {name.name}
                 </option>
               ))}
@@ -136,10 +143,17 @@ const AllProducts = () => {
               id="brand"
               value={filters.brand}
               onChange={handleFilterChange}
+              className="drop-select-option"
             >
-              <option value="All Brands">All Brands</option>
+              <option value="All Brands" className="drop-select-option">
+                All Brands
+              </option>
               {mergedData.brands.map((brand, idx) => (
-                <option value={brand.name} key={idx + 1}>
+                <option
+                  value={brand.name}
+                  key={idx + 1}
+                  className="drop-select-option"
+                >
                   {brand.name}
                 </option>
               ))}
@@ -156,13 +170,26 @@ const AllProducts = () => {
               id="price"
               value={filters.price}
               onChange={handleFilterChange}
+              className="drop-select-option"
             >
-              <option value="">Price</option>
-              <option value="0-999">Below ₹1000</option>
-              <option value="1000-5000">₹1000 - ₹5000</option>
-              <option value="5000-25000">₹5000 - ₹25000</option>
-              <option value="25000-50000">₹25000 - ₹50000</option>
-              <option value="50000+">Above ₹50000</option>
+              <option value="" className="drop-select-option">
+                Price
+              </option>
+              <option value="0-999" className="drop-select-option">
+                Below ₹1000
+              </option>
+              <option value="1000-5000" className="drop-select-option">
+                ₹1000 - ₹5000
+              </option>
+              <option value="5000-25000" className="drop-select-option">
+                ₹5000 - ₹25000
+              </option>
+              <option value="25000-50000" className="drop-select-option">
+                ₹25000 - ₹50000
+              </option>
+              <option value="50000+" className="drop-select-option">
+                Above ₹50000
+              </option>
             </select>
             <span className="material-symbols-outlined mso">
               keyboard_arrow_down
