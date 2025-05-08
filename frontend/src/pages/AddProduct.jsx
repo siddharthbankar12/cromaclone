@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axiosConfig";
-import { categoryList, brandList } from "../utils/BrandAndCategory";
+import { mergedData } from "../utils/data";
 
 const AddProduct = () => {
   const userData = useSelector((state) => state.user.user);
@@ -147,9 +147,10 @@ const AddProduct = () => {
           value={productData.category}
           className="add-product-select"
         >
-          {categoryList.map((category, index) => (
-            <option key={index} value={category}>
-              {category}
+          <option>Select Category</option>
+          {mergedData.categories.map((category, index) => (
+            <option key={index} value={category.name}>
+              {category.name}
             </option>
           ))}
         </select>
@@ -161,9 +162,10 @@ const AddProduct = () => {
           value={productData.brand}
           className="add-product-select"
         >
-          {brandList.map((brand, index) => (
-            <option key={index} value={brand}>
-              {brand}
+          <option>Select Brand</option>
+          {mergedData.brands.map((brand, index) => (
+            <option key={index} value={brand.name}>
+              {brand.name}
             </option>
           ))}
         </select>

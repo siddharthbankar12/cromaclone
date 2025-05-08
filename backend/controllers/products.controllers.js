@@ -53,7 +53,8 @@ export const AddProduct = async (req, res) => {
       image,
       description,
       brand,
-      userId,
+      sellerId: userId,
+      originalPrice: price,
     });
 
     await newProduct.save();
@@ -80,7 +81,7 @@ export const AddedProducts = async (req, res) => {
         .json({ success: false, message: "User ID is required." });
     }
 
-    const products = await Product.find({ userId });
+    const products = await Product.find({ sellerId: userId });
 
     return res.status(200).json({
       success: true,
@@ -96,7 +97,7 @@ export const AddedProducts = async (req, res) => {
 // Get all products with filters
 export const getAllProducts = async (req, res) => {
   try {
-    const { category, brand, price } = req.query;
+    const { category, brand, price, search } = req.query;
 
     const filter = {};
 
@@ -108,12 +109,27 @@ export const getAllProducts = async (req, res) => {
       filter.brand = { $regex: brand, $options: "i" };
     }
 
+    if (search) {
+      const searchRegex = { $regex: search, $options: "i" };
+      filter.$or = [
+        { category: searchRegex },
+        { brand: searchRegex },
+        { name: searchRegex },
+      ];
+    }
+
     if (price) {
-      const priceRange = price.split("-");
-      if (priceRange.length === 2) {
-        filter.price = { $gte: priceRange[0], $lte: priceRange[1] };
-      } else if (priceRange[0] === "50000+") {
+      if (price === "50000+") {
         filter.price = { $gte: 50000 };
+      } else {
+        const priceRange = price.split("-");
+        if (priceRange.length === 2) {
+          const min = Number(priceRange[0]);
+          const max = Number(priceRange[1]);
+          if (!isNaN(min) && !isNaN(max)) {
+            filter.price = { $gte: min, $lte: max };
+          }
+        }
       }
     }
 
@@ -143,7 +159,7 @@ export const SingleProductData = async (req, res) => {
     }
 
     const product = await Product.findById(productId).populate(
-      "userId",
+      "sellerId",
       "-password"
     );
 

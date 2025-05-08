@@ -16,6 +16,7 @@ import Cart from "./pages/Cart";
 import OrderHistory from "./pages/OrderHistory";
 import Footer from "./components/Footer";
 import ManageProducts from "./pages/ManageProducts";
+import AboutUs from "./pages/AboutUs";
 
 const App = () => {
   const userData = useSelector((state) => state.user.user);
@@ -83,6 +84,7 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/admin/manage-products" element={<ManageProducts />} />
+          <Route path="/about-us" element={<AboutUs />} />
         </Routes>
       </div>
       <Footer />

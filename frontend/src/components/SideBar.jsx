@@ -60,7 +60,7 @@ const SideBar = ({ setIsSidebarOpen }) => {
             </li>
           </>
         )}
-
+        <li onClick={() => handleClick("/about-us")}>About us</li>
         {userData?.role && <li onClick={logOutUser}>Logout</li>}
       </ul>
     </div>

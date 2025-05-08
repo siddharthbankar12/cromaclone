@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../style/LandingPage.css";
-import { imagesSlider, imagesCategory, brandLogos } from "../utils/imagePaths";
+import { mergedData, imagesSlider } from "../utils/data";
+import { useDispatch } from "react-redux";
+import { querySearch } from "../store/querySlice";
 
 const LandingPage = () => {
-  const imagesToShow = 10;
-  const imagesToMove = 2;
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [curIndex, setCurIndex] = useState(0);
+  const route = useNavigate();
+  const dispatch = useDispatch();
+
+  const imagesToShow = 10;
+  const imagesToMove = 2;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -15,11 +20,13 @@ const LandingPage = () => {
     }, 5000);
 
     return () => clearInterval(interval);
-    // eslint-disable-next-line
   }, []);
 
   const nextImage = () => {
-    if (curIndex + imagesToMove <= imagesCategory.length - imagesToShow) {
+    if (
+      curIndex + imagesToMove <=
+      mergedData.categories.length - imagesToShow
+    ) {
       setCurIndex(curIndex + imagesToMove);
     } else {
       setCurIndex(0);
@@ -30,7 +37,7 @@ const LandingPage = () => {
     if (curIndex - imagesToMove >= 0) {
       setCurIndex(curIndex - imagesToMove);
     } else {
-      setCurIndex(imagesCategory.length - imagesToShow);
+      setCurIndex(mergedData.categories.length - imagesToShow);
     }
   };
 
@@ -100,13 +107,19 @@ const LandingPage = () => {
             className="category-container"
             style={{ transform: `translateX(${offset}%)` }}
           >
-            {imagesCategory.map((src, index) => (
+            {mergedData.categories.map((src, index) => (
               <div
                 key={index}
                 className="category-images"
                 style={{ flex: `0 0 ${100 / imagesToShow}%` }}
+                onClick={() => {
+                  const queryParams = new URLSearchParams();
+                  queryParams.set("search", src.name.trim());
+                  route(`/all-products?${queryParams.toString()}`);
+                  dispatch(querySearch({ query: src.name.trim() }));
+                }}
               >
-                <img src={src} alt={`category ${index}`} />
+                <img src={src.image} alt={src.name} />
               </div>
             ))}
           </div>
@@ -232,9 +245,18 @@ const LandingPage = () => {
 
         <div className="logoWindow">
           <div className="brand-container">
-            {brandLogos.map((logoPath, index) => (
-              <div className="brand-images" key={index}>
-                <img src={logoPath} alt={`Logo ${index + 1}`} />
+            {mergedData.brands.slice(0, -1).map((logoPath, index) => (
+              <div
+                className="brand-images"
+                key={index}
+                onClick={() => {
+                  const queryParams = new URLSearchParams();
+                  queryParams.set("search", logoPath.name.trim());
+                  route(`/all-products?${queryParams.toString()}`);
+                  dispatch(querySearch({ query: logoPath.name.trim() }));
+                }}
+              >
+                <img src={logoPath.logo} alt={logoPath.name} />
               </div>
             ))}
           </div>

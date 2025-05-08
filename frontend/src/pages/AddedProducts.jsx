@@ -50,12 +50,15 @@ const AddedProducts = () => {
                 alt={product.name}
                 className="product-imagee"
               />
-              <h2 className="product-namee">Name : {product.name}</h2>
+              <h2 className="product-namee">Product Name : {product.name}</h2>
               <p className="product-brandd">
                 <b>Brand Name :</b> {product.brand}
               </p>
+              <p className="product-brandd">
+                <b>Quantity :</b> {product.quantity}
+              </p>
               <p className="product-pricee">
-                <b>Price :</b> ₹{product.price}
+                <b>Price :</b> ₹{product.price.toLocaleString("en-IN")}
               </p>
               <p className="product-categoryy">
                 <b>Category :</b> {product.category}
@@ -66,7 +69,7 @@ const AddedProducts = () => {
             </div>
           ))
         ) : (
-          <p>No products found.</p>
+          <p style={{ color: "white" }}>No products found..</p>
         )}
       </div>
     </div>

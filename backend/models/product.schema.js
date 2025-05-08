@@ -10,7 +10,7 @@ const productSchema = new Schema({
   brand: { type: String, required: true },
   image: { type: String, required: true },
   description: { type: String, required: true },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
+  sellerId: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
 });
 
 const Product = model("Products", productSchema);

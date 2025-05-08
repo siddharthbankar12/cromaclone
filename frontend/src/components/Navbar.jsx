@@ -2,11 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginRegisterPage from "./LoginRegister";
 import SideBar from "./SideBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { querySearch } from "../store/querySlice";
 
 const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
   const route = useNavigate();
+  const dispatch = useDispatch();
   const sidebarRef = useRef(null);
   const userData = useSelector((state) => state.user.user);
   const cartCount = useSelector((state) => state.user.cartCount);
@@ -32,16 +34,19 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
     } else if (userData?.role === "user") {
       route("/cart");
     } else {
-      toast.error("Please log in first to access this page.");
+      toast.warn("Please log in first to access this page.");
     }
   };
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
       const queryParams = new URLSearchParams();
-      queryParams.set("category", searchTerm.trim());
+      queryParams.set("search", searchTerm.trim());
       route(`/all-products?${queryParams.toString()}`);
+      dispatch(querySearch({ query: searchTerm.trim() }));
       setSearchTerm("");
+    } else {
+      toast.warn("Please type something");
     }
   };
 

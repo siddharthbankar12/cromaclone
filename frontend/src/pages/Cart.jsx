@@ -51,7 +51,10 @@ const Cart = () => {
       });
       if (response.data.success) {
         toast.success("Product removed from cart");
-        getCartProducts();
+        setProducts((prevProducts) =>
+          prevProducts.filter((product) => product._id !== productId)
+        );
+        recalculateTotal();
       }
     } catch (error) {
       console.log(error);
@@ -65,7 +68,21 @@ const Cart = () => {
         { userId: userData.userId, productId, action }
       );
       if (response.data.success) {
-        getCartProducts();
+        setProducts((prevProducts) =>
+          prevProducts.map((product) =>
+            product._id === productId
+              ? {
+                  ...product,
+                  quantity:
+                    action === "increase"
+                      ? product.quantity + 1
+                      : Math.max(product.quantity - 1, 1),
+                }
+              : product
+          )
+        );
+
+        recalculateTotal();
       }
     } catch (error) {
       console.log(error);
@@ -73,7 +90,16 @@ const Cart = () => {
   };
 
   const checkOut = async () => {
+    if (!userData?.userId) {
+      toast.error("User not logged in.");
+      return;
+    }
+
     try {
+      if (products.length < 1) {
+        return toast.warn("Please add some products to the cart");
+      }
+
       setLoading(true);
       const response = await axiosInstance.post("/user/checkout", {
         userId: userData.userId,
@@ -90,6 +116,22 @@ const Cart = () => {
       setLoading(false);
     }
   };
+
+  const recalculateTotal = () => {
+    let total = 0;
+    let qty = 0;
+    products.forEach((item) => {
+      total += item.price * item.quantity;
+      qty += item.quantity;
+    });
+    setTotalPrice(total);
+    setQuantity(qty);
+    dispatch(setCartCount(qty));
+  };
+
+  useEffect(() => {
+    recalculateTotal();
+  }, [products]);
 
   useEffect(() => {
     if (userData?.userId) {
@@ -129,7 +171,7 @@ const Cart = () => {
                       <b>Product Name :</b> {product.name}
                     </h2>
                     <p>
-                      <b>Price :</b> ₹{product.price}
+                      <b>Price :</b> ₹{product.price.toLocaleString("en-IN")}
                     </p>
                     <p>
                       <b>Category :</b> {product.category}
@@ -169,7 +211,7 @@ const Cart = () => {
                 <b>Total Cart Products:</b> {quantity}
               </p>
               <p>
-                <b>Total Price:</b> ₹{totalPrice}
+                <b>Total Price:</b> ₹{totalPrice.toLocaleString("en-IN")}
               </p>
               <div className="btnCenter">
                 <button className="cart-checkout-btn" onClick={checkOut}>

@@ -145,7 +145,7 @@ const ManageProducts = () => {
                     <td>{product.category}</td>
                     <td>
                       <div className="quantity-actions">
-                        <button
+                        <p
                           className="quantity-btn"
                           onClick={() =>
                             handleQuantityChange(product._id, "decrease")
@@ -153,16 +153,16 @@ const ManageProducts = () => {
                           disabled={product.quantity <= 1}
                         >
                           -
-                        </button>
+                        </p>
                         {product.quantity}
-                        <button
+                        <p
                           className="quantity-btn"
                           onClick={() =>
                             handleQuantityChange(product._id, "increase")
                           }
                         >
                           +
-                        </button>
+                        </p>
                       </div>
                     </td>
                     <td>

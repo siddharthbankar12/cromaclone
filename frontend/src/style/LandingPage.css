@@ -163,7 +163,8 @@
   display: flex;
 
   & .imageWindow {
-    overflow: hidden;
+    overflow: scroll;
+    scrollbar-width: none;
 
     & .category-container {
       display: flex;
@@ -342,7 +343,8 @@
   display: flex;
 
   & .logoWindow {
-    overflow: hidden;
+    overflow: scroll;
+    scrollbar-width: none;
 
     & .brand-container {
       display: flex;

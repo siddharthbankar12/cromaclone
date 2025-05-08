@@ -188,6 +188,45 @@ export const CheckOut = async (req, res) => {
   }
 };
 
+export const BuyNow = async (req, res) => {
+  try {
+    const { userId, product } = req.body;
+
+    if (!userId) {
+      return res.json({ success: false, message: "User is required" });
+    }
+
+    if (!product) {
+      return res.json({ success: false, message: "Product are required" });
+    }
+
+    const isUserExist = await User.findById(userId);
+    if (!isUserExist) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    let singleProduct = [{ productId: product._id, quantity: 1 }];
+
+    const newOrder = Order({
+      userId,
+      products: singleProduct,
+      price: product.price,
+    });
+
+    await newOrder.save();
+
+    await Cart.findOneAndUpdate({ userId }, { products: [] });
+
+    return res.json({
+      success: true,
+      message: "Order Successful, you'll get product delivered soon",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, error });
+  }
+};
+
 export const GetOrderHistory = async (req, res) => {
   try {
     const { userId } = req.body;

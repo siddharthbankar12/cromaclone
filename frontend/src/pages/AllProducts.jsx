@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import "../style/AllProducts.css";
 import axiosInstance from "../utils/axiosConfig";
 import { useNavigate, useLocation } from "react-router-dom";
-import { categoryList, brandList } from "../utils/BrandAndCategory";
+import { mergedData } from "../utils/data";
+import { useSelector } from "react-redux";
 
 const AllProducts = () => {
+  const userSearch = useSelector((state) => state.user.query);
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState({
@@ -12,23 +14,28 @@ const AllProducts = () => {
     brand: "",
     price: "",
   });
+  const [search, setSearch] = useState(userSearch);
+
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Fetch all products with applied filters
   const getAllProducts = async () => {
     try {
       setLoading(true);
-
       const queryParams = new URLSearchParams();
-      if (filters.category && filters.category !== "All Category") {
-        queryParams.set("category", filters.category);
-      }
-      if (filters.brand && filters.brand !== "All Brands") {
-        queryParams.set("brand", filters.brand);
-      }
-      if (filters.price) {
-        queryParams.set("price", filters.price);
+
+      if (search) {
+        queryParams.set("search", search);
+      } else {
+        if (filters.category && filters.category !== "All Category") {
+          queryParams.set("category", filters.category);
+        }
+        if (filters.brand && filters.brand !== "All Brands") {
+          queryParams.set("brand", filters.brand);
+        }
+        if (filters.price) {
+          queryParams.set("price", filters.price);
+        }
       }
 
       const response = await axiosInstance.get(
@@ -45,22 +52,29 @@ const AllProducts = () => {
     }
   };
 
-  // Update filters based on URL query parameters
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-    setFilters({
-      category: queryParams.get("category") || "",
-      brand: queryParams.get("brand") || "",
-      price: queryParams.get("price") || "",
-    });
-  }, [location.search]);
+    const updatedCategory = queryParams.get("category") || "";
+    const updatedBrand = queryParams.get("brand") || "";
+    const updatedPrice = queryParams.get("price") || "";
+    const updatedSearch = queryParams.get("search") || "";
 
-  // Fetch products when filters change
+    setFilters({
+      category: updatedCategory,
+      brand: updatedBrand,
+      price: updatedPrice,
+    });
+    setSearch(updatedSearch);
+  }, [location.search, search]);
+
   useEffect(() => {
     getAllProducts();
   }, [filters]);
 
-  // Handle filter changes and update URL query parameters
+  // useEffect(() => {
+  //   getAllProducts();
+  // }, [userSearch]);
+
   const handleFilterChange = (e) => {
     const updatedFilters = {
       ...filters,
@@ -88,7 +102,11 @@ const AllProducts = () => {
       <div className="category-name">
         <p>Category</p>
         <p>
-          {filters.category ? filters.category : "All Products"}{" "}
+          {filters.category
+            ? filters.category
+            : search
+            ? search
+            : "All Products"}{" "}
           <span>({allProducts.length})</span>
         </p>
       </div>
@@ -103,10 +121,10 @@ const AllProducts = () => {
               value={filters.category}
               onChange={handleFilterChange}
             >
-              <option value="">All Categories</option>
-              {categoryList.map((name, idx) => (
-                <option value={name} key={idx + 1}>
-                  {name}
+              <option value="All Category">All Categories</option>
+              {mergedData.categories.map((name, idx) => (
+                <option value={name.name} key={idx + 1}>
+                  {name.name}
                 </option>
               ))}
             </select>
@@ -123,10 +141,10 @@ const AllProducts = () => {
               value={filters.brand}
               onChange={handleFilterChange}
             >
-              <option value="">All Brands</option>
-              {brandList.map((brand, idx) => (
-                <option value={brand} key={idx + 1}>
-                  {brand}
+              <option value="All Brands">All Brands</option>
+              {mergedData.brands.map((brand, idx) => (
+                <option value={brand.name} key={idx + 1}>
+                  {brand.name}
                 </option>
               ))}
             </select>
@@ -191,9 +209,9 @@ const AllProducts = () => {
                     <p>
                       (Save ₹
                       {product.originalPrice && product.price
-                        ? (product.originalPrice - product.price)
-                            .toFixed(2)
-                            .toLocaleString("en-IN")
+                        ? (
+                            product.originalPrice - product.price
+                          ).toLocaleString("en-IN")
                         : "N/A"}
                       )
                     </p>

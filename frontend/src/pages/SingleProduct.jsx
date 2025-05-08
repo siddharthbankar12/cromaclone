@@ -13,7 +13,7 @@ const SingleProduct = () => {
   const userData = useSelector((state) => state.user.user);
   const location = useSelector((state) => state.user.location);
 
-  const navigate = useNavigate();
+  const route = useNavigate();
 
   useEffect(() => {
     if (id) getSingleProductData();
@@ -39,29 +39,52 @@ const SingleProduct = () => {
   };
 
   const addToCart = async () => {
-    try {
-      setCartButtonDisable(true);
-      if (!userData?.userId) {
+    if (userData?.role === "user") {
+      try {
+        setCartButtonDisable(true);
+
+        const response = await axiosInstance.post("/user/add-to-cart", {
+          productId: id,
+          userId: userData.userId,
+        });
+        if (response.data.success) {
+          toast.success(response.data.message);
+          route("/cart");
+        }
+      } catch (error) {
+        console.error("Add to cart error:", error);
+      } finally {
         setCartButtonDisable(false);
-        return toast.error("Please login to add product to cart");
       }
+    } else if (userData?.role === "admin" || userData?.role === "seller") {
+      return toast.warn("You don't have access add to cart option");
+    } else {
+      toast.warn("Please login first to add product to cart");
+    }
+  };
 
-      if (userData?.role !== "user") {
-        return toast.error("You don't have access cart option");
-      }
+  const buyNow = async () => {
+    if (userData?.role === "user") {
+      try {
+        setLoading(true);
+        const response = await axiosInstance.post("/user/buy-now", {
+          userId: userData.userId,
+          product: singleProduct,
+        });
+        if (response.data.success) {
+          toast.success(response.data.message);
 
-      const response = await axiosInstance.post("/user/add-to-cart", {
-        productId: id,
-        userId: userData.userId,
-      });
-      if (response.data.success) {
-        toast.success(response.data.message);
-        navigate("/cart");
+          route("/order-history");
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Add to cart error:", error);
-    } finally {
-      setCartButtonDisable(false);
+    } else if (userData?.role === "admin" || userData?.role === "seller") {
+      return toast.warn("You don't have access buy option");
+    } else {
+      return toast.warn("Please login first to buy product");
     }
   };
 
@@ -152,32 +175,31 @@ const SingleProduct = () => {
           </div>
         </div>
       </div>
-
-      {userData?.role === "user" && (
-        <div className="buy-option">
-          <div className="buy-container">
-            <div className="left-side-buy">
-              <div className="pro-img">
-                <img src={singleProduct.image} alt={singleProduct.name} />
-              </div>
-              <div className="pro-detail">
-                <p>{singleProduct.name}</p>
-                <p>₹ {singleProduct.price.toLocaleString("en-IN")}</p>
-              </div>
+      <div className="buy-option">
+        <div className="buy-container">
+          <div className="left-side-buy">
+            <div className="pro-img">
+              <img src={singleProduct.image} alt={singleProduct.name} />
             </div>
-            <div className="right-side-buy">
-              <button className="buy-button">Buy Now</button>
-              <button
-                className="addCart-button"
-                onClick={addToCart}
-                disabled={cartButtonDisable}
-              >
-                {cartButtonDisable ? "Adding..." : "Add to Cart"}
-              </button>
+            <div className="pro-detail">
+              <p>{singleProduct.name}</p>
+              <p>₹ {singleProduct.price.toLocaleString("en-IN")}</p>
             </div>
           </div>
+          <div className="right-side-buy">
+            <button className="buy-button" onClick={buyNow}>
+              Buy Now
+            </button>
+            <button
+              className="addCart-button"
+              onClick={addToCart}
+              disabled={cartButtonDisable}
+            >
+              {cartButtonDisable ? "Adding..." : "Add to Cart"}
+            </button>
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

@@ -30,6 +30,8 @@ const OrderHistory = () => {
     }
   }, [userData]);
 
+  console.log(orders);
+
   return (
     <>
       {loading ? (
@@ -42,7 +44,9 @@ const OrderHistory = () => {
               {orders.map((order, idx) => (
                 <div key={idx} className="order-card">
                   <h2 className="order-id">Order ID: {order._id}</h2>
-                  <p className="order-price">Total Price: ₹{order.price}</p>
+                  <p className="order-price">
+                    Total Price: ₹{order.price.toLocaleString("en-IN")}
+                  </p>
                   <p className="order-date">
                     Order Date: {new Date(order.createdAt).toLocaleDateString()}
                   </p>
