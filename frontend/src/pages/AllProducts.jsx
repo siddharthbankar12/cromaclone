@@ -19,22 +19,22 @@ const AllProducts = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const getAllProducts = async () => {
+  const getAllProducts = async (category, brand, price, searchValue) => {
     try {
       setLoading(true);
       const queryParams = new URLSearchParams();
 
-      if (search) {
-        queryParams.set("search", search);
+      if (searchValue) {
+        queryParams.set("search", searchValue);
       } else {
-        if (filters.category && filters.category !== "All Category") {
-          queryParams.set("category", filters.category);
+        if (category && category !== "All Category") {
+          queryParams.set("category", category);
         }
-        if (filters.brand && filters.brand !== "All Brands") {
-          queryParams.set("brand", filters.brand);
+        if (brand && brand !== "All Brands") {
+          queryParams.set("brand", brand);
         }
-        if (filters.price) {
-          queryParams.set("price", filters.price);
+        if (price) {
+          queryParams.set("price", price);
         }
       }
 
@@ -54,6 +54,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
+
     const updatedCategory = queryParams.get("category") || "";
     const updatedBrand = queryParams.get("brand") || "";
     const updatedPrice = queryParams.get("price") || "";
@@ -64,12 +65,11 @@ const AllProducts = () => {
       brand: updatedBrand,
       price: updatedPrice,
     });
-    setSearch(updatedSearch);
-  }, [search, location.search]);
 
-  useEffect(() => {
-    getAllProducts();
-  }, [filters]);
+    setSearch(updatedSearch);
+
+    getAllProducts(updatedCategory, updatedBrand, updatedPrice, updatedSearch);
+  }, [location.search]);
 
   const handleFilterChange = (e) => {
     const updatedFilters = {
