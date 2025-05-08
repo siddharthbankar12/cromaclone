@@ -67,7 +67,7 @@ const AllProducts = () => {
     setSearch(updatedSearch);
 
     getAllProducts();
-  }, [location.search]);
+  }, [userSearch, location.search]);
 
   const handleFilterChange = (e) => {
     const updatedFilters = {
