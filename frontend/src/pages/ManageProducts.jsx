@@ -113,12 +113,12 @@ const ManageProducts = () => {
             <thead>
               <tr>
                 <th>Image</th>
-                <th>Name</th>
+                <th style={{ width: "260px" }}>Name</th>
                 <th>Brand</th>
                 <th>Category</th>
                 <th>Quantity</th>
                 <th>Price (₹) / Discount (%)</th>
-                <th>Original Price</th>
+                <th>Original Price (₹)</th>
                 <th>Discount (%)</th>
                 <th>Action</th>
               </tr>
