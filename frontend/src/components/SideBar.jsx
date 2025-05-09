@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../style/SideBar.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -57,6 +57,12 @@ const SideBar = ({ setIsSidebarOpen }) => {
           <>
             <li onClick={() => handleClick("/admin/manage-products")}>
               Manage Products
+            </li>
+            <li onClick={() => handleClick("/admin/manage-users")}>
+              Manage Users
+            </li>
+            <li onClick={() => handleClick("/admin/manage-sellers")}>
+              Manage Sellers
             </li>
           </>
         )}

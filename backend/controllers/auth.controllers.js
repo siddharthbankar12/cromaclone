@@ -16,16 +16,7 @@ export const Register = async (req, res) => {
       confirmPassword,
     } = req.body.newUserData;
 
-    if (
-      !role ||
-      !firstName ||
-      !lastName ||
-      !gender ||
-      !phoneNo ||
-      !email ||
-      !password ||
-      !confirmPassword
-    ) {
+    if (!role || !firstName || !lastName || !gender || !phoneNo || !email) {
       return res.status(400).json({
         success: false,
         message: "Please fill all required fields.",

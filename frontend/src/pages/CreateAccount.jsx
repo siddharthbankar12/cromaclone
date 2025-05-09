@@ -33,39 +33,26 @@ const CreateAccount = () => {
       const response = await axiosInstance.post("/auth/register", {
         newUserData,
       });
-      if (
-        newUserData.role &&
-        newUserData.firstName &&
-        newUserData.lastName &&
-        newUserData.email
-      ) {
-        if (newUserData.password === newUserData.confirmPassword) {
-          if (response.data.success === true) {
-            toast.success(response.data.message);
 
-            setNewUserData({
-              role: "user",
-              firstName: "",
-              lastName: "",
-              gender: "",
-              phoneNo: "",
-              email: "",
-              password: "",
-              confirmPassword: "",
-            });
-
-            route("/");
-          } else {
-            toast.error(response.data.message);
-          }
-        } else {
-          toast.error(response.data.message);
-        }
+      if (response.data.success) {
+        toast.success(response.data.message);
+        setNewUserData({
+          role: "user",
+          firstName: "",
+          lastName: "",
+          gender: "",
+          phoneNo: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+        route("/");
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error(error);
+      console.error("Registration error:", error);
+      toast.error(error.response?.data?.message);
     }
   };
 

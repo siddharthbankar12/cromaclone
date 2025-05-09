@@ -1,0 +1,104 @@
+.admin-container {
+  padding: 20px;
+  max-width: 90%;
+  margin: auto;
+  color: white;
+}
+
+.admin-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.admin-table-wrapper {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+.admin-table th {
+  padding: 12px;
+  border: 1px solid white;
+  color: black;
+  text-align: center;
+  background-color: #00e9bf;
+  font-size: 16px;
+}
+
+.admin-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.admin-user-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.admin-delete-btn {
+  padding: 6px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.admin-delete-btn:hover {
+  background-color: #c9302c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-table th,
+  .admin-table td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .admin-user-img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .admin-delete-btn {
+    padding: 5px;
+    font-size: 14px;
+  }
+}
+
+.loader {
+  margin: 0 auto;
+  height: 100vh;
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 30px;
+  color: #0000;
+  background: linear-gradient(90deg, #00e9bf calc(50% + 0.5ch), white 0)
+    right/calc(200% + 1ch) 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: l7 2s infinite steps(11);
+}
+
+.loader:before {
+  content: "Loading...";
+}
+
+@keyframes l7 {
+  to {
+    background-position: left;
+  }
+}

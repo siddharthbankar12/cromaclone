@@ -1,4 +1,6 @@
 import Product from "../models/product.schema.js";
+import User from "../models/user.schema.js";
+import jwt from "jsonwebtoken";
 
 export const allProducts0 = async (req, res) => {
   try {
@@ -45,7 +47,7 @@ export const updateProductQuantity0 = async (req, res) => {
   }
 };
 
-export const Discount0 = async (req, res) => {
+export const discount0 = async (req, res) => {
   try {
     const { productId, discountPercentage } = req.body;
 
@@ -102,5 +104,48 @@ export const deleteProduct0 = async (req, res) => {
   } catch (error) {
     console.error("Delete Product API error:", error);
     return res.status(500).json({ success: false, message: "Server error." });
+  }
+};
+
+export const usersManagement0 = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Unauthorized. No token provided." });
+    }
+
+    try {
+      jwt.verify(token, process.env.TOKENSECRETKEY);
+    } catch (err) {
+      return res
+        .status(403)
+        .json({ success: false, message: "Invalid token." });
+    }
+
+    const { action, userId } = req.body;
+
+    if (action === "delete" && userId) {
+      await User.findByIdAndDelete(userId);
+      const usersData = await User.find({ role: { $in: ["seller", "user"] } });
+      return res.status(200).json({
+        success: true,
+        message: "User deleted successfully.",
+        usersData,
+      });
+    }
+
+    const usersData = await User.find({ role: { $in: ["seller", "user"] } });
+    return res.status(200).json({
+      success: true,
+      message: "User data fetched successfully.",
+      usersData,
+    });
+  } catch (error) {
+    console.error("Error in usersManagement0:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error." });
   }
 };
