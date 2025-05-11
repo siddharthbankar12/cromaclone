@@ -11,6 +11,8 @@ const ManageProducts = () => {
   const [discountInputs, setDiscountInputs] = useState({});
   const [loading, setLoading] = useState(false);
 
+  console.log(products);
+
   const getAllProducts = async () => {
     try {
       setLoading(true);
@@ -115,6 +117,7 @@ const ManageProducts = () => {
                 <th>Image</th>
                 <th style={{ width: "260px" }}>Name</th>
                 <th>Brand</th>
+                <th>Seller ID</th>
                 <th>Category</th>
                 <th>Quantity</th>
                 <th>Price (₹) / Discount (%)</th>
@@ -142,6 +145,7 @@ const ManageProducts = () => {
                     </td>
                     <td>{product.name}</td>
                     <td>{product.brand}</td>
+                    <td>{product.sellerId._id}</td>
                     <td>{product.category}</td>
                     <td>
                       <div className="quantity-actions">

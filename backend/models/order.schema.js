@@ -10,6 +10,7 @@ const orderSchema = new Schema(
       },
     ],
     price: { type: Number },
+    orderAdd: { type: String },
   },
   { timestamps: true }
 );

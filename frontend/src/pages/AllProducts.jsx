@@ -4,9 +4,11 @@ import axiosInstance from "../utils/axiosConfig";
 import { useNavigate, useLocation } from "react-router-dom";
 import { mergedData } from "../utils/data";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
 
 const AllProducts = () => {
-  const userSearch = useSelector((state) => state.user.query);
+  const userData = useSelector((state) => state.user.user);
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState({
@@ -14,7 +16,7 @@ const AllProducts = () => {
     brand: "",
     price: "",
   });
-  const [search, setSearch] = useState(userSearch);
+  const [search, setSearch] = useState("");
 
   const route = useNavigate();
   const location = useLocation();
@@ -204,55 +206,61 @@ const AllProducts = () => {
         ) : allProducts.length === 0 ? (
           <p>No products found.</p>
         ) : (
-          allProducts.map((product) => (
-            <div
-              className="single-product-container"
-              key={product._id}
-              onClick={() =>
-                route(`/all-products/single-product/${product._id}`)
-              }
-            >
-              <div className="all-product-image">
-                <img src={product.image} alt={product.name} />
-                <i className="fa-regular fa-heart"></i>
+          allProducts.map((product) => {
+            return (
+              <div className="single-product-container" key={product._id}>
+                <div className="all-product-image">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    onClick={() =>
+                      route(`/all-products/single-product/${product._id}`)
+                    }
+                  />
+                </div>
+
+                <div
+                  className="product-name-price-delivery"
+                  onClick={() =>
+                    route(`/all-products/single-product/${product._id}`)
+                  }
+                >
+                  <div className="product-namee">
+                    {product.name} - {product.brand}
+                  </div>
+
+                  <div className="product-price">
+                    <div className="price">
+                      <p>₹{product.price.toLocaleString("en-IN")}</p>
+                    </div>
+
+                    <div className="save-price">
+                      <p>₹{product.originalPrice.toLocaleString("en-IN")}</p>
+                      <p>
+                        (Save ₹
+                        {product.originalPrice && product.price
+                          ? (
+                              product.originalPrice - product.price
+                            ).toLocaleString("en-IN")
+                          : "N/A"}
+                        )
+                      </p>
+                    </div>
+                    <div className="price-off">
+                      <p>{product.discountPercentage}% Off</p>
+                    </div>
+                  </div>
+
+                  <div className="product-delivery-date">
+                    <span className="material-symbols-outlined mso">
+                      delivery_truck_speed
+                    </span>
+                    <p>Standard Delivery by Mon, 20th Jan</p>
+                  </div>
+                </div>
               </div>
-
-              <div className="product-name-price-delivery">
-                <div className="product-namee">
-                  {product.name} - {product.brand}
-                </div>
-
-                <div className="product-price">
-                  <div className="price">
-                    <p>₹{product.price.toLocaleString("en-IN")}</p>
-                  </div>
-
-                  <div className="save-price">
-                    <p>₹{product.originalPrice.toLocaleString("en-IN")}</p>
-                    <p>
-                      (Save ₹
-                      {product.originalPrice && product.price
-                        ? (
-                            product.originalPrice - product.price
-                          ).toLocaleString("en-IN")
-                        : "N/A"}
-                      )
-                    </p>
-                  </div>
-                  <div className="price-off">
-                    <p>{product.discountPercentage}% Off</p>
-                  </div>
-                </div>
-
-                <div className="product-delivery-date">
-                  <span className="material-symbols-outlined mso">
-                    delivery_truck_speed
-                  </span>
-                  <p>Standard Delivery by Mon, 20th Jan</p>
-                </div>
-              </div>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
     </div>

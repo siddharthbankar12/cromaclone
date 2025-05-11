@@ -16,6 +16,17 @@ const SideBar = ({ setIsSidebarOpen }) => {
     setIsSidebarOpen(false);
   };
 
+  const handleUserClick = (path) => {
+    if (!userData) {
+      toast.warn("Please log in first to access this page.");
+    } else if (userData.role === "user") {
+      route(path);
+      setIsSidebarOpen(false);
+    } else {
+      toast.error("You do not have access to this page.");
+    }
+  };
+
   const logOutUser = async () => {
     try {
       const response = await axiosInstance.put("/auth/logout");
@@ -30,12 +41,23 @@ const SideBar = ({ setIsSidebarOpen }) => {
       console.error("Logout error:", error);
       toast.error(error);
     }
+    setIsSidebarOpen(false);
   };
 
   return (
     <div className="sidebar">
       <ul className="btns">
         <li onClick={() => handleClick("/all-products")}>All Products</li>
+        {(!userData || userData.role === "user") && (
+          <>
+            <li onClick={() => handleUserClick("/cart")}>Cart</li>
+            <li onClick={() => handleUserClick("/wishlist")}>Wishlist</li>
+            <li onClick={() => handleUserClick("/order-history")}>
+              Order History
+            </li>
+          </>
+        )}
+
         {userData?.role === "seller" && (
           <>
             <li onClick={() => handleClick("/seller/add-product")}>
@@ -44,12 +66,6 @@ const SideBar = ({ setIsSidebarOpen }) => {
             <li onClick={() => handleClick("/seller/added-products")}>
               Added Products
             </li>
-          </>
-        )}
-
-        {userData?.role === "user" && (
-          <>
-            <li onClick={() => handleClick("/order-history")}>Order History</li>
           </>
         )}
 
@@ -63,6 +79,9 @@ const SideBar = ({ setIsSidebarOpen }) => {
             </li>
             <li onClick={() => handleClick("/admin/manage-sellers")}>
               Manage Sellers
+            </li>
+            <li onClick={() => handleClick("/admin/track-orders")}>
+              Track Orders
             </li>
           </>
         )}

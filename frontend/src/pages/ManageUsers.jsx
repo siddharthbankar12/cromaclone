@@ -51,7 +51,7 @@ const ManageUsers = () => {
   }, [userData]);
 
   return (
-    <div className="admin-container">
+    <div className="admin-container-manage">
       <h2>Manage Users</h2>
 
       {loading ? (
@@ -63,6 +63,7 @@ const ManageUsers = () => {
               <tr>
                 <th>Name</th>
                 <th>Email</th>
+                <th>ID</th>
                 <th>Role</th>
                 <th>Phone</th>
                 <th>Address</th>
@@ -85,6 +86,7 @@ const ManageUsers = () => {
                         {user.firstName} {user.lastName}
                       </td>
                       <td>{user.email}</td>
+                      <td>{user._id}</td>
                       <td>{user.role}</td>
                       <td>{user.phoneNo}</td>
                       <td>{user.address}</td>

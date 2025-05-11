@@ -2,13 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginRegisterPage from "./LoginRegister";
 import SideBar from "./SideBar";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { querySearch } from "../store/querySlice";
 
 const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
   const route = useNavigate();
-  const dispatch = useDispatch();
   const sidebarRef = useRef(null);
   const userData = useSelector((state) => state.user.user);
   const cartCount = useSelector((state) => state.user.cartCount);
@@ -16,16 +14,16 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
   const location = useSelector((state) => state.user.location);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const LoginRegister = () => {
     if (userData) {
       route("/user-profile");
     } else {
       setIsModalOpen(true);
     }
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
   };
 
   const UserCart = () => {
@@ -40,10 +38,8 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
-      const queryParams = new URLSearchParams();
-      queryParams.set("search", searchTerm.trim());
-      route(`/all-products?${queryParams.toString()}`);
-      dispatch(querySearch({ query: searchTerm.trim() }));
+      route(`/all-products?search=${searchTerm.trim()}`);
+
       setSearchTerm("");
     } else {
       toast.warn("Please type something");
@@ -70,17 +66,29 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
     <div className="navbar">
       <div className="containerNav">
         <div className="left-nav">
-          <div
-            className="menu-hidden"
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          >
-            <span
-              className="material-symbols-outlined"
-              aria-label="Menu Toggle"
+          {!isSidebarOpen && (
+            <div onClick={() => setIsSidebarOpen(true)} className="menu-hidden">
+              <span
+                className="material-symbols-outlined"
+                aria-label="Menu Toggle"
+              >
+                menu
+              </span>
+            </div>
+          )}
+          {isSidebarOpen && (
+            <div
+              onClick={() => setIsSidebarOpen(false)}
+              className="menu-hidden"
             >
-              {isSidebarOpen ? "close" : "menu"}
-            </span>
-          </div>
+              <span
+                className="material-symbols-outlined"
+                aria-label="Menu Toggle"
+              >
+                close
+              </span>
+            </div>
+          )}
 
           <div
             className="croma-logo"
@@ -91,18 +99,28 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
             <img src="/assets/croma_logo/Croma_Logo.svg" alt="Croma Logo" />
           </div>
 
-          <div
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="menu-bar"
-          >
-            <span
-              className="material-symbols-outlined"
-              aria-label="Menu Toggle"
-            >
-              {isSidebarOpen ? "close" : "menu"}
-            </span>
-            <p>{isSidebarOpen ? "Menu" : "Menu"}</p>
-          </div>
+          {!isSidebarOpen && (
+            <div onClick={() => setIsSidebarOpen(true)} className="menu-bar">
+              <span
+                className="material-symbols-outlined"
+                aria-label="Menu Toggle"
+              >
+                menu
+              </span>
+              <p>Menu</p>
+            </div>
+          )}
+          {isSidebarOpen && (
+            <div onClick={() => setIsSidebarOpen(false)} className="menu-bar">
+              <span
+                className="material-symbols-outlined"
+                aria-label="Menu Toggle"
+              >
+                close
+              </span>
+              <p>Close</p>
+            </div>
+          )}
 
           <div className="search-bar">
             <input
@@ -123,7 +141,9 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
 
             <span
               className="material-symbols-outlined"
-              aria-label="Search"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               onClick={handleSearch}
             >
               search
@@ -136,15 +156,21 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
             <span className="material-symbols-outlined" aria-label="Location">
               location_on
             </span>
+
             <p>
-              {location.userCity}, {location.postalCode}
+              {location?.userCity || "Unknown City"},{" "}
+              {location?.postalCode || "000000"}
             </p>
-            <span
+
+            {/* <span
               className="material-symbols-outlined"
               aria-label="Edit Location"
+              onClick={() => {
+                route("/user-profile");
+              }}
             >
               edit
-            </span>
+            </span> */}
           </div>
 
           <div className="profile" onClick={LoginRegister}>

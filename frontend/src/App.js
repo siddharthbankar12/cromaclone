@@ -19,6 +19,8 @@ import ManageProducts from "./pages/ManageProducts";
 import AboutUs from "./pages/AboutUs";
 import ManageUsers from "./pages/ManageUsers";
 import ManageSellers from "./pages/ManageSellers";
+import WishList from "./pages/WishList";
+import TrackOrders from "./pages/TrackOrders";
 
 const App = () => {
   const userData = useSelector((state) => state.user.user);
@@ -85,9 +87,11 @@ const App = () => {
           />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order-history" element={<OrderHistory />} />
+          <Route path="/wishlist" element={<WishList />} />
           <Route path="/admin/manage-products" element={<ManageProducts />} />
           <Route path="/admin/manage-users" element={<ManageUsers />} />
           <Route path="/admin/manage-sellers" element={<ManageSellers />} />
+          <Route path="/admin/track-orders" element={<TrackOrders />} />
           <Route path="/about-us" element={<AboutUs />} />
         </Routes>
       </div>

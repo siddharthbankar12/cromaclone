@@ -1,0 +1,139 @@
+.mo-orders-container {
+  padding: 2rem;
+  background-color: #f8f9fa;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+}
+
+.mo-orders-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1a9f57;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #1a9f57;
+  padding-bottom: 0.5rem;
+  text-align: center;
+}
+
+.mo-orders-table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.mo-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.mo-orders-table thead {
+  background-color: #e6f4ed;
+}
+
+.mo-orders-table th,
+.mo-orders-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgb(222, 218, 218);
+}
+
+.mo-orders-table th {
+  color: #1a9f57;
+  font-weight: 600;
+}
+
+.mo-orders-table td img.mo-product-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+.mo-product-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.mo-clickable-id {
+  color: #1a9f57;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.mo-clickable-id:hover {
+  color: #117d43;
+  text-decoration: underline;
+}
+
+.mo-loading-text {
+  color: #1a9f57;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Popups */
+.mo-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.mo-popup-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.mo-popup-content h3 {
+  margin-top: 0;
+  color: #1a9f57;
+  margin-bottom: 1rem;
+}
+
+.mo-popup-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.mo-popup-content li {
+  margin-bottom: 0.5rem;
+  font-size: 14.5px;
+}
+
+.mo-close-btn {
+  background-color: #1a9f57;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.mo-close-btn:hover {
+  background-color: #117d43;
+}
+
+.mo-order-date {
+  font-size: 13.5px;
+  color: #555;
+}

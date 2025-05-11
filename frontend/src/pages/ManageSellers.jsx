@@ -10,7 +10,9 @@ const ManageSellers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const getUsersDetails = async () => {
+  console.log(users);
+
+  const getSellerDetails = async () => {
     try {
       setLoading(true);
       const response = await axiosInstance.post("/admin/all-users0", {
@@ -25,7 +27,7 @@ const ManageSellers = () => {
     }
   };
 
-  const deleteUser = async (userId) => {
+  const deleteSeller = async (userId) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this seller?"
     );
@@ -46,12 +48,12 @@ const ManageSellers = () => {
 
   useEffect(() => {
     if (userData?.role === "admin") {
-      getUsersDetails();
+      getSellerDetails();
     }
   }, [userData]);
 
   return (
-    <div className="admin-container">
+    <div className="admin-container-manage">
       <h2>Manage Sellers</h2>
 
       {loading ? (
@@ -63,6 +65,7 @@ const ManageSellers = () => {
               <tr>
                 <th>Name</th>
                 <th>Email</th>
+                <th>ID</th>
                 <th>Role</th>
                 <th>Phone</th>
                 <th>Address</th>
@@ -85,13 +88,14 @@ const ManageSellers = () => {
                         {user.firstName} {user.lastName}
                       </td>
                       <td>{user.email}</td>
+                      <td>{user._id}</td>
                       <td>{user.role}</td>
                       <td>{user.phoneNo}</td>
                       <td>{user.address}</td>
                       <td className="delete-user-btn-admin">
                         <button
                           className="admin-delete-btn"
-                          onClick={() => deleteUser(user._id)}
+                          onClick={() => deleteSeller(user._id)}
                           title="Delete User"
                         >
                           <MdDelete size={20} />

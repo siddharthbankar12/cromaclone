@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/LandingPage.css";
 import { mergedData, imagesSlider } from "../utils/data";
-import { useDispatch } from "react-redux";
-import { querySearch } from "../store/querySlice";
 
 const LandingPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [curIndex, setCurIndex] = useState(0);
   const route = useNavigate();
-  const dispatch = useDispatch();
 
   const imagesToShow = 10;
   const imagesToMove = 2;
@@ -113,10 +110,7 @@ const LandingPage = () => {
                 className="category-images"
                 style={{ flex: `0 0 ${100 / imagesToShow}%` }}
                 onClick={() => {
-                  const queryParams = new URLSearchParams();
-                  queryParams.set("search", src.name.trim());
-                  route(`/all-products?${queryParams.toString()}`);
-                  dispatch(querySearch({ query: src.name.trim() }));
+                  route(`/all-products?category=${src.name.trim()}`);
                 }}
               >
                 <img src={src.image} alt={src.name} />
@@ -250,10 +244,7 @@ const LandingPage = () => {
                 className="brand-images"
                 key={index}
                 onClick={() => {
-                  const queryParams = new URLSearchParams();
-                  queryParams.set("search", logoPath.name.trim());
-                  route(`/all-products?${queryParams.toString()}`);
-                  dispatch(querySearch({ query: logoPath.name.trim() }));
+                  route(`/all-products?brand=${logoPath.name.trim()}`);
                 }}
               >
                 <img src={logoPath.logo} alt={logoPath.name} />

@@ -45,10 +45,14 @@ const OrderHistory = () => {
                 <div key={idx} className="order-card">
                   <h2 className="order-id">Order ID: {order._id}</h2>
                   <p className="order-price">
-                    Total Price: ₹{order.price.toLocaleString("en-IN")}
+                    Total Price : ₹{order.price.toLocaleString("en-IN")}
                   </p>
                   <p className="order-date">
-                    Order Date: {new Date(order.createdAt).toLocaleDateString()}
+                    Order Date :{" "}
+                    {new Date(order.createdAt).toLocaleDateString()}
+                  </p>
+                  <p className="order-date">
+                    Delivery Address : {order.orderAdd}
                   </p>
                   <div className="product-list">
                     {order.products.map((item, index) => (

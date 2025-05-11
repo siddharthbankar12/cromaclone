@@ -1,10 +1,11 @@
+import Order from "../models/order.schema.js";
 import Product from "../models/product.schema.js";
 import User from "../models/user.schema.js";
 import jwt from "jsonwebtoken";
 
 export const allProducts0 = async (req, res) => {
   try {
-    const products = await Product.find({});
+    const products = await Product.find({}).populate("sellerId");
 
     return res.status(200).json({
       success: true,
@@ -13,6 +14,23 @@ export const allProducts0 = async (req, res) => {
     });
   } catch (error) {
     console.error("All Products API error:", error);
+    return res.status(500).json({ success: false, message: "Server error." });
+  }
+};
+
+export const getAllOrders0 = async (req, res) => {
+  try {
+    const orders = await Order.find()
+      .populate("userId")
+      .populate("products.productId");
+
+    return res.status(200).json({
+      success: true,
+      message: "All orders fetched successfully.",
+      orders,
+    });
+  } catch (error) {
+    console.error("All Orders API error:", error);
     return res.status(500).json({ success: false, message: "Server error." });
   }
 };

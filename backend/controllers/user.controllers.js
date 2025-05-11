@@ -2,6 +2,7 @@ import User from "../models/user.schema.js";
 import Product from "../models/product.schema.js";
 import Cart from "../models/cart.schema.js";
 import Order from "../models/order.schema.js";
+import WishList from "../models/wishlist.schema.js";
 
 export const AddToCart = async (req, res) => {
   try {
@@ -143,10 +144,13 @@ export const DeleteCartProduct = async (req, res) => {
 
 export const CheckOut = async (req, res) => {
   try {
-    const { userId, products } = req.body;
+    const { userId, products, userAddress } = req.body;
 
     if (!userId) {
       return res.json({ success: false, message: "User is required" });
+    }
+    if (!userAddress) {
+      return res.json({ success: false, message: "Address is required" });
     }
     if (!products || products.length == 0) {
       return res.json({ success: false, message: "Products are required" });
@@ -172,6 +176,7 @@ export const CheckOut = async (req, res) => {
       userId,
       products: allProducts,
       price: totalPrice,
+      orderAdd: userAddress,
     });
 
     await newOrder.save();
@@ -190,12 +195,14 @@ export const CheckOut = async (req, res) => {
 
 export const BuyNow = async (req, res) => {
   try {
-    const { userId, product } = req.body;
+    const { userId, product, userAddress } = req.body;
 
     if (!userId) {
       return res.json({ success: false, message: "User is required" });
     }
-
+    if (!userAddress) {
+      return res.json({ success: false, message: "Address is required" });
+    }
     if (!product) {
       return res.json({ success: false, message: "Product are required" });
     }
@@ -211,6 +218,7 @@ export const BuyNow = async (req, res) => {
       userId,
       products: singleProduct,
       price: product.price,
+      orderAdd: userAddress,
     });
 
     await newOrder.save();
@@ -249,5 +257,90 @@ export const GetOrderHistory = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.json({ success: false, error });
+  }
+};
+
+export const updateWishList = async (req, res) => {
+  try {
+    const { userId, productId, action } = req.body;
+
+    if (!userId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User ID is required." });
+    }
+
+    if (!productId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Product ID is required." });
+    }
+
+    let wishList = await WishList.findOne({ userId });
+
+    if (!wishList) {
+      wishList = new WishList({ userId, products: [] });
+    }
+
+    if (action === "add") {
+      if (!wishList.products.includes(productId)) {
+        wishList.products.push(productId);
+      }
+    } else if (action === "remove") {
+      wishList.products = wishList.products.filter(
+        (id) => id.toString() !== productId
+      );
+    } else {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid action." });
+    }
+
+    await wishList.save();
+
+    const populatedWishList = await WishList.findById(wishList._id).populate(
+      "products"
+    );
+
+    return res.json({
+      success: true,
+      message: `Product ${
+        action === "add" ? "added to" : "removed from"
+      } wishlist.`,
+      wishlist: populatedWishList,
+    });
+  } catch (error) {
+    console.log("Error updating wishlist:", error);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export const getWishList = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User ID is required." });
+    }
+
+    const wishlist = await WishList.findOne({ userId }).populate("products");
+
+    if (!wishlist) {
+      return res.status(404).json({
+        success: false,
+        message: "Wishlist not found for this user.",
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: "Wishlist fetched successfully.",
+      wishlist,
+    });
+  } catch (error) {
+    console.error("Error fetching wishlist:", error);
+    return res.status(500).json({ success: false, error: error.message });
   }
 };

@@ -5,6 +5,25 @@
   margin-bottom: 60px;
 }
 
+.wishLiBt {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid #353535;
+  background-color: #353535;
+  border-radius: 12px;
+  padding: 5px 20px 5px 10px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.wishListBtn {
+  font-size: 45px;
+  border-radius: 22px;
+  padding: 10px;
+  cursor: pointer;
+}
+
 .loader {
   height: 100vh;
   margin: 0 auto;
@@ -75,6 +94,8 @@
 .single-product-name {
   font-size: 32px;
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
 }
 
 .product-rating {

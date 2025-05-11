@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import axiosInstance from "../utils/axiosConfig";
 import "../style/SingleProduct.css";
+import { MdFavorite } from "react-icons/md";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -12,6 +13,8 @@ const SingleProduct = () => {
   const [cartButtonDisable, setCartButtonDisable] = useState(false);
   const userData = useSelector((state) => state.user.user);
   const location = useSelector((state) => state.user.location);
+  const [wishListProducts, setWishListProducts] = useState([]);
+  const isInWishlist = wishListProducts.includes(id);
 
   const route = useNavigate();
 
@@ -38,14 +41,43 @@ const SingleProduct = () => {
     }
   };
 
+  const addToWishList = async (productId) => {
+    try {
+      await axiosInstance.post("/user/update-wishlist", {
+        userId: userData?._id,
+        productId,
+        action: "add",
+      });
+      setWishListProducts((prev) => [...prev, productId]);
+      toast.success("Product added to the wishlist");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeFromWishList = async (productId) => {
+    try {
+      await axiosInstance.post("/user/update-wishlist", {
+        userId: userData?._id,
+        productId,
+        action: "remove",
+      });
+      setWishListProducts((prev) => prev.filter((id) => id !== productId));
+      toast.success("Product removed from the wishlist");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const addToCart = async () => {
     if (userData?.role === "user") {
+      console.log(userData);
       try {
         setCartButtonDisable(true);
 
         const response = await axiosInstance.post("/user/add-to-cart", {
           productId: id,
-          userId: userData.userId,
+          userId: userData._id,
         });
         if (response.data.success) {
           toast.success(response.data.message);
@@ -68,8 +100,9 @@ const SingleProduct = () => {
       try {
         setLoading(true);
         const response = await axiosInstance.post("/user/buy-now", {
-          userId: userData.userId,
+          userId: userData._id,
           product: singleProduct,
+          userAddress: userData.address,
         });
         if (response.data.success) {
           toast.success(response.data.message);
@@ -88,7 +121,26 @@ const SingleProduct = () => {
     }
   };
 
-  console.log(userData);
+  useEffect(() => {
+    if (userData?.role) {
+      const fetchWishlist = async () => {
+        try {
+          const res = await axiosInstance.get(
+            `/user/get-wishlist/${userData?._id}`
+          );
+
+          const ids = res?.data?.wishlist?.products?.map((p) =>
+            typeof p === "string" ? p : p._id
+          );
+          setWishListProducts(ids || []);
+        } catch (err) {
+          console.log("Error fetching wishlist", err);
+        }
+      };
+
+      fetchWishlist();
+    }
+  }, [userData?.role]);
 
   if (loading) return <div className="loader"></div>;
   if (!singleProduct) return <p>No product found.</p>;
@@ -111,7 +163,7 @@ const SingleProduct = () => {
             </div>
             <div className="product-details">
               <div className="single-product-name">
-                <p>{singleProduct.name}</p>
+                <p>{singleProduct.name}</p>{" "}
               </div>
 
               <div className="product-rating">
@@ -143,6 +195,27 @@ const SingleProduct = () => {
                     )
                   </p>
                 </div>
+              </div>
+
+              <div
+                className="wishLiBt"
+                onClick={() => {
+                  isInWishlist
+                    ? removeFromWishList(singleProduct._id)
+                    : addToWishList(singleProduct._id);
+                }}
+              >
+                <MdFavorite
+                  className="wishListBtn"
+                  color={isInWishlist ? "red" : "white"}
+                />
+
+                <p>
+                  {" "}
+                  {isInWishlist
+                    ? "Remove from Wishlist"
+                    : "Add to Wishlist"}{" "}
+                </p>
               </div>
 
               <div className="address">

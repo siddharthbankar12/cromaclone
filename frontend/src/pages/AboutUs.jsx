@@ -34,6 +34,7 @@ const AboutUs = () => {
             <ul>
               <li>Add to cart & Buy Now</li>
               <li>Order History</li>
+              <li>Wishlist</li>
               <li>Profile Management</li>
             </ul>
           </div>
@@ -53,7 +54,8 @@ const AboutUs = () => {
             <h3>Admin</h3>
             <ul>
               <li>Manage Products</li>
-              <li>Monitor Users & Orders</li>
+              <li>Monitor Users & Sellers</li>
+              <li>Track Orders</li>
               <li>Dashboard Overview</li>
             </ul>
           </div>
@@ -64,7 +66,7 @@ const AboutUs = () => {
         <h2>Technologies Used</h2>
         <ul>
           <li>React.js & Redux for Frontend</li>
-          <li>Node.js and Express.js for Backend</li>
+          <li>Node.js & Express.js for Backend</li>
           <li>MongoDB for Database</li>
           <li>Socket.io for Real-Time Features</li>
           <li>HTML, CSS, JavaScript for UI</li>

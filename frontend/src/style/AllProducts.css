@@ -81,7 +81,7 @@
 .all-product-image {
   width: 100%;
   height: 300px;
-  position: relative;
+  /* position: relative; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,17 +92,7 @@
   & img {
     width: 67%;
     border-radius: 12px;
-    /* object-fit: fill; */
-  }
-
-  & i {
-    font-size: 18px;
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(25, 25, 25, 0.4);
-    border-radius: 22px;
-    padding: 10px;
+    cursor: pointer;
   }
 }
 
@@ -112,6 +102,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  cursor: pointer;
 }
 
 .product-namee {
@@ -188,13 +179,6 @@
   .all-product-image {
     & img {
       width: 100%;
-    }
-
-    & i {
-      font-size: 16px;
-
-      top: 10px;
-      right: 10px;
     }
   }
 

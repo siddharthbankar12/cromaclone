@@ -7,6 +7,8 @@ import {
   CheckOut,
   GetOrderHistory,
   BuyNow,
+  updateWishList,
+  getWishList,
 } from "../controllers/user.controllers.js";
 
 const UserRouters = Router();
@@ -18,5 +20,7 @@ UserRouters.post("/update-cart-product-quantity", UpdateCartProductQuantity);
 UserRouters.post("/checkout", CheckOut);
 UserRouters.post("/buy-now", BuyNow);
 UserRouters.post("/get-order-history", GetOrderHistory);
+UserRouters.post("/update-wishlist", updateWishList);
+UserRouters.get("/get-wishlist/:userId", getWishList);
 
 export default UserRouters;

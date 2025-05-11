@@ -17,6 +17,8 @@ const Cart = () => {
   const route = useNavigate();
   const dispatch = useDispatch();
 
+  console.log(userData);
+
   const getCartProducts = async () => {
     try {
       if (!userData?.userId) {
@@ -103,6 +105,7 @@ const Cart = () => {
       setLoading(true);
       const response = await axiosInstance.post("/user/checkout", {
         userId: userData.userId,
+        userAddress: userData.address,
         products,
       });
       if (response.data.success) {
