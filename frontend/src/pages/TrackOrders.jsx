@@ -34,7 +34,7 @@ const TrackOrders = () => {
     <div className="mo-orders-container">
       <h2 className="mo-orders-title">Track Orders</h2>
       {loading ? (
-        <p className="mo-loading-text">Loading...</p>
+        <div className="loader"></div>
       ) : (
         <div className="mo-orders-table-wrapper">
           <table className="mo-orders-table">

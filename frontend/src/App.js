@@ -21,6 +21,9 @@ import ManageUsers from "./pages/ManageUsers";
 import ManageSellers from "./pages/ManageSellers";
 import WishList from "./pages/WishList";
 import TrackOrders from "./pages/TrackOrders";
+import { FaArrowUp } from "react-icons/fa";
+import "./style/index.css";
+import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
   const userData = useSelector((state) => state.user.user);
@@ -67,7 +70,8 @@ const App = () => {
   }, [userData]);
 
   return (
-    <>
+    <div className="superApp">
+      <ScrollToTop />
       <Navbar
         setIsSidebarOpen={setIsSidebarOpen}
         isSidebarOpen={isSidebarOpen}
@@ -96,7 +100,14 @@ const App = () => {
         </Routes>
       </div>
       <Footer />
-    </>
+
+      <div
+        className="TopWindowArrow"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
+        <FaArrowUp />
+      </div>
+    </div>
   );
 };
 

@@ -4,3 +4,24 @@
   box-sizing: border-box;
   font-family: "Open Sans", serif;
 }
+
+.TopWindowArrow {
+  position: fixed;
+  background-color: #0f9c82;
+  font-size: 28px;
+  bottom: 25px;
+  right: 25px;
+  border: 2px solid white;
+  border-radius: 90%;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+}
+
+.TopWindowArrow:hover {
+  transform: scale(1.1);
+  background-color: #0a6655;
+}

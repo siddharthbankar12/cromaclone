@@ -54,7 +54,9 @@ const ManageSellers = () => {
 
   return (
     <div className="admin-container-manage">
-      <h2>Manage Sellers</h2>
+      <h2 style={{ textAlign: "center", margin: " 0 0 25px 0" }}>
+        Manage Sellers
+      </h2>
 
       {loading ? (
         <div className="loader"></div>

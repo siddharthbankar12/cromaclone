@@ -52,7 +52,9 @@ const ManageUsers = () => {
 
   return (
     <div className="admin-container-manage">
-      <h2>Manage Users</h2>
+      <h2 style={{ textAlign: "center", margin: " 0 0 25px 0" }}>
+        Manage Users
+      </h2>
 
       {loading ? (
         <div className="loader"></div>
