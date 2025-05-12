@@ -1,84 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "../style/LandingPage.css";
-import { mergedData, imagesSlider } from "../utils/data";
+import { imagesSlider } from "../utils/data";
+import CategoryLandingPage from "../components/CategoryLandingPage";
+import LogoLandingPage from "../components/LogoLandingPage";
 
 const LandingPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [curIndex, setCurIndex] = useState(0);
-  const route = useNavigate();
-
-  const imagesToShow = 10;
-  const imagesToMove = 2;
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % imagesSlider.length);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
-
-  const nextImage = () => {
-    if (
-      curIndex + imagesToMove <=
-      mergedData.categories.length - imagesToShow
-    ) {
-      setCurIndex(curIndex + imagesToMove);
-    } else {
-      setCurIndex(0);
-    }
-  };
-
-  const prevImage = () => {
-    if (curIndex - imagesToMove >= 0) {
-      setCurIndex(curIndex - imagesToMove);
-    } else {
-      setCurIndex(mergedData.categories.length - imagesToShow);
-    }
-  };
-
-  const offset = -(curIndex * (100 / imagesToShow));
-
-  useEffect(() => {
-    const logoContainer = document.querySelector(".brand-container");
-    const logos = document.querySelectorAll(".brand-images");
-    const logosToShow = 5;
-    const logosToMove = 2;
-    const logoWidth = 100 / logosToShow;
-    let currentLogoIndex = 0;
-
-    function updateLogoPosition() {
-      const offset = -currentLogoIndex * logoWidth;
-      logoContainer.style.transform = `translateX(${offset}%)`;
-    }
-
-    function nextLogo() {
-      if (currentLogoIndex + logosToMove <= logos.length - logosToShow) {
-        currentLogoIndex += logosToMove;
-      } else {
-        currentLogoIndex = logos.length - logosToShow;
-      }
-      updateLogoPosition();
-    }
-
-    function prevLogo() {
-      if (currentLogoIndex - logosToMove >= 0) {
-        currentLogoIndex -= logosToMove;
-      } else {
-        currentLogoIndex = 0;
-      }
-      updateLogoPosition();
-    }
-
-    logos.forEach((logo) => {
-      logo.style.flex = `0 0 ${logoWidth}%`;
-    });
-
-    updateLogoPosition();
-
-    window.nextLogo = nextLogo;
-    window.prevLogo = prevLogo;
   }, []);
 
   return (
@@ -94,35 +27,7 @@ const LandingPage = () => {
         ))}
       </div>
 
-      <div className="category">
-        <button className="prev" onClick={prevImage}>
-          &#10094;
-        </button>
-
-        <div className="imageWindow">
-          <div
-            className="category-container"
-            style={{ transform: `translateX(${offset}%)` }}
-          >
-            {mergedData.categories.map((src, index) => (
-              <div
-                key={index}
-                className="category-images"
-                style={{ flex: `0 0 ${100 / imagesToShow}%` }}
-                onClick={() => {
-                  route(`/all-products?category=${src.name.trim()}`);
-                }}
-              >
-                <img src={src.image} alt={src.name} />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <button className="next" onClick={nextImage}>
-          &#10095;
-        </button>
-      </div>
+      <CategoryLandingPage />
 
       <div className="bank-offers">
         <p>Exciting Bank Offers For You</p>
@@ -232,31 +137,7 @@ const LandingPage = () => {
         <img src="./assets/why_croma/Why-Croma_t2lgxr.png" alt="" />
       </div>
 
-      <div className="brands">
-        <button className="prevLogo" onClick={() => window.prevLogo()}>
-          &#10094;
-        </button>
-
-        <div className="logoWindow">
-          <div className="brand-container">
-            {mergedData.brands.slice(0, -1).map((logoPath, index) => (
-              <div
-                className="brand-images"
-                key={index}
-                onClick={() => {
-                  route(`/all-products?brand=${logoPath.name.trim()}`);
-                }}
-              >
-                <img src={logoPath.logo} alt={logoPath.name} />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <button className="nextLogo" onClick={() => window.nextLogo()}>
-          &#10095;
-        </button>
-      </div>
+      <LogoLandingPage />
     </div>
   );
 };

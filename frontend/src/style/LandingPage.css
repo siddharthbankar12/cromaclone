@@ -316,7 +316,7 @@
 
     & img {
       cursor: pointer;
-      width: 10%;
+      width: 120px;
     }
   }
 }

@@ -28,6 +28,7 @@ import ScrollToTop from "./components/ScrollToTop";
 const App = () => {
   const userData = useSelector((state) => state.user.user);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -69,6 +70,24 @@ const App = () => {
     }
   }, [userData]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const windowHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollPosition / windowHeight) * 100;
+
+      if (scrollPercent > 20) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div className="superApp">
       <ScrollToTop />
@@ -101,12 +120,14 @@ const App = () => {
       </div>
       <Footer />
 
-      <div
-        className="TopWindowArrow"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      >
-        <FaArrowUp />
-      </div>
+      {showScrollTop && (
+        <div
+          className="TopWindowArrow"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          <FaArrowUp />
+        </div>
+      )}
     </div>
   );
 };
