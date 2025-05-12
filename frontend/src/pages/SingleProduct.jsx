@@ -42,39 +42,40 @@ const SingleProduct = () => {
   };
 
   const addToWishList = async (productId) => {
-    try {
-      const response = await axiosInstance.post("/user/update-wishlist", {
-        userId: userData?._id,
-        productId,
-        action: "add",
-      });
+    if (userData?.role) {
+      try {
+        await axiosInstance.post("/user/update-wishlist", {
+          userId: userData?._id,
+          productId,
+          action: "add",
+        });
 
-      if (response.data.success === true) {
         setWishListProducts((prev) => [...prev, productId]);
         toast.success("Product added to the wishlist");
-      } else {
-        toast.warn(response.data.message);
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      toast.warn("UserId required, Please login.");
     }
   };
 
   const removeFromWishList = async (productId) => {
-    try {
-      const response = await axiosInstance.post("/user/update-wishlist", {
-        userId: userData?._id,
-        productId,
-        action: "remove",
-      });
-      if (response.data.success === true) {
+    if (userData?.role) {
+      try {
+        await axiosInstance.post("/user/update-wishlist", {
+          userId: userData?._id,
+          productId,
+          action: "remove",
+        });
+
         setWishListProducts((prev) => prev.filter((id) => id !== productId));
         toast.success("Product removed from the wishlist");
-      } else {
-        toast.warn(response.data.message);
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      toast.warn("UserId required, Please login.");
     }
   };
 
