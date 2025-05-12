@@ -265,9 +265,10 @@ export const updateWishList = async (req, res) => {
     const { userId, productId, action } = req.body;
 
     if (!userId) {
-      return res
-        .status(400)
-        .json({ success: false, message: "User ID is required." });
+      return res.status(400).json({
+        success: false,
+        message: "User ID is required, Please Login.",
+      });
     }
 
     if (!productId) {

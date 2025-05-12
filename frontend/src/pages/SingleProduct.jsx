@@ -43,13 +43,18 @@ const SingleProduct = () => {
 
   const addToWishList = async (productId) => {
     try {
-      await axiosInstance.post("/user/update-wishlist", {
+      const response = await axiosInstance.post("/user/update-wishlist", {
         userId: userData?._id,
         productId,
         action: "add",
       });
-      setWishListProducts((prev) => [...prev, productId]);
-      toast.success("Product added to the wishlist");
+
+      if (response.data.success === true) {
+        setWishListProducts((prev) => [...prev, productId]);
+        toast.success("Product added to the wishlist");
+      } else {
+        toast.warn(response.data.message);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -57,13 +62,17 @@ const SingleProduct = () => {
 
   const removeFromWishList = async (productId) => {
     try {
-      await axiosInstance.post("/user/update-wishlist", {
+      const response = await axiosInstance.post("/user/update-wishlist", {
         userId: userData?._id,
         productId,
         action: "remove",
       });
-      setWishListProducts((prev) => prev.filter((id) => id !== productId));
-      toast.success("Product removed from the wishlist");
+      if (response.data.success === true) {
+        setWishListProducts((prev) => prev.filter((id) => id !== productId));
+        toast.success("Product removed from the wishlist");
+      } else {
+        toast.warn(response.data.message);
+      }
     } catch (error) {
       console.log(error);
     }
