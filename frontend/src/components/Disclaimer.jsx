@@ -4,7 +4,7 @@ import "../style/UsefulLinksFooter.css";
 const Disclaimer = () => {
   return (
     <div>
-      <h1>Disclaimer</h1>
+      <h1 className="usefulLink">Disclaimer</h1>
     </div>
   );
 };

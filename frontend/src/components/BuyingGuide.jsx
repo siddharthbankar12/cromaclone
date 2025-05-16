@@ -4,7 +4,7 @@ import "../style/UsefulLinksFooter.css";
 const BuyingGuide = () => {
   return (
     <div>
-      <h1>Buying Guide</h1>
+      <h1 className="usefulLink">Buying Guide</h1>
     </div>
   );
 };

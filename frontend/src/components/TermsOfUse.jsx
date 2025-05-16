@@ -4,7 +4,7 @@ import "../style/UsefulLinksFooter.css";
 const TermsOfUse = () => {
   return (
     <div>
-      <h1>Terms Of Use</h1>
+      <h1 className="usefulLink">Terms Of Use</h1>
     </div>
   );
 };

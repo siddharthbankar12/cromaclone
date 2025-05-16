@@ -57,12 +57,18 @@ const LandingPage = () => {
             <img
               src="./assets/new_favourites/HP_2Split_SOH_Exchange_13Dec2024_kfuopd.jpg"
               alt=""
+              onClick={() => {
+                route("/all-products");
+              }}
             />
           </div>
           <div className="tfv">
             <img
               src="./assets/new_favourites/HP_2Split_SOH_Winter_13Dec2024_cw4pe0.jpg"
               alt=""
+              onClick={() => {
+                route("/all-products");
+              }}
             />
           </div>
         </div>
@@ -70,12 +76,20 @@ const LandingPage = () => {
           <img
             src="./assets/new_favourites/HP_SingleSplit_13R_13Jan2025_rroxr9.jpg"
             alt=""
+            onClick={() => {
+              route("/all-products?category=Mobiles&brand=OnePlus");
+            }}
           />
         </div>
         <div className="fav-images">
           <img
             src="./assets/new_favourites/HP_SingleSplit_JBLBeam3_13Jan2025_pxlh9h.jpg"
             alt=""
+            onClick={() => {
+              route(
+                "/all-products?category=Headphones+%26+Earphones&brand=JBL"
+              );
+            }}
           />
         </div>
         <div className="fav-images"></div>
@@ -101,17 +115,29 @@ const LandingPage = () => {
           <img
             src="./assets/whats_hot/HP_Whats_Hot_Ref_13Jan2025_ckquqt.jpg"
             alt=""
+            onClick={() => {
+              route("/all-products?category=refrigerator");
+            }}
           />
           <img
             src="./assets/whats_hot/HP_Whats_Hot_TV_13Jan2025_tzbq8z.jpg"
             alt=""
+            onClick={() => {
+              route("/all-products?category=Television");
+            }}
           />
         </div>
       </div>
 
       <div className="repairing-appliances">
         <p>No More Worrying About Your Appliances</p>
-        <img src="./assets/repairing/D_zipcare_njguxg.png" alt="" />
+        <img
+          src="./assets/repairing/D_zipcare_njguxg.png"
+          alt=""
+          onClick={() => {
+            route("/all-products");
+          }}
+        />
       </div>
 
       <div className="exclusively-curated">

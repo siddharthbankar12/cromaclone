@@ -4,7 +4,7 @@ import "../style/UsefulLinksFooter.css";
 const PrivacyPolicy = () => {
   return (
     <div>
-      <h1>Privacy Policy</h1>
+      <h1 className="usefulLink">Privacy Policy</h1>
     </div>
   );
 };
