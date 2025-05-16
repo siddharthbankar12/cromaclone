@@ -3,9 +3,11 @@ import "../style/LandingPage.css";
 import { imagesSlider } from "../utils/data";
 import CategoryLandingPage from "../components/CategoryLandingPage";
 import LogoLandingPage from "../components/LogoLandingPage";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const route = useNavigate();
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % imagesSlider.length);
@@ -85,10 +87,16 @@ const LandingPage = () => {
           <img
             src="./assets/whats_hot/HP_Whats_Hot_ACs_13Jan2025_a2hphd.jpg"
             alt=""
+            onClick={() => {
+              route("/all-products?category=Air%20Conditioners");
+            }}
           />
           <img
             src="./assets/whats_hot/HP_Whats_Hot_Laptops_13Jan2025_agf06d.jpg"
             alt=""
+            onClick={() => {
+              route("/all-products?category=Laptops");
+            }}
           />
           <img
             src="./assets/whats_hot/HP_Whats_Hot_Ref_13Jan2025_ckquqt.jpg"

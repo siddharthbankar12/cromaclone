@@ -56,7 +56,7 @@ const SingleProduct = () => {
         console.log(error);
       }
     } else {
-      toast.warn("UserId required, Please login.");
+      toast.warn("User ID required, Please login.");
     }
   };
 
@@ -75,7 +75,7 @@ const SingleProduct = () => {
         console.log(error);
       }
     } else {
-      toast.warn("UserId required, Please login.");
+      toast.warn("User ID required, Please login.");
     }
   };
 

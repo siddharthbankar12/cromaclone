@@ -75,6 +75,7 @@
     margin: 25px 0;
     padding-bottom: 15px;
     border-bottom: 1px solid grey;
+    cursor: pointer;
   }
 }
 
@@ -92,7 +93,6 @@
   & img {
     width: 67%;
     border-radius: 12px;
-    cursor: pointer;
   }
 }
 
@@ -102,7 +102,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  cursor: pointer;
 }
 
 .product-namee {

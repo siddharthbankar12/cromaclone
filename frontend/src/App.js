@@ -24,6 +24,11 @@ import TrackOrders from "./pages/TrackOrders";
 import { FaArrowUp } from "react-icons/fa";
 import "./style/index.css";
 import ScrollToTop from "./components/ScrollToTop";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import Disclaimer from "./components/Disclaimer";
+import TermsOfUse from "./components/TermsOfUse";
+import BuyingGuide from "./components/BuyingGuide";
+import HelpSupport from "./components/HelpSupport";
 
 const App = () => {
   const userData = useSelector((state) => state.user.user);
@@ -116,6 +121,12 @@ const App = () => {
           <Route path="/admin/manage-sellers" element={<ManageSellers />} />
           <Route path="/admin/track-orders" element={<TrackOrders />} />
           <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/about-us" element={<PrivacyPolicy />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/terms-of-use" element={<TermsOfUse />} />
+          <Route path="/buying-guide" element={<BuyingGuide />} />
+          <Route path="/help-and-support" element={<HelpSupport />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
       </div>
       <Footer />

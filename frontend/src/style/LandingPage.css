@@ -405,14 +405,24 @@
 }
 
 .changeHead {
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 24px;
+  font-weight: 700;
   text-transform: uppercase;
-  text-decoration: underline;
+  /* text-decoration: underline; */
   margin-bottom: 10px;
+  word-spacing: 10px;
 }
 
-.twosection {
+.changeHeadForm {
+  font-size: 22px;
+  font-weight: 800;
+  text-transform: uppercase;
+  /* text-decoration: underline; */
+  margin-bottom: 10px;
+  word-spacing: 5px;
+}
+
+.twoSection {
   display: flex;
   flex-wrap: wrap;
   font-size: 18px;
@@ -421,6 +431,10 @@
     cursor: pointer;
     width: 50%;
     margin-top: 10px;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -428,7 +442,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  /* justify-content: space-around; */
+  gap: 12px;
+  height: 100%;
   padding: 20px;
   border: 1px solid white;
   border-radius: 8px;

@@ -6,7 +6,6 @@ import { mergedData } from "../utils/data";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-
 const AllProducts = () => {
   const userData = useSelector((state) => state.user.user);
   const [allProducts, setAllProducts] = useState([]);
@@ -208,23 +207,18 @@ const AllProducts = () => {
         ) : (
           allProducts.map((product) => {
             return (
-              <div className="single-product-container" key={product._id}>
+              <div
+                className="single-product-container"
+                key={product._id}
+                onClick={() =>
+                  route(`/all-products/single-product/${product._id}`)
+                }
+              >
                 <div className="all-product-image">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    onClick={() =>
-                      route(`/all-products/single-product/${product._id}`)
-                    }
-                  />
+                  <img src={product.image} alt={product.name} />
                 </div>
 
-                <div
-                  className="product-name-price-delivery"
-                  onClick={() =>
-                    route(`/all-products/single-product/${product._id}`)
-                  }
-                >
+                <div className="product-name-price-delivery">
                   <div className="product-namee">
                     {product.name} - {product.brand}
                   </div>

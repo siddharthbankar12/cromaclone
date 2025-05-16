@@ -1,38 +1,79 @@
 import React from "react";
 import "../style/LandingPage.css";
+import { mergedData } from "../utils/data";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const route = useNavigate();
+
   return (
     <div className="footer">
       <div className="footer-container">
         <div className="footer-top">
           <div className="usefulLinks">
             <p className="changeHead">Useful Links</p>
-            <div className="twosection">
-              <p>About Croma</p>
-              <p>Help And Support</p>
-              <p>FAQs</p>
-              <p>Buying Guide</p>
-              <p>Return Policy</p>
-              <p>B2B Orders</p>
-              <p>Store Locator</p>
-              <p>E-Waste</p>
-              <p>Franchise Opportunity</p>
-              <p>Site Map</p>
-              <p>Careers At Croma</p>
-              <p>Terms of Use</p>
-              <p>Disclaimer</p>
-              <p>Privacy Policy</p>
-              <p>Unboxed</p>
-              <p>Gift Card</p>
-              <p>Croma E-Star</p>
+            <div className="twoSection">
+              <p
+                onClick={() => {
+                  route("/about-us");
+                }}
+              >
+                About Croma
+              </p>
+              <p
+                onClick={() => {
+                  route("/help-and-support");
+                }}
+              >
+                Help And Support
+              </p>
+
+              <p
+                onClick={() => {
+                  route("/buying-guide");
+                }}
+              >
+                Buying Guide
+              </p>
+
+              <p
+                onClick={() => {
+                  route("/terms-of-use");
+                }}
+              >
+                Terms of Use
+              </p>
+              <p
+                onClick={() => {
+                  route("/disclaimer");
+                }}
+              >
+                Disclaimer
+              </p>
+              <p
+                onClick={() => {
+                  route("/privacy-policy");
+                }}
+              >
+                Privacy Policy
+              </p>
             </div>
           </div>
 
           <div className="productLinks">
             <p className="changeHead">Products</p>
-            <div className="twosection">
-              <p>Televisions & Accessories</p>
+            <div className="twoSection">
+              {mergedData.categories.map((src, index) => (
+                <p
+                  key={index}
+                  onClick={() => {
+                    route(`/all-products?category=${src.name.trim()}`);
+                  }}
+                >
+                  {src.name}
+                </p>
+              ))}
+              {/* <p>Televisions & Accessories</p>
               <p>Home Appliances</p>
               <p>Phones & Wearables</p>
               <p>Computers & Tablets</p>
@@ -44,12 +85,12 @@ const Footer = () => {
               <p>Gaming</p>
               <p>Accessories</p>
               <p>Top Brands</p>
-              <p>Personal Care</p>
+              <p>Personal Care</p> */}
             </div>
           </div>
 
           <form className="contact-form">
-            <p className="changeHead">Connect with us</p>
+            <p className="changeHeadForm">Connect with us</p>
             <div className="enter-email">
               <input type="text" placeholder="Enter Email ID" />
             </div>
