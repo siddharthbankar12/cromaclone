@@ -25,6 +25,13 @@ export const AddToCart = async (req, res) => {
       return res.json({ success: false, message: "Product not found" });
     }
 
+    if (isProductExist.quantity <= 1) {
+      return res.json({
+        success: false,
+        message: "Product is out of stock",
+      });
+    }
+
     const cart = await Cart.findOne({ userId });
 
     if (cart) {
@@ -165,14 +172,31 @@ export const CheckOut = async (req, res) => {
     let totalPrice = 0;
 
     for (let i = 0; i < products.length; i++) {
-      allProducts.push({
-        productId: products[i]._id,
-        quantity: products[i].quantity,
-      });
-      totalPrice += products[i].price * products[i].quantity;
+      const { _id, quantity } = products[i];
+
+      const product = await Product.findById(_id);
+      if (!product) {
+        return res.json({
+          success: false,
+          message: `Product with ID ${_id} not found`,
+        });
+      }
+
+      if (product.quantity < quantity) {
+        return res.json({
+          success: false,
+          message: `Insufficient stock for product ${product.name}`,
+        });
+      }
+
+      product.quantity -= quantity;
+      await product.save();
+
+      allProducts.push({ productId: _id, quantity });
+      totalPrice += product.price * quantity;
     }
 
-    const newOrder = Order({
+    const newOrder = new Order({
       userId,
       products: allProducts,
       price: totalPrice,
@@ -185,7 +209,7 @@ export const CheckOut = async (req, res) => {
 
     return res.json({
       success: true,
-      message: "Order Successful, you'll get product delivered soon",
+      message: "Order successful, you'll get your products delivered soon",
     });
   } catch (error) {
     console.log(error);
@@ -210,6 +234,18 @@ export const BuyNow = async (req, res) => {
     const isUserExist = await User.findById(userId);
     if (!isUserExist) {
       return res.json({ success: false, message: "User not found" });
+    }
+
+    const isProductExist = await Product.findById(product._id);
+    if (!isProductExist) {
+      return res.json({ success: false, message: "Product not found" });
+    }
+
+    if (isProductExist.quantity <= 1) {
+      return res.json({
+        success: false,
+        message: "Product is out of stock",
+      });
     }
 
     let singleProduct = [{ productId: product._id, quantity: 1 }];

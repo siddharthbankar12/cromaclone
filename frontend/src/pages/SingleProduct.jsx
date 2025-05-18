@@ -18,6 +18,16 @@ const SingleProduct = () => {
 
   const route = useNavigate();
 
+  const getDeliveryDate = () => {
+    const today = new Date();
+    today.setDate(today.getDate() + 3);
+    return today.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
   useEffect(() => {
     if (id) getSingleProductData();
   }, [id]);
@@ -89,9 +99,11 @@ const SingleProduct = () => {
           productId: id,
           userId: userData._id,
         });
-        if (response.data.success) {
+        if (response.data.success === true) {
           toast.success(response.data.message);
           route("/cart");
+        } else {
+          toast.error(response.data.message);
         }
       } catch (error) {
         console.error("Add to cart error:", error);
@@ -114,10 +126,12 @@ const SingleProduct = () => {
           product: singleProduct,
           userAddress: userData.address,
         });
-        if (response.data.success) {
+        if (response.data.success === true) {
           toast.success(response.data.message);
 
           route("/order-history");
+        } else {
+          toast.error(response.data.message);
         }
       } catch (error) {
         console.log(error);
@@ -240,11 +254,15 @@ const SingleProduct = () => {
                     </span>
                     .
                   </p>
-                  <p>Will be delivered by 20 January 2025.</p>
+                  <p>Will be delivered by {getDeliveryDate()}.</p>
                 </div>
               </div>
 
               <div className="product-feature">
+                <p style={{ marginBottom: "15px" }}>
+                  Available Quantity : {singleProduct.quantity}
+                </p>
+
                 <p>Brand Name : {singleProduct.brand}</p>
                 <br />
                 <p>Description</p>

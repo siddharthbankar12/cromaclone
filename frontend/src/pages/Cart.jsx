@@ -112,6 +112,8 @@ const Cart = () => {
         toast.success(response.data.message);
         dispatch(setCartCount(0));
         route("/order-history");
+      } else {
+        toast.warn(response.data.message);
       }
     } catch (error) {
       console.log(error);
