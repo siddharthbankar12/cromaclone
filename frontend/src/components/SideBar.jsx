@@ -51,7 +51,7 @@ const SideBar = ({ setIsSidebarOpen }) => {
         {(!userData || userData.role === "user") && (
           <>
             <li onClick={() => handleUserClick("/cart")}>Cart</li>
-            <li onClick={() => handleUserClick("/wishlist")}>Wishlist</li>
+            <li onClick={() => handleUserClick("/wishlist")}>My Wishlist</li>
             <li onClick={() => handleUserClick("/order-history")}>
               Order History
             </li>
@@ -85,6 +85,9 @@ const SideBar = ({ setIsSidebarOpen }) => {
             </li>
           </>
         )}
+        <li onClick={() => handleClick("/buying-guide")}>Buying Guide</li>
+        <li onClick={() => handleClick("/help-and-support")}>Help & Support</li>
+        <li onClick={() => handleClick("/privacy-policy")}>Privacy Policy</li>
         <li onClick={() => handleClick("/about-us")}>About us</li>
         {userData?.role && <li onClick={logOutUser}>Logout</li>}
       </ul>

@@ -1,5 +1,331 @@
-.usefulLink {
+/* buying guide */
+
+.croma-buying-guide {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom, #1c1c1c, #2b2b2b);
   color: white;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+.croma-heading {
+  font-size: 2.8rem;
   text-align: center;
-  margin: 200px 0;
+  margin-bottom: 40px;
+  color: #00e9bf;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.croma-guide-section {
+  width: 80%;
+  background: #333;
+  margin: 0 auto 30px;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  border-left: 5px solid #00e9bf;
+  transition: background 0.3s ease;
+}
+
+.croma-guide-section h2 {
+  color: #00e9bf;
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+  border-bottom: 1px solid #444;
+  padding-bottom: 8px;
+}
+
+.croma-guide-section ul {
+  list-style: disc;
+  margin-left: 20px;
+  color: #e2e2e2;
+  line-height: 1.8;
+}
+
+.croma-guide-section li {
+  margin-bottom: 0.8rem;
+}
+
+@media (max-width: 600px) {
+  .croma-buying-guide {
+    padding: 20px 10px;
+  }
+
+  .croma-heading {
+    font-size: 2rem;
+  }
+
+  .croma-guide-section {
+    padding: 20px;
+  }
+
+  .croma-guide-section h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Disclaimer */
+
+.croma-disclaimer-wrapper {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom, #1c1c1c, #2b2b2b);
+  color: white;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+.croma-disclaimer-heading {
+  font-size: 2.8rem;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #00e9bf;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.croma-disclaimer-section {
+  width: 80%;
+  background: #333;
+  margin: 0 auto 30px;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  border-left: 5px solid #00e9bf;
+}
+
+.croma-disclaimer-section h2 {
+  color: #00e9bf;
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+  border-bottom: 1px solid #444;
+  padding-bottom: 8px;
+}
+
+.croma-disclaimer-section p {
+  color: #e2e2e2;
+  line-height: 1.8;
+}
+
+@media (max-width: 600px) {
+  .croma-disclaimer-wrapper {
+    padding: 20px 10px;
+  }
+
+  .croma-disclaimer-heading {
+    font-size: 2rem;
+  }
+
+  .croma-disclaimer-section {
+    padding: 20px;
+  }
+
+  .croma-disclaimer-section h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* HelpSupport */
+
+.croma-help-wrapper {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom, #1c1c1c, #2b2b2b);
+  color: white;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+.croma-help-heading {
+  font-size: 2.8rem;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #00e9bf;
+  text-transform: uppercase;
+}
+
+.croma-help-section {
+  width: 80%;
+  background: #333;
+  margin: 0 auto 30px;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  border-left: 5px solid #00e9bf;
+}
+
+.croma-help-section h2 {
+  color: #00e9bf;
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+  border-bottom: 1px solid #444;
+  padding-bottom: 8px;
+}
+
+.croma-help-section ul {
+  list-style: disc;
+  margin-left: 20px;
+  color: #e2e2e2;
+  line-height: 1.8;
+}
+
+.croma-help-section li {
+  margin-bottom: 0.8rem;
+}
+
+.croma-help-section p {
+  color: #e2e2e2;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .croma-help-wrapper {
+    padding: 20px 10px;
+  }
+
+  .croma-help-heading {
+    font-size: 2rem;
+  }
+
+  .croma-help-section {
+    padding: 20px;
+  }
+
+  .croma-help-section h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* terms of use  */
+
+.terms-wrapper {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom, #1c1c1c, #2b2b2b);
+  padding: 40px 20px;
+  color: white;
+  min-height: 100vh;
+}
+
+.terms-heading {
+  font-size: 2.8rem;
+  text-align: center;
+  color: #00e9bf;
+  margin-bottom: 40px;
+}
+
+.terms-section {
+  width: 80%;
+  background: #333;
+  padding: 25px 30px;
+  margin: 0 auto 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  border-left: 5px solid #00e9bf;
+}
+
+.terms-section h2 {
+  font-size: 1.6rem;
+  color: #00e9bf;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 8px;
+}
+
+.terms-section p {
+  font-size: 1.1rem;
+  color: #e2e2e2;
+  line-height: 1.6;
+}
+
+.terms-section ul {
+  color: #e2e2e2;
+  margin-left: 20px;
+  line-height: 1.7;
+  list-style: disc;
+}
+
+.terms-section li {
+  margin-bottom: 8px;
+}
+
+@media (max-width: 600px) {
+  .terms-wrapper {
+    padding: 20px 10px;
+  }
+
+  .terms-heading {
+    font-size: 2rem;
+  }
+
+  .terms-section {
+    padding: 20px;
+  }
+
+  .terms-section h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* privacy and policies */
+
+.privacy-wrapper {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom, #1c1c1c, #2b2b2b);
+  padding: 40px 20px;
+  color: white;
+  min-height: 100vh;
+}
+
+.privacy-heading {
+  font-size: 2.8rem;
+  text-align: center;
+  color: #00e9bf;
+  margin-bottom: 40px;
+}
+
+.privacy-section {
+  width: 80%;
+  background: #333;
+  padding: 25px 30px;
+  margin: 0 auto 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  border-left: 5px solid #00e9bf;
+}
+
+.privacy-section h2 {
+  font-size: 1.6rem;
+  color: #00e9bf;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 8px;
+}
+
+.privacy-section p,
+.privacy-section ul {
+  font-size: 1.1rem;
+  color: #e2e2e2;
+  line-height: 1.6;
+}
+
+.privacy-section ul {
+  margin-left: 20px;
+  list-style: disc;
+}
+
+@media (max-width: 600px) {
+  .privacy-wrapper {
+    padding: 20px 10px;
+  }
+
+  .privacy-heading {
+    font-size: 2rem;
+  }
+
+  .privacy-section {
+    padding: 20px;
+  }
+
+  .privacy-section h2 {
+    font-size: 1.3rem;
+  }
 }

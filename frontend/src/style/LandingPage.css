@@ -524,6 +524,10 @@
   align-items: center;
   gap: 16px;
   font-size: 20px;
+
+  & a {
+    color: white;
+  }
 }
 
 /* Extra Small devices (phones, less than 576px) */

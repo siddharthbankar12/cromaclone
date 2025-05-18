@@ -2,6 +2,7 @@ import React from "react";
 import "../style/LandingPage.css";
 import { mergedData } from "../utils/data";
 import { useNavigate } from "react-router-dom";
+import ContactForm from "./ContactForm";
 
 const Footer = () => {
   const route = useNavigate();
@@ -88,17 +89,7 @@ const Footer = () => {
               <p>Personal Care</p> */}
             </div>
           </div>
-
-          <form className="contact-form">
-            <p className="changeHeadForm">Connect with us</p>
-            <div className="enter-email">
-              <input type="text" placeholder="Enter Email ID" />
-            </div>
-            <div className="enter-message">
-              <textarea type="text" placeholder="Enter your message"></textarea>
-            </div>
-            <button>Submit</button>
-          </form>
+          <ContactForm />
         </div>
         <div className="footer-bottom">
           <div className="fb-left">
@@ -106,11 +97,41 @@ const Footer = () => {
             <p>All rights reserved</p>
           </div>
           <div className="fb-right">
-            <i className="fa-brands fa-linkedin-in"></i>
-            <i className="fa-brands fa-youtube"></i>
-            <i className="fa-brands fa-twitter"></i>
-            <i className="fa-brands fa-facebook-f"></i>
-            <i className="fa-brands fa-instagram"></i>
+            <a
+              href="https://www.linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fa-brands fa-linkedin-in"></i>
+            </a>
+            <a
+              href="https://www.youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fa-brands fa-youtube"></i>
+            </a>
+            <a
+              href="https://www.twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fa-brands fa-twitter"></i>
+            </a>
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fa-brands fa-facebook-f"></i>
+            </a>
+            <a
+              href="https://www.instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fa-brands fa-instagram"></i>
+            </a>
           </div>
         </div>
       </div>

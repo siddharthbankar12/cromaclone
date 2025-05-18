@@ -121,7 +121,6 @@ const App = () => {
           <Route path="/admin/manage-sellers" element={<ManageSellers />} />
           <Route path="/admin/track-orders" element={<TrackOrders />} />
           <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/about-us" element={<PrivacyPolicy />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/terms-of-use" element={<TermsOfUse />} />
           <Route path="/buying-guide" element={<BuyingGuide />} />
