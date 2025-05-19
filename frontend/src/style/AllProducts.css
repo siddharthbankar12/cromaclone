@@ -360,26 +360,3 @@
     margin: 8px 0;
   }
 }
-
-.loader {
-  margin: 0 auto;
-  width: fit-content;
-  height: 100vh;
-  font-weight: bold;
-  font-family: monospace;
-  font-size: 30px;
-  color: #0000;
-  background: linear-gradient(90deg, #00e9bf calc(50% + 0.5ch), white 0)
-    right/calc(200% + 1ch) 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: l7 2s infinite steps(11);
-}
-.loader:before {
-  content: "Loading...";
-}
-@keyframes l7 {
-  to {
-    background-position: left;
-  }
-}
