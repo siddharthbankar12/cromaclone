@@ -30,6 +30,8 @@ import TermsOfUse from "./components/TermsOfUse";
 import BuyingGuide from "./components/BuyingGuide";
 import HelpSupport from "./components/HelpSupport";
 import serverSocket from "./utils/serverSocket.js";
+import ManageContactRequest from "./pages/ManageContactRequest.jsx";
+import Notification from "./pages/Notification.jsx";
 
 const App = () => {
   const userData = useSelector((state) => state.user.user);
@@ -109,6 +111,7 @@ const App = () => {
           <Route path="/croma/create-account" element={<CreateAccount />} />
           <Route path="/seller/add-product" element={<AddProduct />} />
           <Route path="/seller/added-products" element={<AddedProducts />} />
+          <Route path="/seller/notifications" element={<Notification />} />
           <Route path="/all-products" element={<AllProducts />} />
           <Route
             path="/all-products/single-product/:id"
@@ -121,6 +124,10 @@ const App = () => {
           <Route path="/admin/manage-users" element={<ManageUsers />} />
           <Route path="/admin/manage-sellers" element={<ManageSellers />} />
           <Route path="/admin/track-orders" element={<TrackOrders />} />
+          <Route
+            path="/admin/manage-contact-requests"
+            element={<ManageContactRequest />}
+          />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/terms-of-use" element={<TermsOfUse />} />

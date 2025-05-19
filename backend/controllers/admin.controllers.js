@@ -3,6 +3,7 @@ import Product from "../models/product.schema.js";
 import User from "../models/user.schema.js";
 import jwt from "jsonwebtoken";
 
+//all products
 export const allProducts0 = async (req, res) => {
   try {
     const products = await Product.find({}).populate("sellerId");
@@ -18,6 +19,7 @@ export const allProducts0 = async (req, res) => {
   }
 };
 
+//get all orders
 export const getAllOrders0 = async (req, res) => {
   try {
     const orders = await Order.find()
@@ -35,6 +37,7 @@ export const getAllOrders0 = async (req, res) => {
   }
 };
 
+// update product quantity
 export const updateProductQuantity0 = async (req, res) => {
   const { productId, quantity } = req.body;
 
@@ -67,6 +70,7 @@ export const updateProductQuantity0 = async (req, res) => {
   }
 };
 
+// apply discount
 export const discount0 = async (req, res) => {
   try {
     const { productId, discountPercentage } = req.body;
@@ -108,6 +112,7 @@ export const discount0 = async (req, res) => {
   }
 };
 
+// delete product
 export const deleteProduct0 = async (req, res) => {
   const { productId } = req.body;
 
@@ -127,6 +132,7 @@ export const deleteProduct0 = async (req, res) => {
   }
 };
 
+// user management
 export const usersManagement0 = async (req, res) => {
   try {
     const token = req.cookies.token;

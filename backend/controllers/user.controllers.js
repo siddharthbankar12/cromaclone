@@ -1,11 +1,13 @@
 import User from "../models/user.schema.js";
 import Product from "../models/product.schema.js";
 import Cart from "../models/cart.schema.js";
+import Notification from "../models/notification.schema.js";
 import Order from "../models/order.schema.js";
 import WishList from "../models/wishlist.schema.js";
 import { sellerSockets } from "../services/socket.service.js";
 import { io } from "../server.js";
 
+// add to cart
 export const AddToCart = async (req, res) => {
   try {
     const { productId, userId } = req.body;
@@ -62,6 +64,7 @@ export const AddToCart = async (req, res) => {
   }
 };
 
+// get cart products
 export const GetCartProducts = async (req, res) => {
   try {
     const { userId } = req.body;
@@ -96,6 +99,7 @@ export const GetCartProducts = async (req, res) => {
   }
 };
 
+// update cart products quantity
 export const UpdateCartProductQuantity = async (req, res) => {
   try {
     const { userId, productId, action } = req.body;
@@ -130,6 +134,7 @@ export const UpdateCartProductQuantity = async (req, res) => {
   }
 };
 
+// delete cart product
 export const DeleteCartProduct = async (req, res) => {
   try {
     const { userId, productId } = req.body;
@@ -151,6 +156,7 @@ export const DeleteCartProduct = async (req, res) => {
   }
 };
 
+// check out cart products
 export const CheckOut = async (req, res) => {
   try {
     const { userId, products, userAddress } = req.body;
@@ -205,9 +211,12 @@ export const CheckOut = async (req, res) => {
           buyerName: isUserExist.firstName + " " + isUserExist.lastName,
           productData: product,
         });
-
-        // mongodb => notification schema
       }
+      await Notification.create({
+        userId: isUserExist._id,
+        sellerId: product.sellerId,
+        message: `New order placed for ${product.name} by ${isUserExist.firstName}`,
+      });
     }
 
     const newOrder = new Order({
@@ -231,6 +240,7 @@ export const CheckOut = async (req, res) => {
   }
 };
 
+// direct buy product
 export const BuyNow = async (req, res) => {
   try {
     const { userId, product, userAddress } = req.body;
@@ -242,7 +252,7 @@ export const BuyNow = async (req, res) => {
       return res.json({ success: false, message: "Address is required" });
     }
     if (!product) {
-      return res.json({ success: false, message: "Product are required" });
+      return res.json({ success: false, message: "Product is required" });
     }
 
     const isUserExist = await User.findById(userId);
@@ -255,14 +265,17 @@ export const BuyNow = async (req, res) => {
       return res.json({ success: false, message: "Product not found" });
     }
 
-    if (isProductExist.quantity <= 1) {
+    if (isProductExist.quantity < 1) {
       return res.json({
         success: false,
         message: "Product is out of stock",
       });
     }
 
-    let singleProduct = [{ productId: product._id, quantity: 1 }];
+    isProductExist.quantity -= 1;
+    await isProductExist.save();
+
+    const singleProduct = [{ productId: product._id, quantity: 1 }];
 
     const sellerSocketIdFound = sellerSockets.get(
       isProductExist.sellerId.toString()
@@ -272,11 +285,15 @@ export const BuyNow = async (req, res) => {
         buyerName: isUserExist.firstName + " " + isUserExist.lastName,
         productData: isProductExist,
       });
-
-      // mongodb => notification schema
     }
 
-    const newOrder = Order({
+    await Notification.create({
+      userId: isUserExist._id,
+      sellerId: isProductExist.sellerId,
+      message: `New order placed for ${product.name} by ${isUserExist.firstName}`,
+    });
+
+    const newOrder = new Order({
       userId,
       products: singleProduct,
       price: product.price,
@@ -289,7 +306,7 @@ export const BuyNow = async (req, res) => {
 
     return res.json({
       success: true,
-      message: "Order Successful, you'll get product delivered soon",
+      message: "Order successful, you'll get product delivered soon",
     });
   } catch (error) {
     console.log(error);
@@ -297,6 +314,7 @@ export const BuyNow = async (req, res) => {
   }
 };
 
+// get order history
 export const GetOrderHistory = async (req, res) => {
   try {
     const { userId } = req.body;
@@ -322,6 +340,7 @@ export const GetOrderHistory = async (req, res) => {
   }
 };
 
+// update wish list
 export const updateWishList = async (req, res) => {
   try {
     const { userId, productId, action } = req.body;
@@ -378,6 +397,7 @@ export const updateWishList = async (req, res) => {
   }
 };
 
+//get wish list
 export const getWishList = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -404,6 +424,32 @@ export const getWishList = async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching wishlist:", error);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+// get seller notifications
+export const getSellerNotification = async (req, res) => {
+  try {
+    const { sellerId } = req.body;
+
+    if (!sellerId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Seller ID is required." });
+    }
+
+    const sellerNotifications = await Notification.find({ sellerId })
+      .populate("userId")
+      .populate("sellerId");
+
+    return res.json({
+      success: true,
+      message: "Notifications fetched successfully.",
+      notifications: sellerNotifications,
+    });
+  } catch (error) {
+    console.error("Error Get Seller Notification API:", error);
     return res.status(500).json({ success: false, error: error.message });
   }
 };

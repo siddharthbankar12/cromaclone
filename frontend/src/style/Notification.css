@@ -1,0 +1,52 @@
+.croma-notification-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 40px auto;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+}
+
+.croma-notification-heading {
+  font-size: 24px;
+  color: #1a202c;
+  border-bottom: 2px solid #28a745;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.croma-notification-empty {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+}
+
+.croma-notification-card {
+  background-color: #fff;
+  padding: 16px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+
+.croma-notification-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.croma-notification-msg {
+  font-size: 16px;
+  font-weight: 500;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.croma-notification-user {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.croma-notification-date {
+  font-size: 13px;
+  color: #888;
+}

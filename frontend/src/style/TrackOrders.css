@@ -1,24 +1,25 @@
 .mo-orders-container {
   padding: 2rem;
-  background-color: #f8f9fa;
+  /* background-color: #f8f9fa; */
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
+  color: white;
 }
 
 .mo-orders-title {
   font-size: 28px;
   font-weight: 600;
-  color: #1a9f57;
+  color: #00e9bf;
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid #1a9f57;
-  padding-bottom: 0.5rem;
+  border-bottom: 2px solid#00e9bf;
+  padding-bottom: 2.5rem;
   text-align: center;
 }
 
 .mo-orders-table-wrapper {
   overflow-x: auto;
   border-radius: 8px;
-  background-color: #fff;
+  /* background-color: #fff; */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
@@ -26,10 +27,6 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 15px;
-}
-
-.mo-orders-table thead {
-  background-color: #e6f4ed;
 }
 
 .mo-orders-table th,
@@ -40,7 +37,7 @@
 }
 
 .mo-orders-table th {
-  color: #1a9f57;
+  color: #00e9bf;
   font-weight: 600;
 }
 
@@ -60,19 +57,19 @@
 }
 
 .mo-clickable-id {
-  color: #1a9f57;
+  color: #00e9bf;
   cursor: pointer;
   font-weight: 500;
   transition: color 0.2s ease;
 }
 
 .mo-clickable-id:hover {
-  color: #117d43;
+  color: #00e9bf;
   text-decoration: underline;
 }
 
 .mo-loading-text {
-  color: #1a9f57;
+  color: #00e9bf;
   font-weight: bold;
   font-size: 18px;
 }
@@ -89,6 +86,7 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
+  color: black;
 }
 
 .mo-popup-content {
@@ -103,7 +101,7 @@
 
 .mo-popup-content h3 {
   margin-top: 0;
-  color: #1a9f57;
+  color: #00e9bf;
   margin-bottom: 1rem;
 }
 
@@ -118,8 +116,8 @@
 }
 
 .mo-close-btn {
-  background-color: #1a9f57;
-  color: #fff;
+  background-color: #00e9bf;
+  color: black;
   border: none;
   padding: 0.6rem 1.2rem;
   font-size: 14px;
@@ -130,12 +128,12 @@
 }
 
 .mo-close-btn:hover {
-  background-color: #117d43;
+  background-color: #00e9bf;
 }
 
 .mo-order-date {
   font-size: 13.5px;
-  color: #555;
+  color: white;
 }
 
 .loader {

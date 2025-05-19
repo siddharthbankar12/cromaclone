@@ -66,6 +66,9 @@ const SideBar = ({ setIsSidebarOpen }) => {
             <li onClick={() => handleClick("/seller/added-products")}>
               Added Products
             </li>
+            <li onClick={() => handleClick("/seller/notifications")}>
+              Notifications
+            </li>
           </>
         )}
 
@@ -83,11 +86,11 @@ const SideBar = ({ setIsSidebarOpen }) => {
             <li onClick={() => handleClick("/admin/track-orders")}>
               Track Orders
             </li>
+            <li onClick={() => handleClick("/admin/manage-contact-requests")}>
+              Contact Requests
+            </li>
           </>
         )}
-        <li onClick={() => handleClick("/buying-guide")}>Buying Guide</li>
-        <li onClick={() => handleClick("/help-and-support")}>Help & Support</li>
-        <li onClick={() => handleClick("/privacy-policy")}>Privacy Policy</li>
         <li onClick={() => handleClick("/about-us")}>About us</li>
         {userData?.role && <li onClick={logOutUser}>Logout</li>}
       </ul>
