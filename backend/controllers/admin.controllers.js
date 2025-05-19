@@ -36,7 +36,7 @@ export const getAllOrders0 = async (req, res) => {
 };
 
 export const updateProductQuantity0 = async (req, res) => {
-  const { productId, action } = req.body;
+  const { productId, quantity } = req.body;
 
   try {
     const product = await Product.findById(productId);
@@ -47,12 +47,14 @@ export const updateProductQuantity0 = async (req, res) => {
         .json({ success: false, message: "Product not found" });
     }
 
-    if (action === "increase") {
-      product.quantity += 1;
-    } else if (action === "decrease" && product.quantity > 1) {
-      product.quantity -= 1;
+    if (!Number.isInteger(quantity) || quantity < 1) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid quantity. Must be an integer greater than 0.",
+      });
     }
 
+    product.quantity = quantity;
     await product.save();
 
     return res.status(200).json({

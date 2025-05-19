@@ -29,12 +29,13 @@ import Disclaimer from "./components/Disclaimer";
 import TermsOfUse from "./components/TermsOfUse";
 import BuyingGuide from "./components/BuyingGuide";
 import HelpSupport from "./components/HelpSupport";
+import serverSocket from "./utils/serverSocket.js";
 
 const App = () => {
   const userData = useSelector((state) => state.user.user);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
-
+  serverSocket();
   const dispatch = useDispatch();
 
   async function getCurrentUserData() {

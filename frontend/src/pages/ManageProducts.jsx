@@ -10,6 +10,7 @@ const ManageProducts = () => {
   const [products, setAllProducts] = useState([]);
   const [discountInputs, setDiscountInputs] = useState({});
   const [loading, setLoading] = useState(false);
+  const [quantityInputs, setQuantityInputs] = useState({});
 
   console.log(products);
 
@@ -18,7 +19,17 @@ const ManageProducts = () => {
       setLoading(true);
       const response = await axiosInstance.get("/admin/all-products0");
       if (response.data.success === true) {
-        setAllProducts(response.data.products);
+        const fetchedProducts = response.data.products;
+        setAllProducts(fetchedProducts);
+
+        const quantityData = {};
+        const discountData = {};
+        fetchedProducts.forEach((product) => {
+          quantityData[product._id] = product.quantity;
+          discountData[product._id] = product.discountPercentage ?? 0;
+        });
+        setQuantityInputs(quantityData);
+        setDiscountInputs(discountData);
       }
     } catch (error) {
       console.error("Fetch error:", error);
@@ -48,48 +59,46 @@ const ManageProducts = () => {
       toast.error("Failed to delete the product.");
     }
   };
+  const handleQuantityChange = async (productId, quantity) => {
+    if (!Number.isInteger(quantity) || quantity < 1) {
+      return toast.error("Enter a valid quantity (min: 1)");
+    }
 
-  const handleQuantityChange = async (productId, action) => {
     try {
       const response = await axiosInstance.put(
         "/admin/update-product-quantity0",
         {
           productId,
-          action,
+          quantity,
         }
       );
 
       if (response.data.success) {
-        toast.success("Product quantity updated successfully!");
+        toast.success("Product quantity updated!");
         getAllProducts();
       }
     } catch (error) {
       console.error("Quantity update error:", error);
-      toast.error("Failed to update product quantity.");
+      toast.error("Failed to update quantity.");
     }
   };
 
   const handleDiscountApply = async (productId) => {
-    const discountPercentage = discountInputs[productId];
-    if (
-      discountPercentage === undefined ||
-      isNaN(discountPercentage) ||
-      discountPercentage < 1 ||
-      discountPercentage > 90
-    ) {
-      return toast.error("Enter a valid discount between 1% and 90%");
+    const discountValue = Number(discountInputs[productId]);
+
+    if (isNaN(discountValue) || discountValue < 0 || discountValue > 90) {
+      return toast.error("Enter a valid discount between 0% and 90%");
     }
 
     try {
       const response = await axiosInstance.post("/admin/discount0", {
         productId,
-        discountPercentage,
+        discountPercentage: discountValue,
       });
 
       if (response.data.success) {
         toast.success("Discount applied!");
         getAllProducts();
-        setDiscountInputs((prev) => ({ ...prev, [productId]: "" }));
       }
     } catch (error) {
       console.error("Discount error:", error);
@@ -120,7 +129,7 @@ const ManageProducts = () => {
                 <th>Seller ID</th>
                 <th>Category</th>
                 <th>Quantity</th>
-                <th>Price (₹) / Discount (%)</th>
+                <th>Price (₹) </th>
                 <th>Original Price (₹)</th>
                 <th>Discount (%)</th>
                 <th>Action</th>
@@ -148,48 +157,61 @@ const ManageProducts = () => {
                     <td>{product.sellerId._id}</td>
                     <td>{product.category}</td>
                     <td>
-                      <div className="quantity-actions">
-                        <p
-                          className="quantity-btn"
-                          onClick={() =>
-                            handleQuantityChange(product._id, "decrease")
+                      <div className="quantity-update">
+                        <input
+                          type="number"
+                          min={1}
+                          value={
+                            quantityInputs[product._id] ?? product.quantity
                           }
-                          disabled={product.quantity <= 1}
-                        >
-                          -
-                        </p>
-                        {product.quantity}
-                        <p
-                          className="quantity-btn"
+                          onChange={(e) => {
+                            const val = parseInt(e.target.value);
+                            if (!isNaN(val)) {
+                              setQuantityInputs((prev) => ({
+                                ...prev,
+                                [product._id]: val,
+                              }));
+                            }
+                          }}
+                          className="quantity-input"
+                          style={{ width: "60px", marginRight: "6px" }}
+                        />
+
+                        <button
                           onClick={() =>
-                            handleQuantityChange(product._id, "increase")
+                            handleQuantityChange(
+                              product._id,
+                              quantityInputs[product._id]
+                            )
                           }
+                          className="apply-qty-btn"
                         >
-                          +
-                        </p>
+                          Apply
+                        </button>
                       </div>
                     </td>
-                    <td>
-                      {product.price.toLocaleString("en-IN")} /{" "}
-                      {product.discountPercentage}%
-                    </td>
+                    <td>{product.price.toLocaleString("en-IN")}</td>
                     <td>{product.originalPrice.toLocaleString("en-IN")}</td>
                     <td>
                       <input
                         type="number"
+                        min={0}
+                        max={90}
                         placeholder="0"
-                        value={discountInputs[product._id] || ""}
+                        value={discountInputs[product._id] ?? ""}
                         onChange={(e) =>
                           setDiscountInputs((prev) => ({
                             ...prev,
-                            [product._id]: e.target.value,
+                            [product._id]:
+                              e.target.value === ""
+                                ? ""
+                                : Number(e.target.value),
                           }))
                         }
                         className="discount-input"
-                        min={1}
-                        max={90}
                         style={{ width: "60px", marginRight: "5px" }}
                       />
+
                       <button
                         onClick={() => handleDiscountApply(product._id)}
                         className="apply-discount-btn"

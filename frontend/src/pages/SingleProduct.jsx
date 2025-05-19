@@ -167,7 +167,12 @@ const SingleProduct = () => {
   }, [userData?.role]);
 
   if (loading) return <div className="loader"></div>;
-  if (!singleProduct) return <p>No product found.</p>;
+  if (!singleProduct)
+    return (
+      <h1 style={{ color: "white", textAlign: "center", margin: "200px auto" }}>
+        No product found.
+      </h1>
+    );
 
   return (
     <div className="mainSingle">

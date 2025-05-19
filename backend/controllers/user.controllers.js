@@ -3,6 +3,8 @@ import Product from "../models/product.schema.js";
 import Cart from "../models/cart.schema.js";
 import Order from "../models/order.schema.js";
 import WishList from "../models/wishlist.schema.js";
+import { sellerSockets } from "../services/socket.service.js";
+import { io } from "../server.js";
 
 export const AddToCart = async (req, res) => {
   try {
@@ -194,6 +196,18 @@ export const CheckOut = async (req, res) => {
 
       allProducts.push({ productId: _id, quantity });
       totalPrice += product.price * quantity;
+
+      const sellerSocketIdFound = sellerSockets.get(
+        product.sellerId.toString()
+      );
+      if (sellerSocketIdFound) {
+        io.to(sellerSocketIdFound).emit("proceedToPayment", {
+          buyerName: isUserExist.firstName + " " + isUserExist.lastName,
+          productData: product,
+        });
+
+        // mongodb => notification schema
+      }
     }
 
     const newOrder = new Order({
@@ -249,6 +263,18 @@ export const BuyNow = async (req, res) => {
     }
 
     let singleProduct = [{ productId: product._id, quantity: 1 }];
+
+    const sellerSocketIdFound = sellerSockets.get(
+      isProductExist.sellerId.toString()
+    );
+    if (sellerSocketIdFound) {
+      io.to(sellerSocketIdFound).emit("buyNow", {
+        buyerName: isUserExist.firstName + " " + isUserExist.lastName,
+        productData: isProductExist,
+      });
+
+      // mongodb => notification schema
+    }
 
     const newOrder = Order({
       userId,

@@ -71,7 +71,7 @@
   gap: 30px;
 
   & .single-product-container {
-    width: calc(92% / 3);
+    width: calc(88% / 3);
     margin: 25px 0;
     padding-bottom: 15px;
     border-bottom: 1px solid grey;
@@ -223,11 +223,11 @@
     width: 90%;
   }
 
-  .list-of-products {
+  /* .list-of-products {
     & .single-product-container {
-      width: calc(96% / 2);
+      width: calc(90% / 3);
     }
-  }
+  } */
 }
 
 @media (min-width: 801px) and (max-width: 1350.99px) {

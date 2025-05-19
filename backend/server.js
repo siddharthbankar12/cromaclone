@@ -4,18 +4,24 @@ import mongoose from "mongoose";
 import allRouters from "./routers/index.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
-const app = express();
+import http from "http";
+import { initSocket } from "./services/socket.service.js";
 
 dotenv.config();
-app.use(express.json());
 
-const corsOptions = {
-  // origin: ["http://localhost:3000"],
-  origin: ["https://cromaclone.vercel.app"],
-  credentials: true,
-};
-app.use(cors(corsOptions));
+const app = express();
+const server = http.createServer(app);
+
+export const io = initSocket(server);
+
+app.use(express.json());
+app.use(
+  cors({
+    // origin: "http://localhost:3000",
+    origin: "https://cromaclone.vercel.app",
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 
 const port = 8000;
@@ -35,4 +41,4 @@ mongoose
     console.error("Error connecting to MongoDB:", error);
   });
 
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+server.listen(port, () => console.log(`Server is running on port ${port}`));
