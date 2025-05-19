@@ -6,14 +6,14 @@ export const sellerSockets = new Map();
 export const initSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      // origin: "http://localhost:3000",
-      origin: "https://cromaclone.vercel.app",
+      origin: ["http://localhost:3000", "https://cromaclone.vercel.app"],
       methods: ["GET", "POST"],
+      credentials: true,
     },
   });
 
   io.on("connection", (socket) => {
-    console.log(`Socket server connected to ${socket.id}`);
+    console.log(`Socket connected: ${socket.id}`);
 
     socket.on("registerSeller", async (sellerData) => {
       const isSellerExist = await User.findById(sellerData.sellerId);

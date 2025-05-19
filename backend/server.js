@@ -17,12 +17,10 @@ export const io = initSocket(server);
 app.use(express.json());
 app.use(
   cors({
-    // origin: "http://localhost:3000",
-    origin: "https://cromaclone.vercel.app",
+    origin: ["http://localhost:3000", "https://cromaclone.vercel.app"],
     credentials: true,
   })
 );
-app.use(cookieParser());
 
 const port = 8000;
 

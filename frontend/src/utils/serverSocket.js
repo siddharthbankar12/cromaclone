@@ -17,9 +17,15 @@ const useServerSocket = () => {
   const userData = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    if (userData?.userId && userData?.role === "seller") {
+    if (!userData?.userId || userData?.role !== "seller") return;
+
+    const register = () => {
       socket.emit("registerSeller", { sellerId: userData.userId });
-    }
+    };
+
+    socket.on("connect", register);
+
+    register();
 
     socket.on("proceedToPayment", ({ buyerName, productData }) => {
       toast.success(
@@ -34,6 +40,7 @@ const useServerSocket = () => {
     });
 
     return () => {
+      socket.off("connect", register);
       socket.off("proceedToPayment");
       socket.off("buyNow");
     };
