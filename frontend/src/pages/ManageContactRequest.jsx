@@ -6,9 +6,11 @@ import "../style/ManageContactRequest.css";
 const ManageContactRequest = () => {
   const userData = useSelector((state) => state.user.user);
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getFormsRequestData = async () => {
     try {
+      setLoading(true);
       const response = await axiosInstance.post("/form/get-contact-request", {
         adminId: userData?.userId,
       });
@@ -18,6 +20,8 @@ const ManageContactRequest = () => {
       }
     } catch (error) {
       console.log(error, "error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -30,7 +34,9 @@ const ManageContactRequest = () => {
   return (
     <div className="croma-contact-request">
       <h2>Contact Requests</h2>
-      {data.length > 0 ? (
+      {loading ? (
+        <div className="loader"></div>
+      ) : data.length > 0 ? (
         <div className="request-list">
           {data.map((item) => (
             <div className="request-card" key={item._id}>

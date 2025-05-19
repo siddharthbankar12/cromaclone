@@ -6,15 +6,19 @@ import "../style/Notification.css";
 const Notification = () => {
   const userData = useSelector((state) => state.user.user);
   const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getNotification = async () => {
     try {
+      setLoading(true);
       const response = await axiosInstance.post("/user/notification", {
         sellerId: userData?._id,
       });
       setNotifications(response.data.notifications);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -27,7 +31,9 @@ const Notification = () => {
   return (
     <div className="croma-notification-container">
       <h2 className="croma-notification-heading">Notifications</h2>
-      {notifications.length === 0 ? (
+      {loading ? (
+        <div className="loader"></div>
+      ) : notifications.length === 0 ? (
         <p className="croma-notification-empty">No notifications found.</p>
       ) : (
         notifications.map((notification) => (
