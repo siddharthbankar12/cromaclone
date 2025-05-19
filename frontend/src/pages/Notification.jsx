@@ -41,6 +41,7 @@ const Notification = () => {
             <p className="croma-notification-msg">{notification.message}</p>
             <p className="croma-notification-user">
               <strong>By ID :</strong> {notification.userId?._id}
+              <strong>Quantity :</strong> {notification.quantity}
             </p>
             <p className="croma-notification-date">
               {new Date(notification.createdAt).toLocaleString()}

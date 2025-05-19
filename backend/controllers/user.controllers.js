@@ -167,7 +167,7 @@ export const CheckOut = async (req, res) => {
     if (!userAddress) {
       return res.json({ success: false, message: "Address is required" });
     }
-    if (!products || products.length == 0) {
+    if (!products || products.length === 0) {
       return res.json({ success: false, message: "Products are required" });
     }
 
@@ -210,15 +210,19 @@ export const CheckOut = async (req, res) => {
         io.to(sellerSocketIdFound).emit("proceedToPayment", {
           buyerName: isUserExist.firstName + " " + isUserExist.lastName,
           productData: product,
+          quantityOrdered: quantity,
         });
       }
+
       await Notification.create({
         userId: isUserExist._id,
         sellerId: product.sellerId,
-        message: `New order placed for ${product.name} by ${isUserExist.firstName}`,
+        quantity: quantity,
+        message: `New order placed for ${product.name} (x${quantity}) by ${isUserExist.firstName}`,
       });
     }
 
+    // Create new order
     const newOrder = new Order({
       userId,
       products: allProducts,
@@ -235,8 +239,8 @@ export const CheckOut = async (req, res) => {
       message: "Order successful, you'll get your products delivered soon",
     });
   } catch (error) {
-    console.log(error);
-    return res.json({ success: false, error });
+    console.error("Checkout error:", error);
+    return res.json({ success: false, error: error.message });
   }
 };
 
@@ -290,6 +294,7 @@ export const BuyNow = async (req, res) => {
     await Notification.create({
       userId: isUserExist._id,
       sellerId: isProductExist.sellerId,
+      quantity: 1,
       message: `New order placed for ${product.name} by ${isUserExist.firstName}`,
     });
 
