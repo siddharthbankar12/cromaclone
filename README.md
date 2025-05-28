@@ -59,31 +59,29 @@ A full-stack e-commerce web app inspired by [Croma](https://www.croma.com/), bui
 
 Follow these steps to run the **Croma Clone** on your local machine.
 
-### 1. Clone the Repository
-
 ```bash
+
+# 1. Clone the Repository
 git clone https://github.com/siddharthbankar12/cromaclone
 cd cromaclone
 
-# Install backend dependencies
+# 2. Install backend dependencies
 cd backend
 npm install
 
-# Install frontend dependencies
+# 3. Install frontend dependencies
 cd frontend
 npm install
 
-# .env (example)
+# 4. create .env file (example)
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 
-# Start backend
-
+# 5. Start backend
 cd backend
 npm start
 
-# Start frontend
-
+# 6. Start frontend
 cd frontend
 npm start
 
