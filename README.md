@@ -66,15 +66,14 @@ git clone https://github.com/siddharthbankar12/cromaclone
 cd cromaclone
 
 # Install backend dependencies
-cd server
+cd backend
 npm install
 
 # Install frontend dependencies
-cd ../client
+cd frontend
 npm install
 
 # .env (example)
-PORT=5000
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 
@@ -82,12 +81,12 @@ JWT_SECRET=your_jwt_secret
 
 # Start backend
 
-cd server
+cd backend
 npm start
 
 # Start frontend
 
-cd ../client
+cd frontend
 npm start
 
 Let me know if:
