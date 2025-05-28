@@ -1,60 +1,97 @@
-<div align="center">
-	<h1> Croma Clone 🛒</h1>
-</div>
+# Croma Clone 🛒
 
-## Snapshot 📸
+A full-stack e-commerce web app inspired by [Croma](https://www.croma.com/), built with the MERN stack.
 
-![Croma Clone Landing Page](./src/images/readme.png)
+## 📸 Snapshot
 
-**Live Preview:** https://siddharthbankar12.github.io/croma-clone/
+![Croma Clone Landing Page](./cromaclone.png)
 
-## Tech Stack ✨
+**Live Preview:** [https://cromaclone.vercel.app/](https://cromaclone.vercel.app/)
 
-- [React.js](https://reactjs.org/) - UI Library
-- [Redux](https://redux.js.org/) - State Management
-- [React Router](https://reactrouter.com/) - Routing
-- [Framer Motion](https://www.framer.com/motion/) - Animations
-- [Chakra UI / Tailwind CSS / Custom CSS Modules] - Styling
-- [Express.js](https://expressjs.com/) (If backend is included) - Server Framework
+---
 
-## How to run locally 💻
+## ✨ Tech Stack
+
+### 🚀 Frontend
+
+- [React.js](https://reactjs.org/) – UI Library
+- [Redux](https://redux.js.org/) – State Management
+- [React Router](https://reactrouter.com/) – Routing
+- [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML), [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS), [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+
+### 🛠️ Backend
+
+- [Node.js](https://nodejs.org/) – JavaScript Runtime
+- [Express.js](https://expressjs.com/) – Web Framework
+- [Socket.io](https://socket.io/) – Real-Time Features
+
+### 💾 Database
+
+- [MongoDB](https://www.mongodb.com/) – NoSQL Database
+
+---
+
+## 👥 Roles and Functionalities
+
+### 👤 User
+
+- Add to Cart & Buy Now
+- Order History
+- Wishlist
+- Profile Management
+
+### 🛍️ Seller
+
+- Add Products
+- Manage Listings
+- Track Orders
+
+### 🛠️ Admin
+
+- Manage Products
+- Monitor Users & Sellers
+- Track Orders
+- Dashboard Overview
+
+---
+
+## 💻 How to Run Locally
 
 Follow these steps to run the **Croma Clone** on your local machine.
 
-### Clone this repository
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/siddharthbankar12/croma-clone
+git clone https://github.com/siddharthbankar12/cromaclone
+cd cromaclone
 
-
-### Navigate to directory
-
-```bash
-cd my-portfolio
-```
-
-### Install NPM
-
-```bash
+# Install backend dependencies
+cd server
 npm install
+
+# Install frontend dependencies
+cd ../client
+npm install
+
+# .env (example)
+PORT=5000
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+
 ```
 
-### Run
+# Start backend
 
-Run the development server to view the app.
-
-```bash
+cd server
 npm start
-```
 
-Now, you can navigate to http://localhost:3000/ to view the app.
+# Start frontend
 
-### Build
+cd ../client
+npm start
 
-```bash
-npm run build
-```
+Let me know if:
 
-## Credits ✍
-
-Implementation by [@siddharthbankar12](https://github.com/siddharthbankar12)
+- You want this as a downloadable `.md` file.
+- You need help adjusting it to a monorepo or separate-folder architecture.
+- You want deployment steps added for Vercel or Render.
